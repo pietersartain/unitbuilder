@@ -5,7 +5,7 @@ ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egyp
 1E04,	Cursed Spearman,		1,   0,   0,   3, Spearmen,      0.20,,,  Regeneration,   1.2, Aggressive, 1,  59, 118, 118, 177,1,2,3,2,r,g,g,g,	white,	1U
 1E05,	Egyptian Archer,		0.2, 0.7, 0.2, 4, Precision,     0.10,,,              ,      ,           ,  ,  52, 104, 104, 156,1,1,2,1,b,g,g,g,	white,	1U
 1E06,	Egyptian Fire Archer,	0,   0.7, 0.3, 3, Fire Arrows,   0.2, Hail of Arrows, 0.1, ,,,,                59, 118, 118, 177,1,1,2,1,b,g,g,g,	white,	1U
-1E07,	Centaur Charger,		1.6, 0,   0.8, 8, Specialised,   0.2, ,,  Battle Prowess, 2.5, Aggressive, 2, 163, 326, 408, 489,1,2,3,2,r,r,g,r,	white,	1U
+1E07,	Centaur Charger,		1.6, 0,   0.8, 8, Specialized,   0.2, ,,  Battle Prowess, 2.5, Aggressive, 2, 163, 326, 408, 489,1,2,3,2,r,r,g,r,	white,	1U
 1E10,	Cleopatra VII,			0,   0,   2,   4, Harsh Mistress,1, Death Touch, 1, Calculating, 12, ,,       617,  --,  --,  --,1,1,2,1,r,r,g,r,	gold,	1U
 1E11,	Decidius Saxa,			2,   0,   2,   4, Command Position, 1, ,, Hustle, 8, Aggressive, 1,           474,  --,  --,  --,1,1,2,1,r,r,r,r,	gold,	1U
 1E12,	Amenhotep III,			1,   0,   1.5, 4, Lord of the Dead, 1, ,, Resentful, 8, Aggressive, 1,        278,  --,  --,  --,1,1,2,1,r,r,g,r,	gold,	1U
@@ -72,7 +72,7 @@ ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egyp
 1R08,	Roman Cavalry Lancer,	1.4, 0,   1,   8, Xenophobic, 0.2, ,, Disciplined, 2.5, ,,                    330, 330, 165,  --,1,2,3,2,r,r,g,r,	white,	2UP
 1R09,	Ursan Cataphract,		3,	 0,   1,   5, Carnivorous, 0.34, ,, Disciplined, 5, Brutal, 5,             --, 984, 328,  --,1,2,2,2,r,g,g,g,	white,	4UP
 1R10,	Marcus Agrippa,			2,	 0,   1.5, 7, Leader of Men, 1, ,, Disciplined, 8, Calculating, 8,         --,1455, 485,  --,1,2,3,2,r,r,g,r,	gold,	2UP
-1R11,	Caius Lucius,			2,	 0,   1.5, 4, Specialised, 1, Specialist Leader, 1, Disciplined, 8, ,,     --, 506, 253,  --,1,1,2,1,r,r,g,r,	gold,	1U
+1R11,	Caius Lucius,			2,	 0,   1.5, 4, Specialized, 1, Specialist Leader, 1, Disciplined, 8, ,,     --, 506, 253,  --,1,1,2,1,r,r,g,r,	gold,	1U
 1R12,	Titus Petronius,		2,   0,   2,   3, Heavy Armor, 0.2, Armored Rush, 1, Disciplined, 5, Tough, 2.5, --,960,320,  --,1,1,2,1,r,g,g,g,	gold,	2UL
 1R13,	Vercingetorix,			2.5, 0,   0,   4, King of the Gauls, 1, Berserker, 1, Charger, 1.2, ,,        612, 408, 204, 612,1,1,1,1,r,r,r,r,	gold,	1U
 1R14,	Diviciacus,				0,   0,   1,   4, Grand Druid, 1, Nature Magic, 1, ,, ,,                      444, 296, 148, 444,1,1,2,1,r,g,g,g,	gold,	1U
@@ -80,7 +80,7 @@ ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egyp
 1R16,	Priestess of Aesclepius,0,	 0,	  0.2, 3, Healing, 1, ,, ,, ,,                                         --, 474, 158,  --,1,1,2,1,g,g,g,g,	green,	1U
 1R17,	Priestess of Bellonna,	0.5, 0,   0.5, 4, Fervor, 1, ,, Disciplined, 2, Hustle, 8,					   --, 315, 105,  --,1,1,2,1,r,r,g,r,	green,	1U
 1R18,	Priestess of Vulcan,	1,	 0,   0,   4, Fireburst, 1, Fire Arrows, 0.34, ,, ,,       				   --, 444, 148,  --,1,1,2,1,r,r,g,r,	green,	1U
-1R19,	Infantry Centurion,		1.25,0,   0.5, 4, Specialised, 1, ,, Disciplined, 4, ,,						  101, 162,  81,  --,1,1,2,1,r,r,g,r,	red,	1U
+1R19,	Infantry Centurion,		1.25,0,   0.5, 4, Specialized, 1, ,, Disciplined, 4, ,,						  101, 162,  81,  --,1,1,2,1,r,r,g,r,	red,	1U
 1R20,	Sagitarii Centurion,	0,	 1,	  0.5, 4, Precision, 1, ,, Disciplined, 4, ,,						  153, 244, 122,  --,1,1,2,1,b,r,g,r,	red,	1U
 1R21,	Druid,					0,   0,   0.5, 4, Tangle Vines, 1, Nature Magic, 0.6, ,, ,,  				  267, 178,  89, 267,1,1,2,1,r,g,g,g,	green,	1U
 1R22,	Minotaur Warrior,		1.67,0,   1,   5, ,, ,, Brutal, 2.5, Disciplined, 2.5, 						   --, 495, 165,  --,1,1,2,1,r,r,g,r,	white,	2UC
