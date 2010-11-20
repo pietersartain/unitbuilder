@@ -1,0 +1,15 @@
+1U	  - 1 peg
+1UB   - 1 peg, big circle
+1UE   - 1 peg, elongated
+2UP	  - 2 peg portrait
+2UL	  - 2 peg landscape
+2UC	  - 2 peg circle-type
+3U2FP - 3 peg, 2 pegs at the front, portrait
+3UAP  - 3 peg, alternating peg locs, portrait
+3UL   - 3 peg, straight line, landscape (probably)
+3UC   - 3 peg, circle-type
+4UP   - 4 peg bear-type portrait
+4UL   - 4 peg bear-type landscape
+4U2FP - 4 pegs, 2 front, 2 back in pairs, portrait
+Formation File			g,-,-,-		12hp
+Formation Column		g,-,-,-		12hp

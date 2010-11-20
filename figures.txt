@@ -1,0 +1,93 @@
+ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egypt,Han,Roman,Merc,Nm,Em,Sm,Wm,Ns,Es,Ss,Ws,BaseColor,BaseType
+1E01,	Hoplite with Javelins,	0.6, 0,   0.4, 4, Thrown Weapon, 0.20,,,  Battle Prowess, 1.2, Aggressive, 1,  75, 150, 188, 255,1,1,2,1,b,r,g,r,	white,	1U
+1E02,	Charging Hoplite,		0.6, 0,   0.4, 4,		         ,   ,,,  Battle Prowess, 1.2, Aggressive, 1,  50, 100, 125, 150,1,1,2,1,r,r,g,r,	white,	1U
+1E03,	Cursed Swordsman,		1,   0,   0.2, 3, Concentration, 0.14,,,  Regeneration,   1.2, Aggressive, 1,  65, 130, 130, 195,1,2,3,2,r,g,g,g,	white,	1U
+1E04,	Cursed Spearman,		1,   0,   0,   3, Spearmen,      0.20,,,  Regeneration,   1.2, Aggressive, 1,  59, 118, 118, 177,1,2,3,2,r,g,g,g,	white,	1U
+1E05,	Egyptian Archer,		0.2, 0.7, 0.2, 4, Precision,     0.10,,,              ,      ,           ,  ,  52, 104, 104, 156,1,1,2,1,b,g,g,g,	white,	1U
+1E06,	Egyptian Fire Archer,	0,   0.7, 0.3, 3, Fire Arrows,   0.2, Hail of Arrows, 0.1, ,,,,                59, 118, 118, 177,1,1,2,1,b,g,g,g,	white,	1U
+1E07,	Centaur Charger,		1.6, 0,   0.8, 8, Specialised,   0.2, ,,  Battle Prowess, 2.5, Aggressive, 2, 163, 326, 408, 489,1,2,3,2,r,r,g,r,	white,	1U
+1E10,	Cleopatra VII,			0,   0,   2,   4, Harsh Mistress,1, Death Touch, 1, Calculating, 12, ,,       617,  --,  --,  --,1,1,2,1,r,r,g,r,	gold,	1U
+1E11,	Decidius Saxa,			2,   0,   2,   4, Command Position, 1, ,, Hustle, 8, Aggressive, 1,           474,  --,  --,  --,1,1,2,1,r,r,r,r,	gold,	1U
+1E12,	Amenhotep III,			1,   0,   1.5, 4, Lord of the Dead, 1, ,, Resentful, 8, Aggressive, 1,        278,  --,  --,  --,1,1,2,1,r,r,g,r,	gold,	1U
+1E13,	Darius of Pontus,		2,   0,   1.5, 4, Hellenic Pride, 1, ,, Battle Prowess, 4, Aggressive, 2,     143, 429,  --,  --,1,1,2,1,r,r,g,r,	gold,	1U
+1E14,	Achilles,				3,   0,   1.5, 8, Power at a Price, 1, ,, Battle Prowess, 8, Aggressive, 2,   453,1359,  --,1359,1,2,3,2,r,r,r,r,	gold,	2UP
+1E15,	Masika,					1,   0,   1,   4, Death Touch, 1, ,, Aggressive, 1, ,,                        205, 615, 615, 615,1,1,2,1,r,r,g,r,	gold,	1U
+1E16,	Hand of Isis,			0,   0,   0.33,4, Death Touch, 1, Impede, 0.34, ,, ,,                         100, 200, 300, 300,1,1,2,1,r,g,g,g,	green,	1U
+1E17,	Hand of Osiris,			0.5, 0,   0,   4, Necromancer, 1, ,, ,, ,,                                    129, 258, 323, 387,1,1,2,1,g,g,g,g,	green,	1U
+1E18,	Anubian Guard,			1.8, 0,   1,   5, Fear, 0.34, ,, Brutal, 2, Aggressive, 2,                    175,  --,  --,  --,1,1,2,1,r,r,r,r,	green,	2UL
+1E19,	Sta,					1.4, 0,   0.3, 6, Poison, 0.2, ,, Beast, 2, Aggressive, 2,                    111, 111, 111, 111,1,2,2,2,g,g,g,g,	green,	2UP (?)
+1E20,	Criosphinx,				1.6, 0,   0.3, 6, ,, ,, Beast, 2, Charger, 3,                                 115, 115, 115, 115,1,2,2,2,g,g,g,g,	white,	2UP (?)
+1E21,	Protosphinx,			2,   0,   1,   6, Cunning, 1, ,, Aggressive, 4, ,,                            258, 516, 516, 516,1,2,2,2,r,r,g,r,	white,	3U2FP
+1E22,	Cyclops,				2.2, 0,   0.8, 5, Carnivorous, 0.25, ,, Brutal, 2.5, Resentful, 2.5,          147, 221, 221, 221,1,1,2,1,r,g,g,g,	white,	2UL
+1E23,	Centaur Archer,			0.2, 1.4, 0.6, 7, Hail of Arrows, 0.2, ,, Battle Prowess, 2.5, ,,             224, 448, 560, 672,1,2,3,2,b,b,g,r,	white,	2UP
+1E24,	Lionrider of Bast,		2.25,0,   1,   7, ,, ,, Deadly, 4, Aggressive, 4,                             278, 558, 837, 837,1,1,2,1,r,r,g,r,	white,	3UAP
+1E25,	Necrotic Wararior,		2.5, 0,   0.5, 6, Trample, 0.25, ,, Brutal, 4, ,,                             202, 606,  --, 606,1,1,2,1,r,r,g,r,	white,	3UL
+1E26,	Beast Handler,			0.5, 0,   0.25,4, Concentration, 1, ,, Aggressive, 1, ,,                       88, 264, 264, 264,1,1,2,1,r,g,g,g,	red,	1U
+1H01,	Charging Han Infantry,	0.8, 0,   0.3, 4, Xenophobic, 0.1, ,, Hustle, 1.2, Good Fortune, 1.2,         150,  50, 150,  --,1,1,2,1,r,r,g,r,	white,	1U
+1H02,	Marching Han Infantry,	0.7, 0,   0.4, 4, Xenophobic, 0.1, ,, Good Fortune, 1.2, ,,                   132,  44, 132,  --,1,1,2,1,r,r,g,r,	white,	1U
+1H03,	Han Sharpshooter,		0,   0.8, 0.4, 4, Precision, 0.17, ,, Good Fortune, 1.2, ,,                   210,  70, 210,  --,1,1,2,1,b,b,g,b,	white,	1U
+1H04,	Han Artillerist,		0,   0.8, 0.3, 4, Hail of Arrows, 0.17, ,, Good Fortune, 1.2, ,,              219,  73, 219,  --,1,1,2,1,b,b,g,b,	white,	1U
+1H05,	Terracotta Spearman A,	0.6, 0,   0.4, 4, Spearmen, 0.1, ,, Fragile, 3, ,,                             78,  26,  78,  --,1,1,2,1,r,r,g,r,	white,	1U
+1H06,	Terracotta Spearman B,	0.6, 0,   0.4, 4, Spearmen, 0.1, ,, Fragile, 3, ,,                             78,  26,  78,  --,1,1,2,1,r,r,g,r,	white,	1U
+1H07,	Han Mounted Archer,		0,   1.2, 0.4, 7, Precision, 0.25, ,, Good Fortune, 2.5, ,,                   579, 193, 579,  --,1,2,3,2,b,r,g,b,	white,	2UP
+1H08,	Han Cavalry,			1.8, 0,   0.8, 7, Xenophobic, 0.2, ,, Good Fortune, 2.5, ,,                   417, 139, 417,  --,1,2,3,2,r,r,g,r,	white,	2UP
+1H09,	Shoyosei,				1.6, 0,   1,   6, Trample, 0.25, Heavy Armor, 0.25, Deadly, 2.5, Good Fortune, 2.5, --, 161, --, --, 1,2,3,2,r,r,g,r,white, 2UP
+1H10,	Zhongli Quan,			2,   0,   1.5, 4, Call the Iron Rain, 1, ,, Deadly, 12, Calculating, 8,        --, 407,  --,  --,1,1,2,1,r,r,r,r,	gold,	1U
+1H11,	Hundun Spirit,			2.5, 0,   1.2, 5, Spirit of Chaos, 1, Superior Reach, 1, ,, ,,                 --, 979,  --,  --,1,1,2,1,r,r,r,r,	gold,	??
+1H12,	Lord Muira,				3,   0,   1,   5, Fear, 1, Confusion, 1, Deadly, 8, Good Fortune, 3,           --, 389,  --,  --,1,1,2,1,r,r,g,r,	gold,	2UC
+1H12,	Harionago,				2,   0,   1.5, 4, Entangle, 1, ,, ,, ,,                                        --, 156,  --,  --,1,1,2,1,r,g,g,g,	gold,	1U
+1H14,	Nuwa,					0,   0,   1.5, 4, Artificer, 1, ,, Good Fortune, 3, ,,                        816, 272, 816, 816,1,1,2,1,r,r,g,r,	gold,	2UC
+1H15,	Chen Xiaotang,			3,   0,   0,   4, Opportunist, 1, ,, Hustle, 4, Good Fortune, 2,              507, 169, 507, 507,1,1,2,1,r,r,g,r,	gold,	1U
+1H16,	Yuezhi Healer,			0,   0,   0,   4, Healing, 1, ,, Good Fortune, 1, ,,                          418, 167, 418, 418,1,1,2,1,g,g,g,g,	green,	1U
+1H17,	Qilin,					1.2, 0,   1,   6, Bad Luck, 0.34, ,, Charger, 3, Good Fortune, 3,              --, 195,  --,  --,1,1,2,1,r,r,r,r,	green,	2UP
+1H18,	Jorogumo,				1.6, 0,   0.75,6, Poison, 0.34, Cunning, 0.25, Resentful, 4, ,,               774, 258, 774, 774,1,1,1,1,r,r,r,r,	green,	3UC
+1H19,	Goryo,					1,   0,   0.67,4, Fireburst, 1, ,, ,, ,,                                      432, 144, 432, 432,1,1,2,1,b,r,g,r,	green,	1U
+1H20,	Wu Tou Gui,				0,   0,   0,   2, Fear, 1, Entangle, 0.34, ,, ,,                              148,  78, 148, 148,2,2,2,2,g,g,g,g,	green,	1U
+1H21,	Foo Lion,				0.5, 0,   2,   4, ,, ,, Brutal, 4.5, ,,                                        --, 322,  --,  --,1,1,2,1,r,r,g,r,	white,	4UP
+1H22,	Han Crossbowman,		0,   0.9, 0,   4, ,, ,, Deadly, 1.2, Good Fortune, 1.2,                       207,  69, 207, 207,1,1,2,1,b,b,g,b,	white,	1U
+1H23,	Yeti,					2.5, 0,   0.5, 6, Impede, 0.34, ,, Cowardly, 6, Brutal, 4,                    825, 330, 825, 825,1,1,2,1,r,r,g,r,	white,	4UL
+1H24,	Kyudo Archer,			0,   0.8, 0.2, 4, Way of the Bow, 0.17, ,, Good Fortune, 1.2, ,,              249,  83, 249, 249,1,1,2,1,b,g,g,g,	white,	1U
+1H25,	Shoyosei Infantry,		0.8, 0,   0.5, 4, Elusive, 0.17, ,, Deadly, 1.2, Good Fortune, 1.2,            --,  71,  --,  --,1,1,2,1,r,r,g,r,	white,	1U
+1M01,	Xiongnu Mounted Archer,	0.2, 1.4, 0.4, 7, Precision, 0.25, Mobility, 0.2, ,, ,,                       204, 408, 204, 204,1,2,3,2,b,r,g,b,	white,	2UP
+1M02,	Xiongnu Skirmisher,		1.8, 0,   1,   7, Mobility, 0.2, ,, Charger, 2, ,,                            175, 350, 175, 175,1,1,3,1,r,r,g,r,	white,	2UP
+1M03,	Savros Kuznetzov,		1,	 0,   1,   3, Intuition, 1, Demolitionist, 1, ,, ,,                       166, 166, 166, 133,1,1,2,1,r,g,g,g,	gold,	1U
+1M04,	Modu Shanyu,			0,   0,   1,   3, Crone's Curse, 1, Death Touch, 1, ,, ,,                     356,  --, 356, 356,2,2,2,2,g,g,g,g,	gold,	3UC
+1M05,	Shield Golem,			0.5, 0,   1.2, 4, Wall of Shields, 0.4, ,, ,, ,,                              170, 170, 170, 136,1,1,2,1,r,r,g,r,	white,	2UP
+1M06,	Sword Golem,			2,   0,   0.33,5, Concentration, 0.34, ,, ,, ,,                               164, 164, 164, 131,1,1,2,1,r,r,g,r,	white,	2UP
+1M07,	The Enlightened One,	0,   0,   0,   4, Aura of Peace, 1, ,, ,, ,,                                  132, 132, 132, 132,1,1,1,1,r,r,r,r,	gold,	1U
+1M08,	Bogomir Litvinov,		4,   0,   1,   4, Concentration, 1, ,, Brutal, 8, ,,                          634, 634, 634, 507,1,1,2,1,r,r,g,r,	gold,	4UL
+1M09,	Slavic Shieldwall,		0,   0,   2,   5, Wall of Shields, 0.5, ,, ,, ,,                              494, 494, 494, 395,1,1,2,1,r,r,r,r,	red,	4UL
+1M10,	Great One,				2,   0,   1,   4, ,, ,, Brutal, 4, Resentful, 4,                              319, 319, 319, 255,1,1,2,1,r,g,g,g,	white,	4UL
+1M11,	Warlord Khudu,			3,   0,   1,   8, Stormrider, 1, ,, Charger, 8, ,,                            679,1086, 679, 543,1,1,2,1,r,r,r,r,	gold,	4U2FP
+1M12,	Gulug,					3,   0,   1,   5, Bully, 1, ,, ,, ,,                                          199, 398, 199, 199,1,1,2,1,r,r,g,r,	gold,	2UL
+1M13,	Kor Tiger Rider,		2,   0,   0.6, 7, Mobility, 0.25, ,, Charger, 4, ,,                           269, 538, 269, 269,1,1,2,1,r,r,g,r,	white,	3U2FP
+1M14,	Kor Sniper,				0,   0.5, 0.5, 3, Sniper, 1, Elusive, 0.34, ,, ,,                             125, 250, 125, 125,1,1,2,1,b,b,g,b,	red,	1UB
+1R01,	Front Line Legionary,	0.7, 0,   0.5, 4, Wall of Shields, 0.1, Thrown Weapon, 0.2, Disciplined, 1.2, ,, 86,156, 78,  --,1,1,2,1,b,r,g,r,	white,	1UE
+1R02,	Formation Legionary,	0.7, 0.5, 0,   4, Wall of Shields, 0.1, ,, Disciplined, 1.2, ,,                58, 106,  53,  --,1,1,2,1,r,r,g,r,	white,	1U
+1R03,	Legionary Shieldbearer,	0.5, 0,   0.6, 3, Wall of Shields, 0.2, ,, Disciplined, 1.2, ,,                56, 102,  51,  --,1,1,2,1,r,r,g,r,	white,	1U
+1R04,	Legionary Defender,		0.5, 0,   0.6, 3, Wall of Shields, 0.2, ,, Disciplined, 1.2, ,,                56, 102,  51,  --,1,1,2,1,r,r,g,r,	white,	1U
+1R05,	Legionary Archer,		0,   0.6, 0.3, 4, ,, ,, Disciplined, 1.2, ,,                                   65, 118,  59,  --,1,1,2,1,b,r,g,r,	white,	1U
+1R06,	Heavy Legionary,		1.4, 0,   1,   3, Heavy Armor, 0.2, ,, Disciplined, 2.5, Tough, 2.5,           --, 426, 142,  --,1,1,2,1,r,r,g,r,	white,	2UL
+1R07,	Roman Cavalry Charger,	1.6, 0,   0.8, 8, Trample, 0.2, ,, Disciplined, 2.5, ,,                       318, 318, 159,  --,1,2,3,2,r,r,g,r,	white,	2UP
+1R08,	Roman Cavalry Lancer,	1.4, 0,   1,   8, Xenophobic, 0.2, ,, Disciplined, 2.5, ,,                    330, 330, 165,  --,1,2,3,2,r,r,g,r,	white,	2UP
+1R09,	Ursan Cataphract,		3,	 0,   1,   5, Carnivorous, 0.34, ,, Disciplined, 5, Brutal, 5,             --, 984, 328,  --,1,2,2,2,r,g,g,g,	white,	4UP
+1R10,	Marcus Agrippa,			2,	 0,   1.5, 7, Leader of Men, 1, ,, Disciplined, 8, Calculating, 8,         --,1455, 485,  --,1,2,3,2,r,r,g,r,	gold,	2UP
+1R11,	Caius Lucius,			2,	 0,   1.5, 4, Specialised, 1, Specialist Leader, 1, Disciplined, 8, ,,     --, 506, 253,  --,1,1,2,1,r,r,g,r,	gold,	1U
+1R12,	Titus Petronius,		2,   0,   2,   3, Heavy Armor, 0.2, Armored Rush, 1, Disciplined, 5, Tough, 2.5, --,960,320,  --,1,1,2,1,r,g,g,g,	gold,	2UL
+1R13,	Vercingetorix,			2.5, 0,   0,   4, King of the Gauls, 1, Berserker, 1, Charger, 1.2, ,,        612, 408, 204, 612,1,1,1,1,r,r,r,r,	gold,	1U
+1R14,	Diviciacus,				0,   0,   1,   4, Grand Druid, 1, Nature Magic, 1, ,, ,,                      444, 296, 148, 444,1,1,2,1,r,g,g,g,	gold,	1U
+1R15,	Minos,					2,   0,   2,   4, Roman Patriot, 1, ,, Disciplined, 8, Battle Prowess, 4,      --,  --, 424,  --,1,1,2,1,r,r,g,r,	gold,	3UC
+1R16,	Priestess of Aesclepius,0,	 0,	  0.2, 3, Healing, 1, ,, ,, ,,                                         --, 474, 158,  --,1,1,2,1,g,g,g,g,	green,	1U
+1R17,	Priestess of Bellonna,	0.5, 0,   0.5, 4, Fervor, 1, ,, Disciplined, 2, Hustle, 8,					   --, 315, 105,  --,1,1,2,1,r,r,g,r,	green,	1U
+1R18,	Priestess of Vulcan,	1,	 0,   0,   4, Fireburst, 1, Fire Arrows, 0.34, ,, ,,       				   --, 444, 148,  --,1,1,2,1,r,r,g,r,	green,	1U
+1R19,	Infantry Centurion,		1.25,0,   0.5, 4, Specialised, 1, ,, Disciplined, 4, ,,						  101, 162,  81,  --,1,1,2,1,r,r,g,r,	red,	1U
+1R20,	Sagitarii Centurion,	0,	 1,	  0.5, 4, Precision, 1, ,, Disciplined, 4, ,,						  153, 244, 122,  --,1,1,2,1,b,r,g,r,	red,	1U
+1R21,	Druid,					0,   0,   0.5, 4, Tangle Vines, 1, Nature Magic, 0.6, ,, ,,  				  267, 178,  89, 267,1,1,2,1,r,g,g,g,	green,	1U
+1R22,	Minotaur Warrior,		1.67,0,   1,   5, ,, ,, Brutal, 2.5, Disciplined, 2.5, 						   --, 495, 165,  --,1,1,2,1,r,r,g,r,	white,	2UC
+1R23,	Gallic Berserker A,		1,	 0,	  0,   5, Berserker, 0.17, ,, Charger, 1.2, ,,						  183, 122,  61, 183,1,1,1,1,r,r,r,r,	white,	1U
+1R24,	Gallic Berserker B,		1,	 0,   0,   5, Berserker, 0.17, ,, Charger, 1.2, ,,						  183, 122,  61, 183,1,1,1,1,r,r,r,r,	white,	1U
+1R25,	Iberian Wolf,			1,	 0,	  0.38,8, Carnivorous, 0.34, Impede, 0.2, Beast, 4, ,,				  468, 312, 156, 468,1,1,2,1,r,r,g,r,	white,	2UP
+1R26,	Ferverian Legionary,	0.67,0,   0.5, 3, Heavy Armor, 0.2, Death Cloud, 1, Disciplined, 2, Tough, 2.5, --,783, 261,  --,1,1,2,1,r,g,g,g,	red,	2UL
+1H06A,	Terracotta Strikers,	0.8, 0,   0.2, 5, ,, ,, Hustle, 1.5, Fragile, 3,							  111,  37, 111,  --,1,1,2,1,r,r,g,r,	white,	1U
+1M03A,	Mechanist Savros,		0.5, 0,   1,   4, Articifer, 1, Intuition, 1, ,, ,,							  250, 200, 250, 200,1,1,2,1,r,g,g,g,	gold,	1U
+1E25A,	Necrotic Reborn,		3,   0,   0,   4, Fear, 1, ,, Regeneration, 2, ,,							  264, 792,  --, 792,1,1,2,1,r,g,g,g,	white,	2UL
