@@ -117,6 +117,8 @@ function createUl($fid) {
 
 <script>
 
+	var iconoffset = 30;
+
 	$(function() {
 
 		$('select[name="faction"]').change(function() {
@@ -124,9 +126,22 @@ function createUl($fid) {
 			$("header img").attr('src',fimg);
 		});
 
+		$('select[name="basetype"]').change(function() {
+			var fimg = "res/units/"+$('select[name="basetype"]').val()+".png";
+			//$("#drop_area").css('background-image', 'url("+fimg+")');
+			$("div#drop_area > img").attr('src',fimg);
+		});
+
 		$( "#figure_list>li" ).draggable({
 			revert: true, 
-			helper: "clone",
+			//helper: "clone",
+			cursorAt: { top: iconoffset, left: iconoffset },
+			helper: function( event ) {
+				var id = $(this).attr('id')+":visible";
+				var base = $("#"+id+" img").attr('src');
+				return $( "<img src='"+base+"' />" )
+			},
+			zIndex: 2700
 		});
 
 		$("#drop_area").droppable({
@@ -135,7 +150,14 @@ function createUl($fid) {
 			drop: function(ev, ui) {
 
 				if ($(ui.draggable).is("li")) {
-	
+
+					// Get the position to drop the cursor 
+					var x = ev.pageX-460-iconoffset;// - this.offsetLeft;
+					var y = ev.pageY-105-iconoffset;// - this.offsetTop;
+					
+					x = (Math.round(x / 26) * 26) + 1;
+					y = (Math.round(y / 26) * 26) + 1;
+
 					var id = $(ui.draggable).attr('id')+":visible";
 					
 					var red = $("#"+id+" .red").text();
@@ -150,9 +172,9 @@ function createUl($fid) {
 	
 					//console.log(base);
 	
-					$("<div class='base'><img src='"+base+"' /><span>"+base_id+"</span></div>").appendTo(this).draggable({
+					$("<div class='base' style='top: "+y+"; left: "+x+";'><img src='"+base+"' /><span>"+base_id+"</span></div>").appendTo(this).draggable({
 						//containment: "parent", // Constrains to the drop area
-						grid: [10, 10],
+						grid: [26, 26],
 						//revert: "invalid", // Reverts the draggable when you drop on an invalid area
 						start: function(event, ui) {
 							// flag to indicate that we want to remove element on drag stop
@@ -184,7 +206,23 @@ function createUl($fid) {
 
 body {font-family: tahoma;}
 
-div#drop_area {width: 800px; height: 600px; border: 1px solid black; float: left;}
+div#drop_area {	width: 469px; height: 183px; border: 1px solid black; float: left; 
+				background-repeat: no-repeat; background-position: 1px 0px;
+				/*background-position: 0px 0px;*/
+				position: absolute; left: 460px; top: 105px;
+				background-color: #000;
+				background-image: url('res/units/gridonly.png');
+			  }
+
+div#lowbar	{	background-image: url('res/units/roman_test.jpg');
+				position: absolute; top: 367px; left: 460px;
+				width: 520px; height: 20px;
+			}
+div#leftbar	{	background-image: url('res/units/roman_test.jpg');
+				position: absolute; top: 105px; left: 430px;
+				width: 30px; height: 262px;
+			}
+
 
 div#drop_area > div > span {position: relative; left: 10px; top: -12px; background: #ffffdd; font-size: 70%;}
 
@@ -242,8 +280,8 @@ ul#figure_list > li table td {width: 12.5%;}
 				background-position: 0px -30px;
 				padding-left: 40px; color: #ffffdd; font-weight: bold;
 		}
-.mercenary 	{	background-image: url('res/insignia/mercenary.png');	}
-.han 		{	background-image: url('res/insignia/han.png');	}
+.mercenary 	{	background-image: url('res/insignia/mercenary.png');}
+.han 		{	background-image: url('res/insignia/han.png');		}
 .roman 		{	background-image: url('res/insignia/roman.png');	}
 .egyptian 	{	background-image: url('res/insignia/egyptian.png');	}
 
@@ -251,11 +289,17 @@ ul#figure_list > li table td {width: 12.5%;}
 
 .name {width: 290px; display: inline; margin-left: 10px; font-weight: bold; font-size: 120%;}
 
-div#drop_area > div {/* background: yellow; border: 0px solid red; */
+div#drop_area div.grid {border: 0px; border-top: 1px; border-left: 1px; border-color: #9499db; border-style: solid; 
+						float: left; width: 25px; height: 25px; position: relative;}
+
+div#drop_area > img {width: 512px; position: absolute; top: 2px; left: -2px;}
+
+div#drop_area div.base {/* background: yellow; border: 0px solid red; */
 					/*width: 100px; height: 100px; */
 					position: absolute; float: left;}
 
-div#scroll_list {overflow: auto; height: 600px; width: 400px; float: left;}
+div#scroll_list {overflow: auto; height: 600px; width: 400px; float: left; }
+/*visibility: hidden; display: none;}*/
 
 </style>
 
@@ -265,14 +309,26 @@ div#scroll_list {overflow: auto; height: 600px; width: 400px; float: left;}
 
 <header>
 
-<img src="res/insignia/egyptian.png" />
-
-<select name='faction'>
-	<option value="egyptian">Egypt</option>
-	<option value="han">Han Dynasty</option>
-	<option value="mercenary">Mercenary</option>
-	<option value="roman">Rome</option>
-</select>
+<table>
+	<tr>
+		<td><img src="res/insignia/egyptian.png" /></td>
+		<td>
+			<select name='faction'>
+				<option value="egyptian">Egypt</option>
+				<option value="han">Han Dynasty</option>
+				<option value="mercenary">Mercenary</option>
+				<option value="roman">Rome</option>
+			</select>
+			<br />
+			<select name='basetype'>
+				<option value="sortie_portrait">Sortie (Portrait)</option>
+				<option value="sortie_landscape">Sortie (Landscape)</option>
+				<option value="cavalry_portrait">Cavalry (Portrait)</option>
+				<option value="cavaltry_landscape">Cavalry (Landscape)</option>
+			</select>
+		</td>
+	</tr>
+</table>
 
 </header>
 
@@ -280,11 +336,26 @@ div#scroll_list {overflow: auto; height: 600px; width: 400px; float: left;}
 <?php echo createUl($fid) ?>
 </div>
 
-<div id="drop_area">
+<div id="leftbar">&nbsp;</div>
 
+<div id="lowbar">&nbsp;</div>
+
+<div id="drop_area" >
+<!--<img src="res/units/roman_test.jpg" />-->
+<?php
+
+$str = '';
+	for ($y = 0; $y < 7; $y++) {
+		for ($x = 0; $x < 18; $x++) {
+			$str .= "<div class='grid'>&nbsp;</div>";
+		}
+//		$str .= "<br />";
+	}
+
+echo $str;
+
+?>
 </div>
-
-
 
 </body>
 </html>
