@@ -46,10 +46,10 @@ function createLi($figure) {
 		$str .= "<div class='$faction base_id'>".$figure[0]."</div>";
 		$str .= "<div class='name'>		".$figure[1]."	</div>";
 		$str .= "<br /><table><tr>";
-		$str .= "<td class='red'>&nbsp;</td><td>	".$figure[2]."	</td>";
-		$str .= "<td class='blue'>&nbsp;</td><td>	".$figure[3]."	</td>";
-		$str .= "<td class='white'>&nbsp;</td><td>	".$figure[4]."	</td>";
-		$str .= "<td class='move'>&nbsp;</td><td>	".$figure[5]."	</td>";
+		$str .= "<td class='red'>&nbsp;</td><td id='red'>		".$figure[2]."	</td>";
+		$str .= "<td class='blue'>&nbsp;</td><td id='blue'>		".$figure[3]."	</td>";
+		$str .= "<td class='white'>&nbsp;</td><td id='white'>	".$figure[4]."	</td>";
+		$str .= "<td class='move'>&nbsp;</td><td id='move'>		".$figure[5]."	</td>";
 		$str .= "</tr><tr>";
 
 		if ($figure[6] != "") {
@@ -118,7 +118,36 @@ function createUl($fid) {
 <script>
 
 	var iconoffset = 30;
+	
+	// Dice and movement
+	var atk		= 0;
+	var atk_idx = 0;
+	var range	= 0;
+	var def		= 0;
+	var move	= 0;
 
+	// Local abilities
+	var la1 = 0;
+	var la2 = 0;
+	
+	// Global abilities
+	var ga1 = 0;
+	var ga2 = 0;
+
+	function changeDice(change,prefix) {
+		if (change > 0) {
+			for (var x=0; x<change; x++) {
+				$('<div id="'+prefix+atk_idx+'">Newdice</div>').appendTo("#dice_pool");
+				atk_idx++;
+			}
+		} else {
+			for (var x=change; x>0; x--) {
+				$("#dice_pool").remove("#"+prefix+atk_idx);
+				atk_idx--;
+			}			
+		}
+	}
+	
 	$(function() {
 
 		$('select[name="faction"]').change(function() {
@@ -155,22 +184,44 @@ function createUl($fid) {
 					var x = ev.pageX-460-iconoffset;// - this.offsetLeft;
 					var y = ev.pageY-105-iconoffset;// - this.offsetTop;
 					
+					// Force the dropped cursor into the grid
 					x = (Math.round(x / 26) * 26) + 1;
 					y = (Math.round(y / 26) * 26) + 1;
 
+					// Get the ID of the original <li> ...
 					var id = $(ui.draggable).attr('id')+":visible";
 					
-					var red = $("#"+id+" .red").text();
-					var white = $("#"+id+" .white").text();
-					var blue = $("#"+id+" .blue").text();
-					var move = $("#"+id+" .move").text();
-					
+					// ... so we can extract the text areas.
+					var red		= parseFloat($("#"+id+" #red").text());
+					var white	= parseFloat($("#"+id+" #white").text());
+					var blue	= parseFloat($("#"+id+" #blue").text());
+					var arrow	= parseFloat($("#"+id+" #move").text());
+
 					var base_id = $("#"+id+" .base_id").text();
-					//var name = $("#"+id+" .name").text();
-					
 					var base = $("#"+id+" img").attr('src');
-	
-					//console.log(base);
+
+					//var name = $("#"+id+" .name").text();					
+
+					// Check to see what state we're going to be in
+					
+//					console.log(red);
+//					console.log(Math.floor(red));
+					
+					// Change the number of atk dice
+					var change = Math.floor(atk + red) - Math.floor(atk);
+					if (change != 0)
+						changeDice(change,'atk');
+					
+					console.log(change);
+					
+					// Keep a running total of the numbers
+					atk		= atk	+ red;
+					range	= range	+ blue;
+					def		= def	+ white;
+					move	= move	+ arrow;
+
+					console.log(atk);					
+//					console.log(base);
 	
 					$("<div class='base' style='top: "+y+"; left: "+x+";'><img src='"+base+"' /><span>"+base_id+"</span></div>").appendTo(this).draggable({
 						//containment: "parent", // Constrains to the drop area
@@ -185,7 +236,17 @@ function createUl($fid) {
 							// which means it wasn't unset on drop into parent
 							// so dragging stopped outside of parent
 							if (ui.helper.removeMe) {
-							  ui.helper.remove();
+							
+								// Get the ID of the original <li> ...
+								var id = $(ui.draggable).attr('id')+":visible";
+								
+								// ... so we can extract the text areas.
+								var red		= parseFloat($("#"+id+" #red").text());
+								atk = atk - red;
+								
+								console.log(red);
+
+								ui.helper.remove();
 							}
 						}
 					});
@@ -206,23 +267,21 @@ function createUl($fid) {
 
 body {font-family: tahoma;}
 
-div#drop_area {	width: 469px; height: 183px; border: 1px solid black; float: left; 
-				background-repeat: no-repeat; background-position: 1px 0px;
+div#drop_area {	width: 469px; height: 183px;
+				border: 0px;
+				border-right: 1px;
+				border-bottom: 1px;
+				border-style: solid;
+				border-color: #9499db;
+				float: left; 
+				background-repeat: no-repeat; background-position: -1px -1px;
 				/*background-position: 0px 0px;*/
 				position: absolute; left: 460px; top: 105px;
-				background-color: #000;
-				background-image: url('res/units/gridonly.png');
+/*				background-color: #000;
+				background-image: url('res/units/gridonly.png');	*/
 			  }
 
-div#lowbar	{	background-image: url('res/units/roman_test.jpg');
-				position: absolute; top: 367px; left: 460px;
-				width: 520px; height: 20px;
-			}
-div#leftbar	{	background-image: url('res/units/roman_test.jpg');
-				position: absolute; top: 105px; left: 430px;
-				width: 30px; height: 262px;
-			}
-
+#fullbg	{	position: absolute; top: 80px; left: 431px; width: 512px;	}
 
 div#drop_area > div > span {position: relative; left: 10px; top: -12px; background: #ffffdd; font-size: 70%;}
 
@@ -301,6 +360,7 @@ div#drop_area div.base {/* background: yellow; border: 0px solid red; */
 div#scroll_list {overflow: auto; height: 600px; width: 400px; float: left; }
 /*visibility: hidden; display: none;}*/
 
+div#dice_pool {position: absolute; top: 400px; left: 460px; width: 200px; height: 200px; border: 1px solid black;}
 </style>
 
 </head>
@@ -336,12 +396,12 @@ div#scroll_list {overflow: auto; height: 600px; width: 400px; float: left; }
 <?php echo createUl($fid) ?>
 </div>
 
-<div id="leftbar">&nbsp;</div>
+<!--<div id="leftbar">&nbsp;</div>
+<div id="fullbg">&nbsp;</div>-->
 
-<div id="lowbar">&nbsp;</div>
-
+<img id="fullbg" src="res/units/roman_test.jpg" />
 <div id="drop_area" >
-<!--<img src="res/units/roman_test.jpg" />-->
+
 <?php
 
 $str = '';
@@ -356,6 +416,8 @@ echo $str;
 
 ?>
 </div>
+
+<div id="dice_pool"></div>
 
 </body>
 </html>
