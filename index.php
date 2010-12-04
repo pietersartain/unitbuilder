@@ -4,6 +4,13 @@
 
 $fid = fopen("figures.txt",'r');
 $headings = fgetcsv($fid);
+$figures = array();
+while(($figure = fgetcsv($fid)) !== FALSE) {
+	//$figures[$figure[0]] = $figure;
+	$figures[] = $figure;
+}
+fclose($fid);
+
 //print_r($figures);
 
 //unset($figures[0]);
@@ -19,8 +26,9 @@ function createAbility($ability,$cost,$type) {
 					>&nbsp;</td><td>".$cost."</td>";
 }
 
-function createLi($figure) {
-	$str = "<li id='".$figure[0]."'>";
+function createLi($figure,$idx) {
+	//$str = "<li id='".$figure[0]."'>";
+	$str = "<li id='".$idx."'>";
 	
 	$base = strtolower($figure[26]).$figure[27];
 	
@@ -46,10 +54,10 @@ function createLi($figure) {
 		$str .= "<div class='$faction base_id'>".$figure[0]."</div>";
 		$str .= "<div class='name'>		".$figure[1]."	</div>";
 		$str .= "<br /><table><tr>";
-		$str .= "<td class='red'>&nbsp;</td><td id='red'>		".$figure[2]."	</td>";
-		$str .= "<td class='blue'>&nbsp;</td><td id='blue'>		".$figure[3]."	</td>";
-		$str .= "<td class='white'>&nbsp;</td><td id='white'>	".$figure[4]."	</td>";
-		$str .= "<td class='move'>&nbsp;</td><td id='move'>		".$figure[5]."	</td>";
+		$str .= "<td class='red dice'>&nbsp;</td><td id='red'>		".$figure[2]."	</td>";
+		$str .= "<td class='blue dice'>&nbsp;</td><td id='blue'>		".$figure[3]."	</td>";
+		$str .= "<td class='white dice'>&nbsp;</td><td id='white'>	".$figure[4]."	</td>";
+		$str .= "<td class='move dice'>&nbsp;</td><td id='move'>		".$figure[5]."	</td>";
 		$str .= "</tr><tr>";
 
 		if ($figure[6] != "") {
@@ -88,15 +96,11 @@ function createLi($figure) {
 	return $str;
 }
 
-function createUl($fid) {
+function createUl($figures) {
 	$str = "<ul id='figure_list'>";
-
-	/*foreach ($figures as $figure) {
-		$str .= createLi($figure);
-	}*/
 	
-	while(($figure = fgetcsv($fid)) !== FALSE) {
-		$str .= createLi($figure);
+	foreach($figures as $idx => $figure) {
+		$str .= createLi($figure,$idx);
 	}
 
 	$str .= "</ul>";
@@ -113,255 +117,28 @@ function createUl($fid) {
 <link type="text/css" href="css/themename/jquery-ui-1.8.6.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
-<!--<script type="text/javascript" src="js/jquery.draggable.js"></script>-->
 
-<script>
+<script language="javascript">
 
-	var iconoffset = 30;
+	var figures = new Array(<?php echo count($figures) ?>);
 	
-	// Dice and movement
-	var atk		= 0;
-	var atk_idx = 0;
-	var range	= 0;
-	var def		= 0;
-	var move	= 0;
+	//figures[0] = new Array(5);
+	//figures[0][0] = 'Wibble';
 
-	// Local abilities
-	var la1 = 0;
-	var la2 = 0;
-	
-	// Global abilities
-	var ga1 = 0;
-	var ga2 = 0;
-
-	function changeDice(change,prefix) {
-		if (change > 0) {
-			for (var x=0; x<change; x++) {
-				$('<div id="'+prefix+atk_idx+'">Newdice</div>').appendTo("#dice_pool");
-				atk_idx++;
+	<?php
+		foreach($figures as $idx => $figure) {
+			echo "figures[$idx] = new Array(".count($figure).");";
+			foreach($figure as $key => $value) {
+				echo "figures[$idx][$key] = \"$value\";";
 			}
-		} else {
-			for (var x=change; x>0; x--) {
-				$("#dice_pool").remove("#"+prefix+atk_idx);
-				atk_idx--;
-			}			
 		}
-	}
-	
-	$(function() {
-
-		$('select[name="faction"]').change(function() {
-			var fimg = "res/insignia/"+$('select[name="faction"]').val()+".png";
-			$("header img").attr('src',fimg);
-		});
-
-		$('select[name="basetype"]').change(function() {
-			var fimg = "res/units/"+$('select[name="basetype"]').val()+".png";
-			//$("#drop_area").css('background-image', 'url("+fimg+")');
-			$("div#drop_area > img").attr('src',fimg);
-		});
-
-		$( "#figure_list>li" ).draggable({
-			revert: true, 
-			//helper: "clone",
-			cursorAt: { top: iconoffset, left: iconoffset },
-			helper: function( event ) {
-				var id = $(this).attr('id')+":visible";
-				var base = $("#"+id+" img").attr('src');
-				return $( "<img src='"+base+"' />" )
-			},
-			zIndex: 2700
-		});
-
-		$("#drop_area").droppable({
-			accept: "li, div",
-
-			drop: function(ev, ui) {
-
-				if ($(ui.draggable).is("li")) {
-
-					// Get the position to drop the cursor 
-					var x = ev.pageX-460-iconoffset;// - this.offsetLeft;
-					var y = ev.pageY-105-iconoffset;// - this.offsetTop;
-					
-					// Force the dropped cursor into the grid
-					x = (Math.round(x / 26) * 26) + 1;
-					y = (Math.round(y / 26) * 26) + 1;
-
-					// Get the ID of the original <li> ...
-					var id = $(ui.draggable).attr('id')+":visible";
-					
-					// ... so we can extract the text areas.
-					var red		= parseFloat($("#"+id+" #red").text());
-					var white	= parseFloat($("#"+id+" #white").text());
-					var blue	= parseFloat($("#"+id+" #blue").text());
-					var arrow	= parseFloat($("#"+id+" #move").text());
-
-					var base_id = $("#"+id+" .base_id").text();
-					var base = $("#"+id+" img").attr('src');
-
-					//var name = $("#"+id+" .name").text();					
-
-					// Check to see what state we're going to be in
-					
-//					console.log(red);
-//					console.log(Math.floor(red));
-					
-					// Change the number of atk dice
-					var change = Math.floor(atk + red) - Math.floor(atk);
-					if (change != 0)
-						changeDice(change,'atk');
-					
-					console.log(change);
-					
-					// Keep a running total of the numbers
-					atk		= atk	+ red;
-					range	= range	+ blue;
-					def		= def	+ white;
-					move	= move	+ arrow;
-
-					console.log(atk);					
-//					console.log(base);
-	
-					$("<div class='base' style='top: "+y+"; left: "+x+";'><img src='"+base+"' /><span>"+base_id+"</span></div>").appendTo(this).draggable({
-						//containment: "parent", // Constrains to the drop area
-						grid: [26, 26],
-						//revert: "invalid", // Reverts the draggable when you drop on an invalid area
-						start: function(event, ui) {
-							// flag to indicate that we want to remove element on drag stop
-							ui.helper.removeMe = true;
-						},
-						stop: function(event, ui) {
-							// remove draggable if flag is still true
-							// which means it wasn't unset on drop into parent
-							// so dragging stopped outside of parent
-							if (ui.helper.removeMe) {
-							
-								// Get the ID of the original <li> ...
-								var id = $(ui.draggable).attr('id')+":visible";
-								
-								// ... so we can extract the text areas.
-								var red		= parseFloat($("#"+id+" #red").text());
-								atk = atk - red;
-								
-								console.log(red);
-
-								ui.helper.remove();
-							}
-						}
-					});
-				} else {
-				
-					ui.helper.removeMe = false;
-				
-				}
-				
-			}
-
-		});
-	});
+	?>
 
 </script>
 
-<style>
+<script type="text/javascript" src="main.js"></script>
 
-body {font-family: tahoma;}
-
-div#drop_area {	width: 469px; height: 183px;
-				border: 0px;
-				border-right: 1px;
-				border-bottom: 1px;
-				border-style: solid;
-				border-color: #9499db;
-				float: left; 
-				background-repeat: no-repeat; background-position: -1px -1px;
-				/*background-position: 0px 0px;*/
-				position: absolute; left: 460px; top: 105px;
-/*				background-color: #000;
-				background-image: url('res/units/gridonly.png');	*/
-			  }
-
-#fullbg	{	position: absolute; top: 80px; left: 431px; width: 512px;	}
-
-div#drop_area > div > span {position: relative; left: 10px; top: -12px; background: #ffffdd; font-size: 70%;}
-
-ul#figure_list {padding: 0px; margin: 0px;}
-ul#figure_list li {	border: 1px solid black; width: 380px; background: silver; 
-					list-style: none; padding: 0px; margin: 0px;
-				}
-
-ul#figure_list li:after, 
-header:after 
-{
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
-
-ul#figure_list > li > p {margin: 0px; padding: 0px; display: block;}
-
-ul#figure_list > li table {width: 100%;}
-ul#figure_list > li table td {width: 12.5%;}
-
-.red, .white, .blue, .move {
-							/*
-							display: inline; 
-							width: 120px; height: 25px;
-							padding-left: 40px;
-							
-							width: 40px;
-							*/
-							background-repeat:no-repeat;
-							background-position: 0px -10px;
-							opacity: 0.1;
-							}
-
-.red 	{	background-image: url('res/attributes/red.png');	}
-.white 	{	background-image: url('res/attributes/white.png');	}
-.blue 	{	background-image: url('res/attributes/blue.png');	}
-.move 	{	background-image: url('res/attributes/move.png');	}
-
-.ability{		/*
-				display: inline; width: 110px; height: 20px;
-				padding-left: 50px; color: #000;
-				
-				width: 25%;
-				*/
-				background-repeat:no-repeat;
-				background-position: 0px -15px;
-				opacity: 0.2;
-		}
-
-.base_id{	display: inline; width: 110px; height: 20px;
-				background-repeat:no-repeat;
-				background-position: 0px -30px;
-				padding-left: 40px; color: #ffffdd; font-weight: bold;
-		}
-.mercenary 	{	background-image: url('res/insignia/mercenary.png');}
-.han 		{	background-image: url('res/insignia/han.png');		}
-.roman 		{	background-image: url('res/insignia/roman.png');	}
-.egyptian 	{	background-image: url('res/insignia/egyptian.png');	}
-
-.base {width: 40px; height: 60px;}
-
-.name {width: 290px; display: inline; margin-left: 10px; font-weight: bold; font-size: 120%;}
-
-div#drop_area div.grid {border: 0px; border-top: 1px; border-left: 1px; border-color: #9499db; border-style: solid; 
-						float: left; width: 25px; height: 25px; position: relative;}
-
-div#drop_area > img {width: 512px; position: absolute; top: 2px; left: -2px;}
-
-div#drop_area div.base {/* background: yellow; border: 0px solid red; */
-					/*width: 100px; height: 100px; */
-					position: absolute; float: left;}
-
-div#scroll_list {overflow: auto; height: 600px; width: 400px; float: left; }
-/*visibility: hidden; display: none;}*/
-
-div#dice_pool {position: absolute; top: 400px; left: 460px; width: 200px; height: 200px; border: 1px solid black;}
-</style>
+<link type="text/css" href="main.css" rel="Stylesheet" />	
 
 </head>
 
@@ -393,7 +170,7 @@ div#dice_pool {position: absolute; top: 400px; left: 460px; width: 200px; height
 </header>
 
 <div id="scroll_list">
-<?php echo createUl($fid) ?>
+<?php echo createUl($figures) ?>
 </div>
 
 <!--<div id="leftbar">&nbsp;</div>
@@ -417,7 +194,19 @@ echo $str;
 ?>
 </div>
 
-<div id="dice_pool"></div>
+<div id="dice_pool">
+
+	<table>
+		<tr>
+			<td class='red dice'>&nbsp;</td><td id="red_count">0/0/0.00</td>
+			<td class='white dice'>&nbsp;</td><td id="white_count">0/0/0.00</td>
+		</tr>
+		<tr>
+			<td class='blue dice'>&nbsp;</td><td id="blue_count">0/0/0.00</td>
+			<td class='move dice'>&nbsp;</td><td id="move_count">0/0/0.00</td>
+		</tr>
+	</table>
+</div>
 
 </body>
 </html>

@@ -1,0 +1,81 @@
+body {font-family: tahoma;}
+
+div#drop_area {	width: 469px; height: 183px;
+				border: 0px;
+				border-right: 1px;
+				border-bottom: 1px;
+				border-style: solid;
+				border-color: #9499db;
+				float: left; 
+				background-repeat: no-repeat; background-position: -1px -1px;
+				position: absolute; left: 460px; top: 105px;
+			  }
+
+div#drop_area div.grid {border: 0px; border-top: 1px; border-left: 1px; border-color: #9499db; border-style: solid; 
+						float: left; width: 25px; height: 25px; position: relative;}
+
+div#drop_area > img 	{width: 512px; position: absolute; top: 2px; left: -2px;}
+
+div#drop_area div.base	{position: absolute; float: left;}
+
+div#drop_area > div > span {position: relative; left: 10px; top: -12px; background: #ffffdd; font-size: 70%;}
+
+div#dice_pool			{ position: absolute; top: 400px; left: 460px; 
+						  border: 1px solid black; background: silver;
+						}
+
+#dice_pool td 			{ width: 80px; border: 1px solid grey; }
+#dice_pool td.dice		{ width: 40px; border: 0px;}
+
+#fullbg					{position: absolute; top: 80px; left: 431px; width: 512px;}
+
+
+div#scroll_list			{overflow: auto; height: 400px; width: 400px; float: left;}
+
+ul#figure_list			{ padding: 0px; margin: 0px;}
+ul#figure_list li		{ border: 1px solid black; width: 380px; background: silver; 
+						  list-style: none; padding: 0px; margin: 0px;
+					    }
+
+ul#figure_list li:after, 
+header:after 
+			{	content: ".";
+				display: block;
+				height: 0;
+				clear: both;
+				visibility: hidden;
+			}
+
+ul#figure_list > li > p			{margin: 0px; padding: 0px; display: block;}
+ul#figure_list > li table 		{width: 100%;}
+ul#figure_list > li table td	{width: 12.5%;}
+
+.dice { background-repeat:no-repeat;
+		background-position: 0px -10px;
+		opacity: 0.2;
+	  }
+
+.red 	{	background-image: url('res/attributes/red.png');	}
+.white 	{	background-image: url('res/attributes/white.png');	}
+.blue 	{	background-image: url('res/attributes/blue.png');	}
+.move 	{	background-image: url('res/attributes/move.png');	}
+
+.ability{ background-repeat:no-repeat;
+		  background-position: 0px -15px;
+		  opacity: 0.2;
+		}
+
+.base_id	{	display: inline; width: 110px; height: 20px;
+				background-repeat:no-repeat;
+				background-position: 0px -30px;
+				padding-left: 40px; color: #ffffdd; font-weight: bold;
+			}
+
+.mercenary 	{	background-image: url('res/insignia/mercenary.png');}
+.han 		{	background-image: url('res/insignia/han.png');		}
+.roman 		{	background-image: url('res/insignia/roman.png');	}
+.egyptian 	{	background-image: url('res/insignia/egyptian.png');	}
+
+.base {width: 40px; height: 60px;}
+
+.name {width: 290px; display: inline; margin-left: 10px; font-weight: bold; font-size: 120%;}
