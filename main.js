@@ -43,7 +43,7 @@ var ga = new Array(2);
 ga[0] = new Array(3);
 ga[1] = new Array(3);
 
-var figure_idx  = [];
+//var figure_idx  = [];
 var figure_list = [];
 
 /*
@@ -56,42 +56,40 @@ function newID() {
 	}).toUpperCase();
 }
 
-/*
- * Update the number of dice available to use
- */
-function changeDice(change,idx) {
-//	console.log("[b]atk_idx: "+atk_idx);
-
-	if (change > 0) {
-		for (var x=0; x<change; x++) {
-//			$('<div id="'+prefix+atk_idx+'">Newdice</div>').appendTo("#dice_pool");
-			atk_idx++;
-		}
-	} else {
-		for (var x=change; x<0; x++) {
-			atk_idx--;
-//			$("#"+prefix+atk_idx).remove();	
-		}
-	}
-	
-	$("#dice_pool td#"+idx[4]+"_count").text(""+idx[2]);
-	
-//	console.log("[a]atk_idx: "+atk_idx);
-}
-
-function add_figure(id) {
+function add_figure(id,uuid) {
 	var cur_idx = figure_list.length;
-	figure_idx[cur_idx] = id;
-	figure_list[cur_idx] = figures[id];	
+	//figure_idx[cur_idx] = id;
+	figure_list[cur_idx] = [];
+	figure_list[cur_idx][0] = id;			// id array value
+	figure_list[cur_idx][1] = figures[id];	// complete figure reference
+	
+	figure_list[cur_idx][2] = 0; // red
+	figure_list[cur_idx][3] = 0; // white
+	figure_list[cur_idx][4] = 0; // blue
+	figure_list[cur_idx][5] = 0; // move
+	
+	figure_list[cur_idx][6] = uuid;
 	
 	change_dice(id,'add');
 	change_move(id,'add');
 }
 
-function rm_figure(id) {
-	var idx = figure_idx.lastIndexOf(id);
-	figure_idx.splice(idx,1);
-	figure_list.splice(idx,1);
+function rm_figure(id,uuid) {
+//	var idx = figure_idx.lastIndexOf(id);
+//	figure_idx.splice(idx,1);
+
+	// First clear out all of the dice, and fix those numbers
+	
+
+	// Now remove the references in the figure_list
+	for (var x = (figure_list.length-1); x >= 0; x--) {
+		if (figure_list[x][0] == id) {
+			figure_list.splice(x,1);
+			break;
+		}
+	}
+
+//	figure_list.splice(idx,1);
 
 	change_dice(id,'rm');
 	change_move(id,'rm');
@@ -102,7 +100,7 @@ function change_move(id,addrm) {
 	var av = 0;
 	
 	for (var x = 0; x < figure_list.length; x++) {
-		av += parseFloat(figure_list[x][5]);
+		av += parseFloat(figure_list[x][1][5]);
 	}
 	
 	if (figure_list.length > 0) {
@@ -164,13 +162,75 @@ function change_dice(id,addrm) {
 		// The remaining unplaced dice
 		dice[x][0] = Math.floor(dice[x][0] + int_diff);
 	
-		$("#dice_pool td#"+dice[x][4]+"_count").text(
-				 ""+dice[x][0]+
-				"/"+dice[x][1]+
-				"/"+dice[x][2].toFixed(2)
-		);
 		
+//		figure_list[id][x] += int_diff;
+	
+		update_dicepool(x);
 	}
+}
+
+function get_idx_from_uuid(uuid) {
+	for (var x = 0; x < figure_list.length; x++) {
+		if (uuid == figure_list[x][6])
+			return x;
+	}
+}
+
+function update_dicepool(x) {
+	$("#dice_pool td#"+dice[x][4]+"_count").text(
+			 ""+dice[x][0]+
+			"/"+dice[x][1]+
+			"/"+dice[x][2].toFixed(2)
+	);
+	
+	if (dice[x][0] > 0) {
+		$( "#dice_pool td."+dice[x][4] ).draggable("enable");
+	} else {
+		$( "#dice_pool td."+dice[x][4] ).draggable("disable");
+	}
+}
+
+function add_dice(idx, type) {
+	var id_ar = idx.split("_");
+	var id = id_ar[1];
+	var uuid = id_ar[2];
+
+	fid = get_idx_from_uuid(uuid);
+
+	figure_list[fid][get_type(type)] += 1;
+	
+	dice[get_type(type)-2][0] -= 1;
+	update_dicepool(get_type(type)-2);
+
+	var num_of_dice = 0;
+	for (var x = 2; x < 6; x++) {
+		num_of_dice += parseInt(figure_list[fid][x]);
+	}
+
+	// Width of the div
+	var w = num_of_dice * 15;
+
+	// Offset of the div to center it
+	var o = (((w - 40) / 2) * -1) + 3;
+
+	$("#dice_"+id+"_"+uuid).width(w);
+	$("#dice_"+id+"_"+uuid).css('left',o);
+}
+
+function rm_dice(id, type) {
+	figure_list[id][get_type(type)] -= 1;
+}
+
+function get_type(type) {
+
+	switch(type) {
+		case "red":		type = 2; break;
+		case "white":	type = 3; break;
+		case "blue":	type = 4; break;
+		case "move":	type = 5; break;
+	}
+	
+	return type;
 }
 
 /*
@@ -204,6 +264,16 @@ $(function() {
 	});
 
 	/*
+	 * Make the dice draggable by default
+	 */
+	$( "#dice_pool td.dice" ).draggable({
+		revert: true,
+		helper: "clone",
+		zIndex: 2700
+	});
+
+
+	/*
 	 * Make the <li> tag in #figure_list draggable with the following properties
 	 */
 	$( "#figure_list>li" ).draggable({
@@ -218,14 +288,7 @@ $(function() {
 		zIndex: 2700
 	});
 
-	/*
-	 * Make the dice draggable
-	 */
-	$( "#dice_pool td.dice" ).draggable({
-		revert: true,
-		helper: "clone",
-		zIndex: 2700
-	});
+
 
 	/*
 	 * Assign #drop_area to be a droppable area. Also creates more draggables on drop.
@@ -253,11 +316,17 @@ $(function() {
 				
 				var base_id 	= figures[id][0];
 
-				add_figure(id);
+				var uuid = newID()
+				
+				add_figure(id,uuid);
 
-				$("<div id='"+id+"' class='base' style='top: "+yloc+"; left: "+xloc+";'> \
+				$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"; left: "+xloc+";'> \
 						<img src='"+base+"' /> \
-						<span>"+base_id+"</span></div>")
+						<span>"+base_id+"</span> \
+						<div id='dice_"+id+"_"+uuid+"' class='smalldice'></div> \
+						<div id='la_"+id+"_"+uuid+"' class='smallla'></div> \
+						</div>"
+				 )
 					
 					.appendTo(this)
 						
@@ -274,11 +343,9 @@ $(function() {
 							if (ui.helper.removeMe) {
 							
 								// Get the ID of the draggable helper thing ...
-								var id = $(ui.helper).attr('id');
-	
-								//change_dice(id,'rm');
-								
-								rm_figure(id);
+								var id = $(ui.helper).attr('id').split("_");
+
+								rm_figure(id[1],id[2]);
 								
 								ui.helper.remove();
 							}
@@ -288,7 +355,14 @@ $(function() {
 					.droppable({
 						accept: "td.dice",
 						drop: function(ev, ui) {
-							add_dice();
+							var id = $(this).attr('id'); 
+							var id_ar = id.split("_");
+							var class_list = $(ui.helper).attr("class").split(" ");
+							
+							add_dice(id, class_list[0]);
+							
+							$("<img src='res/attributes/"+class_list[0]+".png' />").appendTo($("#dice_"+id_ar[1]+"_"+id_ar[2]));
+
 						}
 					}) // droppable
 				

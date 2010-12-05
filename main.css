@@ -16,10 +16,6 @@ div#drop_area div.grid {border: 0px; border-top: 1px; border-left: 1px; border-c
 
 div#drop_area > img 	{width: 512px; position: absolute; top: 2px; left: -2px;}
 
-div#drop_area div.base	{position: absolute; float: left;}
-
-div#drop_area > div > span {position: relative; left: 10px; top: -12px; background: #ffffdd; font-size: 70%;}
-
 div#dice_pool			{ position: absolute; top: 400px; left: 460px; 
 						  border: 1px solid black; background: silver;
 						}
@@ -76,6 +72,10 @@ ul#figure_list > li table td	{width: 12.5%;}
 .roman 		{	background-image: url('res/insignia/roman.png');	}
 .egyptian 	{	background-image: url('res/insignia/egyptian.png');	}
 
-.base {width: 40px; height: 60px;}
+.base {width: 40px; height: 60px; position: absolute; float: left;}
+.base > span {position: relative; left: 10px; top: -12px; background: #ffffdd; font-size: 70%;}
+.base > div.smalldice {position: absolute; left: 15px; top: -10px; width: 10px}
+.base > div.smalldice > img {width: 20px; margin-right: -5px; padding: 0px;}
+.base > div.smallla > img {width: 35px;}
 
 .name {width: 290px; display: inline; margin-left: 10px; font-weight: bold; font-size: 120%;}
