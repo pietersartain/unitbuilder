@@ -4,57 +4,11 @@
  */
 var iconoffset = 30;
 
-/*
- * Dice and movement:
- *
- * 4 x 3 array
- *	rows: red, white, blue, move
- *  cols: remaining unplaced, sum (int), sum (natural), name, id
- */
-var dice = new Array(4);
-for (var x = 0; x < 4; x++) {
-	dice[x] = new Array(5);
-	
-	// Initialise the integer values
-	for (var y = 0; y < 3; y++) {
-		dice[x][y] = 0;
-	}
-};
 
-// Initialise the string values
-dice[0][3] = "atk";
-dice[1][3] = "def";
-dice[2][3] = "range";
-dice[3][3] = "move";
-
-dice[0][4] = "red";
-dice[1][4] = "white";
-dice[2][4] = "blue";
-dice[3][4] = "move";
-
-
-/* Local abilities */
-var la = new Array(2);
-la[0] = new Array(3);
-la[1] = new Array(3);
-
-/* Global abilities */
-var ga = new Array(2);
-ga[0] = new Array(3);
-ga[1] = new Array(3);
 
 //var figure_idx  = [];
 var figure_list = [];
 
-/*
- * Generate a UUID
- */
-function newID() {
-	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-		return v.toString(16);
-	}).toUpperCase();
-}
 
 function add_figure(id,uuid) {
 	var cur_idx = figure_list.length;

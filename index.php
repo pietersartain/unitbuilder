@@ -136,7 +136,13 @@ function createUl($figures) {
 
 </script>
 
-<script type="text/javascript" src="main.js"></script>
+<!--<script type="text/javascript" src="main.js"></script>-->
+
+<script type="text/javascript" src="functions.js"></script>
+<script type="text/javascript" src="figure.class.js"></script>
+<script type="text/javascript" src="unit.class.js"></script>
+<script type="text/javascript" src="view.js"></script>
+<script type="text/javascript" src="events.jquery.js"></script>
 
 <link type="text/css" href="main.css" rel="Stylesheet" />	
 
@@ -206,6 +212,12 @@ echo $str;
 			<td class='move dice'>&nbsp;</td><td id="move_count">0/0/0.00</td>
 		</tr>
 	</table>
+</div>
+
+<div id="ability_pool">
+</div>
+
+<div id="unit_cost">
 </div>
 
 </body>
