@@ -33,14 +33,10 @@ function Unit(max_figures){
 	this.dtrans[3] = 5;
 	
 	/* Local abilities */
-	this.la = new Array(2);
-	this.la[0] = new Array(3);
-	this.la[1] = new Array(3);
+	this.la = [];
 	
 	/* Global abilities */
-	this.ga = new Array(2);
-	this.ga[0] = new Array(3);
-	this.ga[1] = new Array(3);
+	this.ga = [];
 	
 	/*
 	 * Return a Figure object from a UUID
@@ -62,8 +58,19 @@ function Unit(max_figures){
 		}
 	}
 	
+	/*
+	 *
+	 */
+	this.get_figurecount = function() { return this.figures.length; }
+	
+	/*
+	 * Return the current dice pool
+	 */
 	this.get_dice = function() { return this.dice; }
 	
+	/*
+	 * Return a dice idx value (for the dice pool) from a dice type string
+	 */
 	this.get_dice_value_from_type = function(type) {
 		for (var x = 0; x < this.dice.length; x++) {
 			if (this.dice[x][3] == type)
@@ -71,6 +78,9 @@ function Unit(max_figures){
 		}
 	}
 	
+	/*
+	 * Add a dice of type string type with uuid Duuid to the figure with uuid Fuuid
+	 */
 	this.add_dice_to_figure = function(Fuuid, type, Duuid) {
 		// Increment the number of dice attached on the figure
 		this.get_figure(Fuuid).add_dice(type,Duuid);
@@ -79,6 +89,9 @@ function Unit(max_figures){
 		this.dice[this.get_dice_value_from_type(type)][0]--;
 	}
 	
+	/*
+	 * Remove a dice of type string type from the figure of uuid
+	 */
 	this.rm_dice_from_figure = function(uuid, type) {
 		// Decrement the number of dice attached on the figure
 		this.get_figure(uuid).rm_dice(type);
@@ -99,7 +112,12 @@ function Unit(max_figures){
 		
 		// Add a new figure
 		this.figures[this.figures.length] = new Figure(uuid,idx,figure);
-		this.update_dice('add',figure);
+		
+		// Update the dice pool availability
+		this.update_dice(figure);
+		
+		// Update the global abilities
+		this.update_ga('add', figure);
 	}
 	
 	/*
@@ -133,14 +151,50 @@ function Unit(max_figures){
 		this.figures.splice(this.get_figure_idx(uuid),1);
 
 		// Finally, update the UI to reflect the changes
-		this.update_dice('rm',figure);
+		this.update_dice(figure);
 		
 	}
+
+	this.get_ga = function(){ return this.ga; }
+
+	/*
+	 *
+	 */
+	this.update_ga = function(addrm, figure) {
+
+		for (var x = 10; x < 13; x=x+2) {
+			if (figure[x] != "") {
+
+				var newga = true;
+		
+				// Do we already have a GA of this type?			
+				for (var y = 0; y < this.ga.length; y++) {
+					if (this.ga[y][0] == figure[x]) {
+					
+						if (addrm == 'add') {
+							this.ga[y][1] += parseFloat(figure[x+1]);
+						} else {
+							this.ga[y][1] -= parseFloat(figure[x+1]);
+						}
+					
+						newga = false;
+					}
+				}
+				
+				// New GA
+				if (newga) {
+					this.ga[this.ga.length] = new Array(2);
+					this.ga[this.ga.length-1][0] = figure[x];	// GA name
+					this.ga[this.ga.length-1][1] = parseFloat(figure[x+1]);	// GA amount
+				}			
+			} // if
+		} //for
+	} // end function
 
 	/*
 	 * Reparse the number of dice on this unit
 	 */
-	this.update_dice = function(addrm, figure) {
+	this.update_dice = function(figure) {
 	
 		// Use the ID to reference the js lookup table
 		var ldice = new Array(4);

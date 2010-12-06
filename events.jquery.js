@@ -47,7 +47,6 @@ $(function() {
 		zIndex: 2700
 	});
 
-
 	/*
 	 * Make the <li> tag in #figure_list draggable with the following properties
 	 */
@@ -97,6 +96,9 @@ $(function() {
 				
 				// Update the dicepool to reflect the changes
 				update_dicepool(Unit.get_dice());
+				
+				// Update the global abilities
+				update_ga()
 
 				$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"; left: "+xloc+";'> \
 					<img src='"+base+"' /> \

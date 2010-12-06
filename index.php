@@ -214,7 +214,10 @@ echo $str;
 	</table>
 </div>
 
-<div id="ability_pool">
+<div id="local_ability_pool">
+</div>
+
+<div id="global_ability_pool">
 </div>
 
 <div id="unit_cost">
