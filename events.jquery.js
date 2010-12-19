@@ -1,3 +1,7 @@
+/******************************************************************************
+ *
+ *
+ ******************************************************************************/
 
 /* 
  * Variable declarations
@@ -12,14 +16,9 @@ var Unit = new Unit(12);
  */
 $(function() {
 
-	/*
-	 * Change the opacity on mouseover, and return it on mouseout.
-	 *
-	 $('.dice').hover(
-	 	function() { $(this).fadeTo("fast",1.0); },
-	 	function() { $(this).fadeTo("slow",0.2); }
-	 );
-	 */
+/******************************************************************************
+ * Default functionality
+ ******************************************************************************/
 
 	/*
 	 * Change the faction icon on a select box change.
@@ -42,6 +41,15 @@ $(function() {
 	 * Make the dice draggable by default
 	 */
 	$( "#dice_pool td.dice" ).draggable({
+		revert: true,
+		helper: "clone",
+		zIndex: 2700
+	});
+
+	/*
+	 * Make the dice draggable by default
+	 */
+	$( "#local_ability_pool img" ).draggable({
 		revert: true,
 		helper: "clone",
 		zIndex: 2700
@@ -114,15 +122,17 @@ $(function() {
 				base_droppable($("#base_"+id+"_"+uuid));				
 				
 			} else {
-			
 				ui.helper.removeMe = false;
-			
 			}
 			
 		}
 
 	}); // #drop_area
-	
+
+/******************************************************************************
+ * Base functions
+ ******************************************************************************/
+
 	function base_draggable(ap_ele) {
 		ap_ele.draggable({
 			grid: [26, 26],
@@ -167,7 +177,20 @@ $(function() {
 					
 					// Then finally update the available number of dice
 					update_dicepool(Unit.get_dice());
+				
+				// If the draggable is an img.la_pool, then it's a local ability from the LA pool
+				} else if ($(ui.draggable).is("img.la_pool")) {
+				
+					var id = $(this).attr('id').split("_");
+					var idx = id[1];
+					var uuid = id[2];
+
+					add_la_to_figure(uuid,name,idx);
 					
+					update_la();
+					
+					
+				
 				// If the draggable is an img, it's come from the main drop area
 				} else if ($(ui.draggable).is("img")) {
 				
@@ -207,7 +230,11 @@ $(function() {
 		}) // droppable
 		;
 	}
-	
+
+/******************************************************************************
+ * Dice functions
+ ******************************************************************************/
+
 	function dice_draggable(ap_ele){
 		ap_ele.draggable({
 			start: function(event, ui) {
@@ -246,10 +273,6 @@ $(function() {
 		}) // draggable
 		; // moveable figure icon
 	}
-	
-	function dice_droppable(ap_ele){
-	
-	}
 
 	function add_dice_to_figure(Fuuid,idx,type) {
 
@@ -268,5 +291,18 @@ $(function() {
 		dice_draggable($("#icon_"+idx+"_"+Fuuid+"_"+Duuid));
 	}
 
+/******************************************************************************
+ * Local ability functions
+ ******************************************************************************/
+
+	function add_la_to_figure(Fuuid,idx,name) {
+	
+		// Give each LA it's own UUID
+		Duuid = newID();
+		
+		// Update the model
+		Unit.add_la_to_figure(Fuuid,name,Duuid);
+	
+	}
 
 }); // main jquery initialiser function

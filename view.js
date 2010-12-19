@@ -18,19 +18,29 @@ function update_dicepool(dice) {
 }
 
 function update_la() {
+	var la = Unit.get_la();
+	//var fcount = Unit.get_figurecount();
+	
+	$("#local_ability_pool").empty();
 
-
-
-	for (var x = 0; x < dice.length; x++) {
-
-		$("#local_ability_pool td#"+dice[x][3]+"_count")
+	for (var x = 0; x < la.length; x++) {
+	
+		//  cols: remaining unplaced, sum (int), sum (natural), name/id
 		
-		if (dice[x][0] > 0) {
-			$( "#dice_pool td."+dice[x][3] ).draggable("enable");
-			$( "#dice_pool td."+dice[x][3] ).fadeTo(0,1);
+		var unplaced	= la[x][0];
+		var sum_int		= la[x][1];
+		var sum_nat		= la[x][2];
+		var name		= la[x][3].replace(/ /g,"-").toLowerCase();  // str_replace(" ","-",strtolower($ability))
+
+		$("<img class='la_pool' id='"+name+"' src='res/special_abilities/lsa-"+name+".png' />").appendTo("#local_ability_pool");
+		$("<span>"+unplaced+"/"+sum_int.toFixed(0)+"/"+sum_nat.toFixed(2)+"</span>").appendTo("#local_ability_pool");
+		
+		if ( (unplaced) > 0 ) {
+			$("img#"+name).fadeTo(0,1);
+			$("img#"+name).draggable("enable");
 		} else {
-			$( "#dice_pool td."+dice[x][3] ).draggable("disable");
-			$( "#dice_pool td."+dice[x][3] ).fadeTo(0,0.2);
+			$("img#"+name).fadeTo(0,0.2);
+			$("img#"+name).draggable("disable");
 		}
 	}
 }

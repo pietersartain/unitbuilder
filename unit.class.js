@@ -1,7 +1,18 @@
+/******************************************************************************
+ *
+ *
+ ******************************************************************************/
+
 function Unit(max_figures){
+
+/******************************************************************************
+ * Member variables and initialisation
+ ******************************************************************************/
 
 	this.figures = [];
 	this.max_figures = max_figures;
+
+	this.pegs = 0;
 
 	/*
 	 * Dice and movement:
@@ -26,18 +37,24 @@ function Unit(max_figures){
 	this.dice[2][3] = "blue";
 	this.dice[3][3] = "move";
 	
+	// Build a conversion table, rather than recode everything in JS
 	this.dtrans = new Array(4);
 	this.dtrans[0] = 2;
 	this.dtrans[1] = 4;
 	this.dtrans[2] = 3;
 	this.dtrans[3] = 5;
 	
-	/* Local abilities */
+	// Local abilities: we need to know similar things as we do for dice
+	// cols: remaining unplaced, sum (int), sum (natural), name/id
 	this.la = [];
 	
-	/* Global abilities */
+	// Global abilities: this is just a list of ability name + number.
 	this.ga = [];
-	
+
+/******************************************************************************
+ * Acessor methods for returning member variables and derivatives
+ ******************************************************************************/
+
 	/*
 	 * Return a Figure object from a UUID
 	 */
@@ -59,11 +76,6 @@ function Unit(max_figures){
 	}
 	
 	/*
-	 *
-	 */
-	this.get_figurecount = function() { return this.figures.length; }
-	
-	/*
 	 * Return the current dice pool
 	 */
 	this.get_dice = function() { return this.dice; }
@@ -77,7 +89,40 @@ function Unit(max_figures){
 				return x;
 		}
 	}
+
+	/*
+	 * Return the number of figures assigned to this unit
+	 */
+	this.get_figure_count = function() { return this.figures.length; }
+	this.get_figurecount = function() { return this.figures.length; }
+
+	/*
+	 * Return the local ability array
+	 */
+	this.get_la = function(){ return this.la; }
 	
+	/*
+	 * Return the global ability array
+	 */
+	this.get_ga = function(){ return this.ga; }
+
+	/*
+	 * Recalculate the number of pegs from scratch
+	 */
+	this.update_pegcount = function() {
+		this.pegs = 0;
+		var pegs;
+		for (var x = 0; x < this.figures.length; x++) {
+			pegs = this.figures[x].get_figure()[27].split("U");
+			//console.log(pegs[0]);
+			this.pegs += parseInt(pegs[0]);
+		}
+	}
+
+/******************************************************************************
+ * Dice methods
+ ******************************************************************************/
+
 	/*
 	 * Add a dice of type string type with uuid Duuid to the figure with uuid Fuuid
 	 */
@@ -88,7 +133,7 @@ function Unit(max_figures){
 		// Decrement the available number of dice
 		this.dice[this.get_dice_value_from_type(type)][0]--;
 	}
-	
+
 	/*
 	 * Remove a dice of type string type from the figure of uuid
 	 */
@@ -99,97 +144,6 @@ function Unit(max_figures){
 		// Increment the available number of dice
 		this.dice[this.get_dice_value_from_type(type)][0]++;
 	}
-	
-	/*
-	 * Return the number of figures assigned to this unit
-	 */
-	this.get_figure_count = function() { return this.figures.length; }
-	
-	/*
-	 * Add a new figure to this unit
-	 */
-	this.add_figure = function(uuid,idx,figure) {
-		
-		// Add a new figure
-		this.figures[this.figures.length] = new Figure(uuid,idx,figure);
-		
-		// Update the dice pool availability
-		this.update_dice(figure);
-		
-		// Update the global abilities
-		this.update_ga('add', figure);
-	}
-	
-	/*
-	 * Remove an existing figure from this unit, based on UUI
-	 */
-	this.rm_figure = function(uuid) {
-	
-		var lfig = this.get_figure(uuid);
-	
-		// Remove all the dice, refunding their values
-		// For each dice type
-		for (var x = 0; x < this.dice.length; x++) {
-		
-			dcnt = lfig.get_dice(this.dice[x][3]);
-		
-			// For each dice of that type
-			for (var y = 0; y < dcnt; y++) {
-			
-				// Decrement the number of dice attached on the figure
-				lfig.rm_dice(this.dice[x][3]);
-		
-				// Increment the available number of dice
-				this.dice[x][0]++;
-			}
-		}		
-
-		// Then find the details of the figure we're about to remove
-		var figure = lfig.get_figure();
-
-		// Kill it from the model
-		this.figures.splice(this.get_figure_idx(uuid),1);
-
-		// Finally, update the UI to reflect the changes
-		this.update_dice(figure);
-		
-	}
-
-	this.get_ga = function(){ return this.ga; }
-
-	/*
-	 *
-	 */
-	this.update_ga = function(addrm, figure) {
-
-		for (var x = 10; x < 13; x=x+2) {
-			if (figure[x] != "") {
-
-				var newga = true;
-		
-				// Do we already have a GA of this type?			
-				for (var y = 0; y < this.ga.length; y++) {
-					if (this.ga[y][0] == figure[x]) {
-					
-						if (addrm == 'add') {
-							this.ga[y][1] += parseFloat(figure[x+1]);
-						} else {
-							this.ga[y][1] -= parseFloat(figure[x+1]);
-						}
-					
-						newga = false;
-					}
-				}
-				
-				// New GA
-				if (newga) {
-					this.ga[this.ga.length] = new Array(2);
-					this.ga[this.ga.length-1][0] = figure[x];	// GA name
-					this.ga[this.ga.length-1][1] = parseFloat(figure[x+1]);	// GA amount
-				}			
-			} // if
-		} //for
-	} // end function
 
 	/*
 	 * Reparse the number of dice on this unit
@@ -198,12 +152,7 @@ function Unit(max_figures){
 	
 		// Use the ID to reference the js lookup table
 		var ldice = new Array(4);
-		
-		//ldice[0] = parseFloat(figure[2]); // red
-		//ldice[1] = parseFloat(figure[4]); // white
-		//ldice[2] = parseFloat(figure[3]); // blue
-		//ldice[3] = parseFloat(figure[5]); // move
-		
+
 		// Loop through adding the new dice values they bring to the table
 		// 0: remaining unplaced
 		// 1: sum (int)
@@ -217,6 +166,7 @@ function Unit(max_figures){
 				av += parseFloat(this.figures[y].get_figure()[this.dtrans[x]]);
 			}
 
+			// The move dice
 			if (x == 3){
 		
 				if (this.figures.length > 0) {
@@ -226,39 +176,38 @@ function Unit(max_figures){
 				}
 			}
 			
-				var new_val = av;
-
-			/*
-			} else {
-				if (addrm == 'add') {
-					var new_val = this.dice[x][2] + ldice[x];
-				} else {
-					var new_val = this.dice[x][2] - ldice[x];
-				}
-			}
-			*/
-			
+			var new_val = av;
 			var old_val = this.dice[x][2];
-
-			var int_diff = Math.floor(new_val) - Math.floor(old_val);
 	
 			// Natural sum of the dice
 			this.dice[x][2] = new_val;
 			
-			// The integer equivalent sum
-			this.dice[x][1] = Math.floor(this.dice[x][2]);
+			
+			if (x == 3) {	
+				// For move dice
+				
+				var int_diff = Math.round(new_val) - Math.round(old_val);
+				
+				// The integer equivalent sum
+				this.dice[x][1] = Math.round(this.dice[x][2]);
+
+				// The remaining unplaced dice
+				this.dice[x][0] = Math.round(this.dice[x][0] + int_diff);
+
+			} else {
+				// For everyone else
+				
+				var int_diff = Math.floor(new_val) - Math.floor(old_val);
+				
+				// The integer equivalent sum
+				this.dice[x][1] = Math.floor(this.dice[x][2]);
+
+				// The remaining unplaced dice
+				this.dice[x][0] = Math.floor(this.dice[x][0] + int_diff);
+			}
 		
-			// The remaining unplaced dice
-			this.dice[x][0] = Math.floor(this.dice[x][0] + int_diff);
-			
-			
-			
-			// Have we reduced the amount of dice available?
-			//if (int_diff < 0) {
-				// Having established that, have we got too many dice placed?
-			//	if
-			//}
-			
+
+
 			// If the remaining unplaced dice is actually less than 0, we have some illegal dice
 			if (this.dice[x][0] < 0) {
 			
@@ -309,5 +258,189 @@ function Unit(max_figures){
 		}
 	}
 
+/******************************************************************************
+ * Figure (miniature) methods
+ ******************************************************************************/
+
+	/*
+	 * Add a new figure to this unit
+	 */
+	this.add_figure = function(uuid,idx,figure) {
+		
+		// Add a new figure
+		this.figures[this.figures.length] = new Figure(uuid,idx,figure);
+		
+		this.update_pegcount();
+		
+		// Update the dice pool availability
+		this.update_dice(figure);
+		
+		// Update the global abilities
+		this.update_ga();
+		
+		// Update the local abilities
+		this.update_la(figure);
+	}
+
+	/*
+	 * Remove an existing figure from this unit, based on UUI
+	 */
+	this.rm_figure = function(uuid) {
 	
-}
+		var lfig = this.get_figure(uuid);
+	
+		// Remove all the dice, refunding their values
+		// For each dice type
+		for (var x = 0; x < this.dice.length; x++) {
+		
+			dcnt = lfig.get_dice(this.dice[x][3]);
+		
+			// For each dice of that type
+			for (var y = 0; y < dcnt; y++) {
+			
+				// Decrement the number of dice attached on the figure
+				lfig.rm_dice(this.dice[x][3]);
+		
+				// Increment the available number of dice
+				this.dice[x][0]++;
+			}
+		}		
+
+		// Then find the details of the figure we're about to remove
+		var figure = lfig.get_figure();
+
+		// Kill it from the model
+		this.figures.splice(this.get_figure_idx(uuid),1);
+
+		// Finally, update the UI to reflect the changes
+		this.update_dice(figure);
+		
+		// Update the global abilities
+		this.update_ga();
+		
+		// Update the local abilities
+		this.update_la(figure);
+		
+	}
+
+/******************************************************************************
+ * Local Ability methods
+ ******************************************************************************/
+
+	/*
+	 *
+	 */
+	this.add_la_to_figure = function(Fuuid, name, Duuid) {
+		// Increment the number of dice attached on the figure
+		this.get_figure(Fuuid).add_la(Duuid);
+				
+		// Do we already have a LA of this type?			
+		for (var y = 0; y < this.la.length; y++) {
+			if (this.la[y][3] == name) {
+				// Decrement the available LA counter
+				this.la[len][0]--;
+			}
+		}
+	}
+
+	/*
+	 * Reparse the number of dice on this unit
+	 */
+	this.update_la = function() {
+	
+		// Clear it all, make a fresh start.
+		this.la = [];
+
+		// For each figure
+		for(var z = 0; z < this.figures.length; z++) {
+			figure = this.figures[z].get_figure();
+
+			// Now
+			for (var x = 6; x < 10; x=x+2) {
+				if (figure[x] != "") {
+	
+					var newla = true;
+			
+					// Do we already have a LA of this type?			
+					for (var y = 0; y < this.la.length; y++) {
+						if (this.la[y][3] == figure[x]) {
+						
+							this.la[y][2] += parseFloat(figure[x+1]);
+							this.la[y][1] = Math.floor(this.la[y][2]);
+							this.la[y][0] = Math.floor(this.la[y][2]);
+						
+							newla = false;
+						}
+					}
+					
+					// New LA
+					if (newla) {
+						var len = this.la.length;
+						//  cols: remaining unplaced, sum (int), sum (natural), name/id
+						this.la[len] = new Array(4);
+
+						this.la[len][3] = figure[x];	// LA name
+						this.la[len][2] = parseFloat(figure[x+1]);	// sum natural
+						this.la[len][1] = Math.floor(this.la[len][2]);	// sum int
+						
+						this.la[len][0] = this.la[len][1];	// remaining dice
+					}			
+				} // if
+			} // for
+		} // for
+		
+		// Having hacked about with the numbers, update the UI
+		update_la();
+	
+	} // end function
+
+/******************************************************************************
+ * Global Ability methods
+ ******************************************************************************/
+
+	/*
+	 * Recalculate the GA costs from scratch
+	 */
+	this.update_ga = function() {
+
+		// Clear it all, make a fresh start.
+		this.ga = [];
+
+		for(var z = 0; z < this.figures.length; z++) {
+			figure = this.figures[z].get_figure();
+
+			for (var x = 10; x < 13; x=x+2) {
+				if (figure[x] != "") {
+	
+					var newga = true;
+			
+					// Do we already have a GA of this type?			
+					for (var y = 0; y < this.ga.length; y++) {
+						if (this.ga[y][0] == figure[x]) {
+						
+							//if (addrm == 'add') {
+								this.ga[y][1] += parseFloat(figure[x+1]);
+							//} else {
+							//	this.ga[y][1] -= parseFloat(figure[x+1]);
+							//}
+						
+							newga = false;
+						}
+					}
+					
+					// New GA
+					if (newga) {
+						this.ga[this.ga.length] = new Array(2);
+						this.ga[this.ga.length-1][0] = figure[x];	// GA name
+						this.ga[this.ga.length-1][1] = parseFloat(figure[x+1]);	// GA amount
+					}			
+				} // if
+			} // for
+		} // for
+		
+		// Having hacked about with the numbers, update the UI
+		update_ga();
+		
+	} // end function	
+
+} // End class
