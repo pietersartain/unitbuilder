@@ -396,7 +396,10 @@ function Unit(max_figures){
 				for (var y = 0; y < this.la.length; y++) {
 					
 					// If we do, then we should do something about it ...
-					if (this.la[y][3] == figure[x]) {
+					var unit_la_name = this.la[y][3];
+					var fig_la_name = figure[x];
+					
+					if (unit_la_name == fig_la_name) {
 					
 						var old_val = this.la[y][2];
 						
@@ -406,7 +409,10 @@ function Unit(max_figures){
 						for (var z = 0; z < this.figures.length; z++) {
 							for (var w = 6; w < 10; w=w+2) {
 								// Only procede if there's something here
-								if (figure[w] == figure[x]) {
+								
+								var gen_la_name = this.figures[z].get_figure()[w];
+								
+								if (gen_la_name == fig_la_name) {
 									new_val += parseFloat(figure[w+1]);
 								}
 							}
