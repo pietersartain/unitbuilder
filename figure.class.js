@@ -9,6 +9,22 @@ function Figure(uuid, idx, figure){
 	this.white	= [];
 	this.blue	= [];
 	this.move	= [];
+	
+	// Local abilities attached to this figure
+	this.la		= [];
+
+	this.add_la = function(uuid) {
+		this.la[this.la.length] = uuid;
+	}
+	
+	this.rm_la = function(uuid) {
+		for (var x = 0; x < this.la.length; x++) {
+			if (this.la[x] == uuid) {
+				this.la.splice(x,1);
+				return;
+			}
+		}
+	}
 
 	this.add_dice = function(type,uuid) {
 		switch(type){
@@ -48,6 +64,10 @@ function Figure(uuid, idx, figure){
 
 	this.get_dicecount = function() {
 		return (this.red.length + this.white.length + this.blue.length + this.move.length);
+	}
+	
+	this.get_lacount = function() {
+		return this.la.length;
 	}
 	
 	this.get_uuid = function(){ return this.uuid; }

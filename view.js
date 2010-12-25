@@ -19,28 +19,43 @@ function update_dicepool(dice) {
 
 function update_la() {
 	var la = Unit.get_la();
-	//var fcount = Unit.get_figurecount();
-	
-	$("#local_ability_pool").empty();
 
 	for (var x = 0; x < la.length; x++) {
-	
+
 		//  cols: remaining unplaced, sum (int), sum (natural), name/id
-		
 		var unplaced	= la[x][0];
 		var sum_int		= la[x][1];
 		var sum_nat		= la[x][2];
-		var name		= la[x][3].replace(/ /g,"-").toLowerCase();  // str_replace(" ","-",strtolower($ability))
+		var name		= la[x][3].replace(/ /g,"-").toLowerCase();
+		
+		var text_val	= unplaced+"/"+sum_int.toFixed(0)+"/"+sum_nat.toFixed(2);
+	
+		// If this item already exists ...
+		if ( $("img#icon_"+name).length ) {
+			if (sum_nat > 0) {
+				// Then just update it's text.
+				$("span#text_"+name).text(text_val);
+			}
 
-		$("<img class='la_pool' id='"+name+"' src='res/special_abilities/lsa-"+name+".png' />").appendTo("#local_ability_pool");
-		$("<span>"+unplaced+"/"+sum_int.toFixed(0)+"/"+sum_nat.toFixed(2)+"</span>").appendTo("#local_ability_pool");
+		} else {
+			// We need to create an icon and text, too.		
+
+			$("<img class='la_pool' id='icon_"+name+"' src='res/special_abilities/lsa-"+name+".png' />").appendTo("#local_ability_pool");
+			$("img#icon_"+name).draggable({
+				revert: true,
+				helper: "clone",
+				zIndex: 2700
+			});
+
+			$("<span id='text_"+name+"'>"+text_val+"</span>").appendTo("#local_ability_pool");
+		}
 		
 		if ( (unplaced) > 0 ) {
-			$("img#"+name).fadeTo(0,1);
-			$("img#"+name).draggable("enable");
+			$("img#icon_"+name).fadeTo(0,1);
+			$("img#icon_"+name).draggable("enable");
 		} else {
-			$("img#"+name).fadeTo(0,0.2);
-			$("img#"+name).draggable("disable");
+			$("img#icon_"+name).fadeTo(0,0.2);
+			$("img#icon_"+name).draggable("disable");
 		}
 	}
 }
@@ -57,6 +72,22 @@ function update_figure_dice(uuid, idx) {
 
 	$("#dice_"+idx+"_"+uuid).width(w);
 	$("#dice_"+idx+"_"+uuid).css('left',o);
+
+}
+
+function update_figure_la(uuid, idx) {
+
+	num_of_la = Unit.get_figure(uuid).get_lacount();
+
+	// Width of the div
+	var w = num_of_la * 35;
+
+	// Offset of the div to center it
+	// We probably want to use the png width to actually center this.
+	var o = (((w - 35) / 2) * -1) + 8;
+
+	$("#la_"+idx+"_"+uuid).width(w);
+	$("#la_"+idx+"_"+uuid).css('left',o);
 
 }
 

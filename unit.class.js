@@ -161,6 +161,8 @@ function Unit(max_figures){
 			
 			ldice[x] = parseFloat(figure[this.dtrans[x]]);
 			
+			// New val - recalculated from the raw figure array based on the addition
+			// of the new figure.
 			var av = 0;
 			for (var y = 0; y < this.figures.length; y++) {
 				av += parseFloat(this.figures[y].get_figure()[this.dtrans[x]]);
@@ -304,7 +306,7 @@ function Unit(max_figures){
 				// Increment the available number of dice
 				this.dice[x][0]++;
 			}
-		}		
+		}
 
 		// Then find the details of the figure we're about to remove
 		var figure = lfig.get_figure();
@@ -314,7 +316,7 @@ function Unit(max_figures){
 
 		// Finally, update the UI to reflect the changes
 		this.update_dice(figure);
-		
+
 		// Update the global abilities
 		this.update_ga();
 		
@@ -328,67 +330,137 @@ function Unit(max_figures){
  ******************************************************************************/
 
 	/*
-	 *
+	 * Attach an LA by name/UUID to a figure of Fuuid
 	 */
-	this.add_la_to_figure = function(Fuuid, name, Duuid) {
-		// Increment the number of dice attached on the figure
-		this.get_figure(Fuuid).add_la(Duuid);
-				
-		// Do we already have a LA of this type?			
-		for (var y = 0; y < this.la.length; y++) {
-			if (this.la[y][3] == name) {
-				// Decrement the available LA counter
-				this.la[len][0]--;
+	this.add_la_to_figure = function(Fuuid, name, Luuid) {
+		// Attach a LA to a figure by UUID of figure and UUID of LA.
+		this.get_figure(Fuuid).add_la(Luuid);
+
+		var la_idx = this.get_la_idx_from_name(name);
+
+		// Decrement the available LA counter
+		this.la[la_idx][0]--;
+	}
+
+	/*
+	 * Remove an LA by UUID from figure Fuuid
+	 */
+	this.rm_la_from_figure = function(Fuuid, name, Luuid) {
+		//
+		this.get_figure(Fuuid).rm_la(Luuid);
+
+		var la_idx = this.get_la_idx_from_name(name);
+
+		// Increment the available LA counter
+		this.la[la_idx][0]++;
+	}
+
+	/*
+	 * Return the idx of the this.la array that contains the name of the LA.
+	 */
+	this.get_la_idx_from_name = function(name) {
+		for (var x = 0; x < this.la.length; x++) {
+			if (this.la[x][4] == name) {
+				return x;
 			}
 		}
+		return -1;
+	}
+	
+	/*
+	 *
+	 */
+	this.figure_has_la = function(Fuuid, la_name) {
+		for (var x = 6; x < 10; x=x+2) {
+			var chkname = this.get_figure(Fuuid).get_figure()[x].replace(/ /g,"-").toLowerCase();
+			if (chkname == la_name) return true;
+		}
+		return false;
 	}
 
 	/*
 	 * Reparse the number of dice on this unit
 	 */
-	this.update_la = function() {
+	this.update_la = function(figure) {
 	
-		// Clear it all, make a fresh start.
-		this.la = [];
-
-		// For each figure
-		for(var z = 0; z < this.figures.length; z++) {
-			figure = this.figures[z].get_figure();
-
-			// Now
-			for (var x = 6; x < 10; x=x+2) {
-				if (figure[x] != "") {
-	
-					var newla = true;
+		// Whatever we do, we need to do it twice because of the two available
+		// slots for local abilities.
+		for (var x = 6; x < 10; x=x+2) {
+			// Only procede if there's something here
+			if (figure[x] != "") {
 			
-					// Do we already have a LA of this type?			
-					for (var y = 0; y < this.la.length; y++) {
-						if (this.la[y][3] == figure[x]) {
-						
-							this.la[y][2] += parseFloat(figure[x+1]);
-							this.la[y][1] = Math.floor(this.la[y][2]);
-							this.la[y][0] = Math.floor(this.la[y][2]);
-						
-							newla = false;
-						}
-					}
+				var newla = true;
+				var remlist = [];
+			
+				// Do we already have a LA of this type?			
+				for (var y = 0; y < this.la.length; y++) {
 					
-					// New LA
-					if (newla) {
-						var len = this.la.length;
-						//  cols: remaining unplaced, sum (int), sum (natural), name/id
-						this.la[len] = new Array(4);
-
-						this.la[len][3] = figure[x];	// LA name
-						this.la[len][2] = parseFloat(figure[x+1]);	// sum natural
-						this.la[len][1] = Math.floor(this.la[len][2]);	// sum int
+					// If we do, then we should do something about it ...
+					if (this.la[y][3] == figure[x]) {
+					
+						var old_val = this.la[y][2];
 						
-						this.la[len][0] = this.la[len][1];	// remaining dice
-					}			
-				} // if
-			} // for
-		} // for
-		
+						// Spin through every figure we have and sum up the LAs
+						// of this type.
+						var new_val = 0;
+						for (var z = 0; z < this.figures.length; z++) {
+							for (var w = 6; w < 10; w=w+2) {
+								// Only procede if there's something here
+								if (figure[w] == figure[x]) {
+									new_val += parseFloat(figure[w+1]);
+								}
+							}
+						}
+					
+						var int_diff = Math.floor(new_val) - Math.floor(old_val);
+
+						// this.la[y][3] // The name should never need altering
+						this.la[y][2] = new_val; 		// sum natural
+						this.la[y][1] = Math.floor(this.la[y][2]);	// sum int
+						this.la[y][0] += int_diff;
+
+						if ( this.la[y][2] <= 0 ) {
+							// We need actually need to subtract some icons
+							remlist.push(y);
+						}
+
+						newla = false;
+						break;
+					}
+				}
+				
+				if (remlist.length) {
+					for (var y = 0; y < remlist.length; y++) {
+						
+						var name = this.la[y][4];
+						
+						// Kill off the view parts
+						$("img#icon_"+name).remove();
+						$("span#text_"+name).remove();
+
+						// Then kill off the model
+						this.la.splice(y,1);
+					}
+				}
+				
+				// We don't already have one of these, so let's add it to the list
+				// and instantiate the default values.
+				if (newla) {
+					var len = this.la.length;
+					//  cols: remaining unplaced, sum (int), sum (natural), name/id
+					this.la[len] = new Array(5);
+
+					this.la[len][4] = figure[x].replace(/ /g,"-").toLowerCase(); // Sanitised name
+					this.la[len][3] = figure[x];					// LA name
+					this.la[len][2] = parseFloat(figure[x+1]);		// sum natural
+					this.la[len][1] = Math.floor(this.la[len][2]);	// sum int
+					
+					this.la[len][0] = this.la[len][1];				// remaining dice
+				}
+
+			} // if figure[x] != ""
+		} // For each LA
+
 		// Having hacked about with the numbers, update the UI
 		update_la();
 	
