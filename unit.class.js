@@ -11,7 +11,9 @@ function Unit(max_figures){
 
 	this.figures = [];
 	this.max_figures = max_figures;
-
+	this.faction = -1;
+	this.unit_cost = 0;
+	
 	this.pegs = 0;
 
 	/*
@@ -50,6 +52,9 @@ function Unit(max_figures){
 	
 	// Global abilities: this is just a list of ability name + number.
 	this.ga = [];
+
+	// Movement grid - N E S W
+	this.movement = new Array(4);
 
 /******************************************************************************
  * Acessor methods for returning member variables and derivatives
@@ -97,7 +102,22 @@ function Unit(max_figures){
 	this.get_figurecount = function() { return this.figures.length; }
 	
 	this.get_max_figures = function() { return this.max_figures; }
+	
 	this.get_pegcount = function() { return this.pegs; }
+	
+	this.get_movement = function() { return this.movement; }
+
+	this.get_cost = function() { return this.unit_cost; }
+
+	this.set_faction = function(faction) {
+		switch(faction){
+		case "egypt":		this.faction = 0;	break;
+		case "han":			this.faction = 1;	break;
+		case "rome":		this.faction = 2;	break;
+		case "mercenary":	this.faction = 3;	break;
+		}
+	}
+
 
 	/*
 	 * Return the local ability array
@@ -285,6 +305,10 @@ function Unit(max_figures){
 		
 		// Update the local abilities
 		this.update_la(figure);
+		
+		this.update_movement();
+		
+		this.update_cost();
 	}
 
 	/*
@@ -327,6 +351,10 @@ function Unit(max_figures){
 		this.update_la(figure);
 		
 		this.update_pegcount();
+		
+		this.update_movement();
+		
+		this.update_cost();
 		
 	}
 
@@ -525,5 +553,53 @@ function Unit(max_figures){
 		update_ga();
 		
 	} // end function	
+
+/******************************************************************************
+ * Movement Grid methods
+ ******************************************************************************/
+
+	/*
+	 *
+	 */
+	this.update_movement = function() {
+	
+		for (var y = 0; y < this.movement.length; y++) {			
+			
+			this.movement[y] = 0;
+			
+			for (var x = 0; x < this.figures.length; x++) {
+				this.movement[y] += parseInt(this.figures[x].get_figure()[18+y]);
+			}
+			
+			if (this.figures.length)
+				this.movement[y] = Math.round(this.movement[y] / this.figures.length);
+
+		}
+	}
+
+/******************************************************************************
+ * Bad Side Grid methods
+ ******************************************************************************/
+
+
+/******************************************************************************
+ * Unit Cost Grid methods
+ ******************************************************************************/
+
+	/*
+	 *
+	 */
+	 this.update_cost = function() {
+	 	 
+	 	this.unit_cost = 0;
+	 	
+		for (var x = 0; x < this.figures.length; x++) {
+		
+			var cost = this.figures[x].get_figure()[14+this.faction];
+		
+			this.unit_cost += parseInt(cost);
+		}
+	 
+	 }
 
 } // End class

@@ -224,15 +224,14 @@ echo $str;
 </div>
 
 <div id="movement">
-
 	<table>
 		<tr>
-			<td>N</td><td id='move_n'></td>
-			<td>E</td><td id='move_e'></td>
+			<td>N</td><td id='move_n'>0</td>
+			<td>E</td><td id='move_e'>0</td>
 		</tr>
 		<tr>
-			<td>S</td><td id='move_s'></td>
-			<td>W</td><td id='move_w'></td>
+			<td>S</td><td id='move_s'>0</td>
+			<td>W</td><td id='move_w'>0</td>
 		</tr>
 	</table>
 </div>

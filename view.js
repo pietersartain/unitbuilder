@@ -126,10 +126,21 @@ function update_ga() {
 }
 
 function update_basehp() {
-
 	$("#base_hp").empty();
 	$("<span>"+m_Unit.get_pegcount()+"/"+m_Unit.get_max_figures()+"</span>").appendTo("#base_hp");
+}
+
+function update_movement() {
+
+	var move = m_Unit.get_movement();
+
+	$("#move_n").text(move[0]);
+	$("#move_e").text(move[1]);
+	$("#move_s").text(move[2]);
+	$("#move_w").text(move[3]);
 
 }
 
-function update_unit_cost(){}
+function update_unitcost(){
+	$("#unit_cost").text(m_Unit.get_cost());
+}

@@ -28,6 +28,9 @@ $(function() {
 	 $('select[name="faction"]').change(function() {
 		var fimg = "res/insignia/"+$('select[name="faction"]').val()+".png";
 		$("header img").attr('src',fimg);
+		
+		m_Unit.set_faction($('select[name="faction"]').val());
+		
 	});
 
 	/*
@@ -129,6 +132,11 @@ $(function() {
 					
 					// Update the HP count.
 					update_basehp();
+					
+					// Update the movement tray
+					update_movement();
+					
+					update_unitcost();
 	
 					$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"; left: "+xloc+";'> \
 						<img src='"+base+"' /> \
@@ -190,6 +198,8 @@ $(function() {
 					update_dicepool(m_Unit.get_dice());
 					update_la();
 					update_basehp();
+					update_movement();
+					update_unitcost();
 
 				}
 			} // stop
