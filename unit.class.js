@@ -95,6 +95,9 @@ function Unit(max_figures){
 	 */
 	this.get_figure_count = function() { return this.figures.length; }
 	this.get_figurecount = function() { return this.figures.length; }
+	
+	this.get_max_figures = function() { return this.max_figures; }
+	this.get_pegcount = function() { return this.pegs; }
 
 	/*
 	 * Return the local ability array
@@ -322,6 +325,8 @@ function Unit(max_figures){
 		
 		// Update the local abilities
 		this.update_la(figure);
+		
+		this.update_pegcount();
 		
 	}
 

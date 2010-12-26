@@ -6,16 +6,17 @@
 /* 
  * Variable declarations
  */
-var Unit = new Unit(12);	// The main base unit thing
+var m_Unit = new Unit(12);	// The main base unit thing
 var iconoffset = 30;		// Dice icon offset size
 var commander = 0;			// Commanders on the base
-
-
 
 /*
  * jQuery functions from here on in ...
  */
 $(function() {
+
+	// Set up some default values to start with ...
+	update_basehp();
 
 /******************************************************************************
  * Default functionality
@@ -36,6 +37,17 @@ $(function() {
 		var fimg = "res/units/"+$('select[name="basetype"]').val()+".png";
 		//$("#drop_area").css('background-image', 'url("+fimg+")');
 		$("div#drop_area > img").attr('src',fimg);
+			
+		// Also we should reset the whole thing and force a new max-HP value
+		var basetype = $('select[name="basetype"]').val().split("_");
+		
+		if (basetype[0] == "sortie") {
+			m_Unit = new Unit(6);
+		} else {
+			m_Unit = new Unit(12);
+		}
+		
+		reset_all();
 	});
 
 	/*
@@ -72,24 +84,31 @@ $(function() {
 
 			if ($(ui.draggable).is("li")) {
 
-				// Get the position to drop the cursor 
-				var xloc = ev.pageX-460-iconoffset;// - this.offsetLeft;
-				var yloc = ev.pageY-105-iconoffset;// - this.offsetTop;
-				
-				// Force the dropped cursor into the grid
-				xloc = (Math.round(xloc / 26) * 26) + 1;
-				yloc = (Math.round(yloc / 26) * 26) + 1;
-
 				// Get the ID of the original <li>
 				var id = $(ui.draggable).attr('id');
 
-				// Use the original li to get the base image
-				var base = $("li#"+id+":visible img").attr('src');
+				var pegs = figures[id][27].split("U");
+				
+				if ( (parseInt(pegs[0]) + m_Unit.get_pegcount()) > m_Unit.get_max_figures() ) {
+					return;
+				}
 
 				// Get the colour ...
 				var base_color = figures[id][26];
 
 				if (!commander || (base_color != 'gold') ) {
+
+					// Get the position to drop the cursor 
+					var xloc = ev.pageX-460-iconoffset;// - this.offsetLeft;
+					var yloc = ev.pageY-105-iconoffset;// - this.offsetTop;
+					
+					// Force the dropped cursor into the grid
+					xloc = (Math.round(xloc / 26) * 26) + 1;
+					yloc = (Math.round(yloc / 26) * 26) + 1;
+
+					// Use the original li to get the base image
+					var base = $("li#"+id+":visible img").attr('src');
+
 					// The id of the figure can be found directly
 					var base_id 	= figures[id][0];
 	
@@ -97,13 +116,19 @@ $(function() {
 					var uuid = newID()
 					
 					// Add the figure to the model
-					Unit.add_figure(uuid,id,figures[id]);
+					m_Unit.add_figure(uuid,id,figures[id]);
 					
 					// Update the dicepool to reflect the changes
-					update_dicepool(Unit.get_dice());
+					update_dicepool(m_Unit.get_dice());
 					
 					// Update the global abilities
 					update_ga()
+					
+					// Local abilities updated at the end of Unit.update_la()
+					// Kinda naughty.
+					
+					// Update the HP count.
+					update_basehp();
 	
 					$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"; left: "+xloc+";'> \
 						<img src='"+base+"' /> \
@@ -153,17 +178,19 @@ $(function() {
 					var id = $(ui.helper).attr('id').split("_");
 					var uuid = id[2];
 
+					ui.helper.remove();
+
 					// Get the colour ...
-					var base_color = Unit.get_figure(uuid).get_figure()[26];
+					var base_color = m_Unit.get_figure(uuid).get_figure()[26];
 					if (base_color == 'gold') {
 						commander = 0;
 					}
 
-					Unit.rm_figure(uuid);
-					update_dicepool(Unit.get_dice());
+					m_Unit.rm_figure(uuid);
+					update_dicepool(m_Unit.get_dice());
 					update_la();
-					
-					ui.helper.remove();
+					update_basehp();
+
 				}
 			} // stop
 		}) // draggable
@@ -186,7 +213,7 @@ $(function() {
 					add_dice_to_figure(uuid,idx,class_list[0]);
 					
 					// Then finally update the available number of dice
-					update_dicepool(Unit.get_dice());
+					update_dicepool(m_Unit.get_dice());
 				
 				// If the draggable is an img.la_pool, then it's a local ability from the LA pool
 				} else if ($(ui.draggable).is("img.la_pool")) {
@@ -202,7 +229,7 @@ $(function() {
 					//console.log("Being dropped: "+id);
 					var la_name = id[1];
 
-					if (Unit.figure_has_la(figure_uuid, la_name)) {
+					if (m_Unit.figure_has_la(figure_uuid, la_name)) {
 						add_la_to_figure(figure_uuid,figure_idx,la_name);
 						//update_la();
 					}
@@ -228,9 +255,9 @@ $(function() {
 					png			= png[0].split("lsa-");
 					var la_name		= png[1];
 
-					if (Unit.figure_has_la(uuidB, la_name)) {
+					if (m_Unit.figure_has_la(uuidB, la_name)) {
 						// Remove this item from the model
-						Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
+						m_Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
 		
 						// Remove the item from the DOM
 						ui.helper.remove();
@@ -267,7 +294,7 @@ $(function() {
 					dice = dice[0];
 
 					// Update model
-					Unit.rm_dice_from_figure(uuidA,dice);
+					m_Unit.rm_dice_from_figure(uuidA,dice);
 					
 					// Update view
 					update_figure_dice(uuidA, idxA);
@@ -313,11 +340,11 @@ $(function() {
 					dice = dice[0];
 					
 					// Update model
-					Unit.rm_dice_from_figure(uuid,dice);
+					m_Unit.rm_dice_from_figure(uuid,dice);
 					
 					// Update view
 					update_figure_dice(uuid, idx);
-					update_dicepool(Unit.get_dice());
+					update_dicepool(m_Unit.get_dice());
 
 					// Remove the offending item
 					ui.helper.remove();
@@ -334,7 +361,7 @@ $(function() {
 		Duuid = newID();
 		
 		// Update the model
-		Unit.add_dice_to_figure(Fuuid,type,Duuid);
+		m_Unit.add_dice_to_figure(Fuuid,type,Duuid);
 		
 		// Resize the UI
 		update_figure_dice(Fuuid, idx);
@@ -379,7 +406,7 @@ $(function() {
 					var la_name	= png[1];
 
 					// Remove this item from the model
-					Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
+					m_Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
 						
 					// Update view
 					update_la();
@@ -396,7 +423,7 @@ $(function() {
 		Luuid = newID();
 		
 		// Update the model
-		Unit.add_la_to_figure(Fuuid,la_name,Luuid);
+		m_Unit.add_la_to_figure(Fuuid,la_name,Luuid);
 		
 		update_figure_la(Fuuid,Fidx);
 		

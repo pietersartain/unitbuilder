@@ -200,6 +200,12 @@ echo $str;
 ?>
 </div>
 
+<div id='base_cost'>
+</div>
+
+<div id='base_hp'>
+</div>
+
 <div id="dice_pool">
 
 	<table>
@@ -215,6 +221,20 @@ echo $str;
 </div>
 
 <div id="local_ability_pool">
+</div>
+
+<div id="movement">
+
+	<table>
+		<tr>
+			<td>N</td><td id='move_n'></td>
+			<td>E</td><td id='move_e'></td>
+		</tr>
+		<tr>
+			<td>S</td><td id='move_s'></td>
+			<td>W</td><td id='move_w'></td>
+		</tr>
+	</table>
 </div>
 
 <div id="global_ability_pool">

@@ -1,3 +1,14 @@
+function reset_all() {
+
+	$("#drop_area div.base").remove();		// Clear any placed figures
+	update_dicepool(m_Unit.get_dice());		// Reload the values from the m_Unit
+	//update_la();
+	$("#local_ability_pool").empty();		// update_la() doesn't work so well. Banish the LAs.
+	update_ga();							// Banish the GAs
+	update_basehp();						// Reload the base HP values
+
+}
+
 function update_dicepool(dice) {
 	for (var x = 0; x < dice.length; x++) {
 
@@ -18,7 +29,7 @@ function update_dicepool(dice) {
 }
 
 function update_la() {
-	var la = Unit.get_la();
+	var la = m_Unit.get_la();
 
 	for (var x = 0; x < la.length; x++) {
 
@@ -62,7 +73,7 @@ function update_la() {
 
 function update_figure_dice(uuid, idx) {
 
-	num_of_dice = Unit.get_figure(uuid).get_dicecount();
+	num_of_dice = m_Unit.get_figure(uuid).get_dicecount();
 
 	// Width of the div
 	var w = num_of_dice * 15;
@@ -77,7 +88,7 @@ function update_figure_dice(uuid, idx) {
 
 function update_figure_la(uuid, idx) {
 
-	num_of_la = Unit.get_figure(uuid).get_lacount();
+	num_of_la = m_Unit.get_figure(uuid).get_lacount();
 
 	// Width of the div
 	var w = num_of_la * 35;
@@ -93,8 +104,8 @@ function update_figure_la(uuid, idx) {
 
 function update_ga() {
 
-	var ga = Unit.get_ga();
-	var fcount = Unit.get_figurecount();
+	var ga = m_Unit.get_ga();
+	var fcount = m_Unit.get_figurecount();
 	
 	$("#global_ability_pool").empty();
 
@@ -112,6 +123,13 @@ function update_ga() {
 			$("img#"+gname).fadeTo(0,0.2);
 		}
 	}
+}
+
+function update_basehp() {
+
+	$("#base_hp").empty();
+	$("<span>"+m_Unit.get_pegcount()+"/"+m_Unit.get_max_figures()+"</span>").appendTo("#base_hp");
+
 }
 
 function update_unit_cost(){}
