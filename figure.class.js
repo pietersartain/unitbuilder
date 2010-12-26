@@ -22,7 +22,7 @@ function Figure(uuid, idx, figure){
 	
 	this.rm_la = function(uuid) {
 		for (var x = 0; x < this.la.length; x++) {
-			if (this.la[x] == uuid) {
+			if (this.la[x][0] == uuid) {
 				this.la.splice(x,1);
 				return;
 			}

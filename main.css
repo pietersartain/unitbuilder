@@ -1,6 +1,6 @@
 body {font-family: tahoma;}
 
-div#drop_area {	width: 469px; height: 183px;
+/*div#drop_area {	width: 469px; height: 183px;
 				border: 0px;
 				border-right: 1px;
 				border-bottom: 1px;
@@ -15,33 +15,53 @@ div#drop_area div.grid {border: 0px; border-top: 1px; border-left: 1px; border-c
 						float: left; width: 25px; height: 25px; position: relative;}
 
 div#drop_area > img 	{width: 512px; position: absolute; top: 2px; left: -2px;}
+*/
 
-div#dice_pool			{ position: absolute; top: 370px; left: 431px; 
+.grid_box > div.grid	{	border: 0px; border-top: 1px; border-left: 1px; border-color: #9499db; 
+							border-style: solid; float: left; width: 25px; height: 25px; position: relative;}
+
+.grid_box				{	visibility: hidden; display: none;
+							border: 0px;
+							border-right: 1px;
+							border-bottom: 1px;
+							border-style: solid;
+							border-color: #9499db;
+							float: left; 
+							background-repeat: no-repeat; background-position: -1px -1px;
+							position: absolute; left: 460px; top: 125px;
+						}
+
+#grid_cavalry_landscape	{ width: 469px; /*height: 183px;*/}
+#grid_cavalry_portrait	{	width: 182px; left: 458px; top: 114px; }
+#grid_sortie_portrait	{ width: 182px; left: 458px; top: 114px; }
+#grid_sortie_landscape	{ width: 208px; left: 454px; }
+
+div#dice_pool			{ position: absolute; top: 370px; left: 703px; 
 						  border: 1px solid black; background: silver;
 						}
 
 #dice_pool td 			{ width: 80px; border: 1px solid grey; }
 #dice_pool td.dice		{ width: 40px; border: 0px;}
 
-div#local_ability_pool	{ position: absolute; top: 370px; left: 703px; 
+div#local_ability_pool	{ position: absolute; top: 370px; left: 973px; 
 						  border: 1px solid black; background: silver;
 						  min-width: 50px; height: 56px; 
 						}
 
-div#global_ability_pool	{ position: absolute; top: 435px; left: 703px; 
+div#global_ability_pool	{ position: absolute; top: 435px; left: 973px; 
 						  border: 1px solid black; background: silver;
 						  min-width: 50px; height: 56px; 
 						}
 
-div#movement			{ position: absolute; top: 435px; left: 431px; 
+div#movement			{ position: absolute; top: 435px; left: 703px; 
 						  border: 1px solid black; background: silver;
 						  min-width: 50px; height: 56px; 
 						}
 
-div#base_cost			{}
-div#base_hp				{ position: absolute; top: 75px; left: 900px;}
+div#base_cost			{ position: absolute; top: 85px; left: 550px; }
+div#base_hp				{ position: absolute; top: 85px; left: 450px; }
 
-#fullbg					{position: absolute; top: 100px; left: 431px; width: 512px;}
+#fullbg					{position: absolute; top: 100px; left: 431px; /*width: 512px;*/}
 
 
 div#scroll_list			{overflow: auto; height: 400px; width: 400px; float: left;}
@@ -90,7 +110,7 @@ ul#figure_list > li table td	{width: 12.5%;}
 .roman 		{	background-image: url('res/insignia/roman.png');	}
 .egyptian 	{	background-image: url('res/insignia/egyptian.png');	}
 
-#drop_area .base {/*width: 40px; height: 60px; */position: absolute; float: left;}
+.grid_box .base {/*width: 40px; height: 60px; */position: absolute; float: left;}
 .base > span {	position: absolute; left: -5px; top: 20px; background: #ffffdd; font-size: 60%;
 				-webkit-transform: rotate(90deg); -moz-transform: rotate(90deg);
 			 }

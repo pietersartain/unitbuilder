@@ -48,12 +48,14 @@ function rm_figure(uuid) {
  ******************************************************************************/
 function reset_all() {
 
-	$("#drop_area div.base").remove();		// Clear any placed figures
+	$(".grid_box div.base").remove();		// Clear any placed figures
 	update_dicepool(m_Unit.get_dice());		// Reload the values from the m_Unit
 	//update_la();
 	$("#local_ability_pool").empty();		// update_la() doesn't work so well. Banish the LAs.
 	update_ga();							// Banish the GAs
 	update_basehp();						// Reload the base HP values
+	update_movement();
+	update_unitcost();
 
 }
 
@@ -74,7 +76,7 @@ function update_movement() {
 }
 
 function update_unitcost(){
-	$("#unit_cost").text(m_Unit.get_cost());
+	$("#base_cost").text(m_Unit.get_cost());
 }
 
 /******************************************************************************

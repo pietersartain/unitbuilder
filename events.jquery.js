@@ -17,6 +17,23 @@ $(function() {
 
 	// Set up some default values to start with ...
 	update_basehp();
+	m_Unit.set_faction('egyptian');
+	update_unitcost();
+
+	// Update the background based on the initial selection
+	var selbox = $('select[name="basetype"]').val();
+
+	var fimg = "res/units/"+$('select[name="faction"]').val()+"_"+selbox+".png";
+	$("img#fullbg").attr('src',fimg);
+
+	// Update the faction icon based on the initial selection
+	fimg = "res/insignia/"+$('select[name="faction"]').val()+".png";
+	$("header img").attr('src',fimg);
+
+	// Reveal the one that we're using now.
+	$("#grid_"+selbox).css('visibility','visible');
+	$("#grid_"+selbox).css('display','block');
+
 
 /******************************************************************************
  * Default functionality
@@ -28,28 +45,42 @@ $(function() {
 	 $('select[name="faction"]').change(function() {
 		var fimg = "res/insignia/"+$('select[name="faction"]').val()+".png";
 		$("header img").attr('src',fimg);
-		
+
+		fimg = "res/units/"+$('select[name="faction"]').val()+"_"+$('select[name="basetype"]').val()+".png";
+		$("img#fullbg").attr('src',fimg);
+
 		m_Unit.set_faction($('select[name="faction"]').val());
-		
+		update_unitcost();
 	});
 
 	/*
 	 * Change the base type on a select box change
 	 */
 	$('select[name="basetype"]').change(function() {
-		var fimg = "res/units/"+$('select[name="basetype"]').val()+".png";
+		
+		var selbox = $('select[name="basetype"]').val();
+		
+		var fimg = "res/units/"+$('select[name="faction"]').val()+"_"+selbox+".png";
 		//$("#drop_area").css('background-image', 'url("+fimg+")');
-		$("div#drop_area > img").attr('src',fimg);
+		$("img#fullbg").attr('src',fimg);
 			
 		// Also we should reset the whole thing and force a new max-HP value
-		var basetype = $('select[name="basetype"]').val().split("_");
+		var basetype = selbox.split("_");
 		
 		if (basetype[0] == "sortie") {
-			m_Unit = new Unit(6);
+			m_Unit = new Unit(8);
 		} else {
 			m_Unit = new Unit(12);
 		}
+
+		// Hide all the grids
+		$(".grid_box").css('visibility','hidden');
+		$(".grid_box").css('display','none');
 		
+		// Reveal the one that we're using now.
+		$("#grid_"+selbox).css('visibility','visible');
+		$("#grid_"+selbox).css('display','block');
+
 		reset_all();
 	});
 
@@ -80,8 +111,8 @@ $(function() {
 	/*
 	 * Assign #drop_area to be a droppable area. Also creates more draggables on drop.
 	 */
-	$("#drop_area").droppable({
-		accept: "#figure_list>li, #drop_area div.base",
+	$(".grid_box").droppable({
+		accept: "#figure_list>li, .grid_box div.base",
 
 		drop: function(ev, ui) {
 
@@ -248,6 +279,9 @@ $(function() {
 
 						// Add a new item to the model and DOM
 						add_la_to_figure(uuidB,idxB,la_name);
+						
+						m_Unit.update_cost();
+						update_unitcost();
 					}
 
 					// Don't kill the helper, please
@@ -285,7 +319,10 @@ $(function() {
 					
 					// And add a new one to the droppable
 					add_dice_to_figure(uuidB,idxB,dice);
-				
+
+					m_Unit.update_cost();
+					update_unitcost();
+
 					ui.helper.removeMe = false;
 				}
 			}
@@ -329,6 +366,9 @@ $(function() {
 
 					// Remove the offending item
 					ui.helper.remove();
+					
+					m_Unit.update_cost();
+					update_unitcost();
 				}
 				
 			} // stop
@@ -353,6 +393,9 @@ $(function() {
 									
 		// Then finally update the available number of dice
 		update_dicepool();
+		
+		m_Unit.update_cost();
+		update_unitcost();
 	}
 
 /******************************************************************************
@@ -391,9 +434,13 @@ $(function() {
 
 					// Remove this item from the model
 					m_Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
-						
+
 					// Update view
-					update_la();
+					update_figure_la(Fuuid,Fidx); // Fix the spacing
+					update_la(); // Sort out the pool icons
+					
+					m_Unit.update_cost();
+					update_unitcost();
 				}
 				
 			} // stop
@@ -417,6 +464,9 @@ $(function() {
 		// Add the new graphic
 		$("<img class='smallla' id='laicon_"+Fidx+"_"+Fuuid+"_"+Luuid+"' src='res/special_abilities/lsa-"+la_name+".png' />").appendTo($("#la_"+Fidx+"_"+Fuuid));
 		la_draggable($("#laicon_"+Fidx+"_"+Fuuid+"_"+Luuid));
+		
+		m_Unit.update_cost();
+		update_unitcost();
 	}
 
 }); // main jquery initialiser function

@@ -55,6 +55,9 @@ function Unit(max_figures){
 
 	// Movement grid - N E S W
 	this.movement = new Array(4);
+	for (var x = 0; x < 4; x++) {
+		this.movement[x] = 0;
+	}
 
 /******************************************************************************
  * Acessor methods for returning member variables and derivatives
@@ -111,11 +114,13 @@ function Unit(max_figures){
 
 	this.set_faction = function(faction) {
 		switch(faction){
-		case "egypt":		this.faction = 0;	break;
+		case "egyptian":	this.faction = 0;	break;
 		case "han":			this.faction = 1;	break;
-		case "rome":		this.faction = 2;	break;
+		case "roman":		this.faction = 2;	break;
 		case "mercenary":	this.faction = 3;	break;
 		}
+		
+		this.update_cost();
 	}
 
 
@@ -609,9 +614,16 @@ function Unit(max_figures){
 	 	
 		for (var x = 0; x < this.figures.length; x++) {
 		
-			var cost = this.figures[x].get_figure()[14+this.faction];
-		
-			this.unit_cost += parseInt(cost);
+			var figure_cost = parseInt(this.figures[x].get_figure()[14+this.faction]);
+			
+			var icon_size = this.figures[x].get_dicecount() + this.figures[x].get_lacount();
+			
+			var icon_cost = 0;
+			for (var y = 0; y < icon_size; y++) {
+				icon_cost += (y*15)
+			}
+
+			this.unit_cost += (figure_cost + icon_cost);
 		}
 	 
 	 }

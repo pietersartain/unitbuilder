@@ -167,7 +167,7 @@ function createUl($figures) {
 				<option value="sortie_portrait">Sortie (Portrait)</option>
 				<option value="sortie_landscape">Sortie (Landscape)</option>
 				<option value="cavalry_portrait">Cavalry (Portrait)</option>
-				<option value="cavaltry_landscape">Cavalry (Landscape)</option>
+				<option value="cavalry_landscape">Cavalry (Landscape)</option>
 			</select>
 		</td>
 	</tr>
@@ -182,23 +182,28 @@ function createUl($figures) {
 <!--<div id="leftbar">&nbsp;</div>
 <div id="fullbg">&nbsp;</div>-->
 
-<img id="fullbg" src="res/units/roman_test.jpg" />
-<div id="drop_area" >
+<img id="fullbg" src="" />
 
 <?php
+//<div id="drop_area" >
 
-$str = '';
-	for ($y = 0; $y < 7; $y++) {
-		for ($x = 0; $x < 18; $x++) {
-			$str .= "<div class='grid'>&nbsp;</div>";
-		}
-//		$str .= "<br />";
-	}
+$cavalry = '';
+for ($x = 0; $x < 7*18; $x++) {
+	$cavalry .= "<div class='grid'>&nbsp;</div>";
+}
 
-echo $str;
+$sortie = '';
+for ($y = 0; $y < 7*8; $y++) {
+	$sortie .= "<div class='grid'>&nbsp;</div>";
+}
 
+echo "<div class='grid_box' id='grid_cavalry_landscape'>".$cavalry."</div>";
+echo "<div class='grid_box' id='grid_cavalry_portrait'>".$cavalry."</div>";
+echo "<div class='grid_box' id='grid_sortie_landscape'>".$sortie."</div>";
+echo "<div class='grid_box' id='grid_sortie_portrait'>".$sortie."</div>";
+
+// </div>
 ?>
-</div>
 
 <div id='base_cost'>
 </div>
@@ -237,9 +242,6 @@ echo $str;
 </div>
 
 <div id="global_ability_pool">
-</div>
-
-<div id="unit_cost">
 </div>
 
 </body>
