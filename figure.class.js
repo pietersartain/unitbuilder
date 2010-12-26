@@ -13,8 +13,11 @@ function Figure(uuid, idx, figure){
 	// Local abilities attached to this figure
 	this.la		= [];
 
-	this.add_la = function(uuid) {
-		this.la[this.la.length] = uuid;
+	this.add_la = function(uuid,name) {
+		var idx = this.la.length;
+		this.la[idx] = new Array(2);
+		this.la[idx][0] = uuid;
+		this.la[idx][1] = name;
 	}
 	
 	this.rm_la = function(uuid) {
@@ -25,6 +28,8 @@ function Figure(uuid, idx, figure){
 			}
 		}
 	}
+	
+	this.get_la = function() { return this.la; }
 
 	this.add_dice = function(type,uuid) {
 		switch(type){

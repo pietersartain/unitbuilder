@@ -334,7 +334,13 @@ function Unit(max_figures){
 				this.dice[x][0]++;
 			}
 		}
-
+		
+		// Remove and refund any LAs attached to the figure
+		var figure_las = lfig.get_la();
+		for (var x = 0; x < lfig.get_lacount(); x++){
+			this.rm_la_from_figure(uuid,figure_las[x][1],figure_las[x][0]);
+		}
+		
 		// Then find the details of the figure we're about to remove
 		var figure = lfig.get_figure();
 
@@ -367,7 +373,7 @@ function Unit(max_figures){
 	 */
 	this.add_la_to_figure = function(Fuuid, name, Luuid) {
 		// Attach a LA to a figure by UUID of figure and UUID of LA.
-		this.get_figure(Fuuid).add_la(Luuid);
+		this.get_figure(Fuuid).add_la(Luuid, name);
 
 		var la_idx = this.get_la_idx_from_name(name);
 
