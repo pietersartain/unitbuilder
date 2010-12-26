@@ -8,7 +8,7 @@
  */
 var m_Unit = new Unit(12);	// The main base unit thing
 var iconoffset = 30;		// Dice icon offset size
-var commander = 0;			// Commanders on the base
+var commander = 0;			// Number of commanders on this base
 
 /*
  * jQuery functions from here on in ...
@@ -115,28 +115,7 @@ $(function() {
 					// The id of the figure can be found directly
 					var base_id 	= figures[id][0];
 	
-					// Construct a pretty unique id
-					var uuid = newID()
-					
-					// Add the figure to the model
-					m_Unit.add_figure(uuid,id,figures[id]);
-					
-					// Update the dicepool to reflect the changes
-					update_dicepool(m_Unit.get_dice());
-					
-					// Update the global abilities
-					update_ga()
-					
-					// Local abilities updated at the end of Unit.update_la()
-					// Kinda naughty.
-					
-					// Update the HP count.
-					update_basehp();
-					
-					// Update the movement tray
-					update_movement();
-					
-					update_unitcost();
+					var uuid = add_figure(figures, id);
 	
 					$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"; left: "+xloc+";'> \
 						<img src='"+base+"' /> \
@@ -194,12 +173,7 @@ $(function() {
 						commander = 0;
 					}
 
-					m_Unit.rm_figure(uuid);
-					update_dicepool(m_Unit.get_dice());
-					update_la();
-					update_basehp();
-					update_movement();
-					update_unitcost();
+					rm_figure(uuid);
 
 				}
 			} // stop
@@ -221,9 +195,6 @@ $(function() {
 					var class_list = $(ui.helper).attr("class").split(" ");
 
 					add_dice_to_figure(uuid,idx,class_list[0]);
-					
-					// Then finally update the available number of dice
-					update_dicepool(m_Unit.get_dice());
 				
 				// If the draggable is an img.la_pool, then it's a local ability from the LA pool
 				} else if ($(ui.draggable).is("img.la_pool")) {
@@ -354,7 +325,7 @@ $(function() {
 					
 					// Update view
 					update_figure_dice(uuid, idx);
-					update_dicepool(m_Unit.get_dice());
+					update_dicepool();
 
 					// Remove the offending item
 					ui.helper.remove();
@@ -379,6 +350,9 @@ $(function() {
 		// Add the new graphic
 		$("<img id='icon_"+idx+"_"+Fuuid+"_"+Duuid+"' src='res/attributes/"+type+".png' />").appendTo($("#dice_"+idx+"_"+Fuuid));
 		dice_draggable($("#icon_"+idx+"_"+Fuuid+"_"+Duuid));
+									
+		// Then finally update the available number of dice
+		update_dicepool();
 	}
 
 /******************************************************************************

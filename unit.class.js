@@ -410,6 +410,12 @@ function Unit(max_figures){
 		}
 		return false;
 	}
+	
+	/*
+	 *
+	 */
+	this.unit_has_la = function(la_name) {
+	}
 
 	/*
 	 * Reparse the number of dice on this unit
@@ -471,14 +477,16 @@ function Unit(max_figures){
 				if (remlist.length) {
 					for (var y = 0; y < remlist.length; y++) {
 						
-						var name = this.la[y][4];
+						idx = remlist[y];
+						
+						var name = this.la[idx][4];
 						
 						// Kill off the view parts
 						$("img#icon_"+name).remove();
 						$("span#text_"+name).remove();
 
 						// Then kill off the model
-						this.la.splice(y,1);
+						this.la.splice(idx,1);
 					}
 				}
 				
