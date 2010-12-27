@@ -1,7 +1,7 @@
 Open Legions Unit Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A running demo is available here:
-http://pesartain.com/games/arcane_legions/unitbuilder
+http://pics.pesartain.com/games/arcane_legions/unitbuilder
 
 The intention is to allow an open platform to build replacement or alternative
 unit cards, possibly also for non-AL fiction. They won't be tournament
