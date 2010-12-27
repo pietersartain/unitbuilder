@@ -55,9 +55,16 @@ function Unit(max_figures){
 
 	// Movement grid - N E S W
 	this.movement = new Array(4);
+
+	// Badsides
+	this.sides = new Array(4);
+
 	for (var x = 0; x < 4; x++) {
 		this.movement[x] = 0;
+		this.sides[x] = 0;
 	}
+	
+
 
 /******************************************************************************
  * Acessor methods for returning member variables and derivatives
@@ -109,7 +116,9 @@ function Unit(max_figures){
 	this.get_pegcount = function() { return this.pegs; }
 	
 	this.get_movement = function() { return this.movement; }
-
+	
+	this.get_sides = function() { return this.sides; }
+	
 	this.get_cost = function() { return this.unit_cost; }
 
 	this.set_faction = function(faction) {
@@ -313,6 +322,8 @@ function Unit(max_figures){
 		
 		this.update_movement();
 		
+		this.update_badsides();
+		
 		this.update_cost();
 	}
 
@@ -364,6 +375,8 @@ function Unit(max_figures){
 		this.update_pegcount();
 		
 		this.update_movement();
+		
+		this.update_badsides();
 		
 		this.update_cost();
 		
@@ -600,6 +613,61 @@ function Unit(max_figures){
  * Bad Side Grid methods
  ******************************************************************************/
 
+	 this.update_badsides = function() {
+
+		var sides = this.sides;
+		
+		for (var y = 0; y < 4; y++) {
+			sides[y] = 0;
+		}
+			 
+		for (var x = 0; x < this.figures.length; x++) {
+
+			for (var y = 1; y < 4; y++) {
+				var col = this.figures[x].get_figure()[22+y];
+
+				/*
+				switch(col) {
+					case 'r': sides[y][0]++; break;
+					case 'b': sides[y][1]++; break;
+					case 'g': sides[y][2]++; break;
+				}
+				*/
+
+				switch(col) {
+					case 'r': sides[y] += 2; break;
+					case 'b': sides[y] += 4; break;
+					case 'g': sides[y] += 1; break;
+				}
+			}
+			
+			// North face
+			var col = this.figures[x].get_figure()[22];
+			switch(col) {
+				case 'r': if (sides[0] < 2) sides[0] = 2; break;
+				case 'b': if (sides[0] < 4) sides[0] = 4; break;
+				case 'g': if (sides[0] < 1) sides[0] = 1; break;
+			}
+		}
+		
+		for (var y = 0; y < 4; y++) {
+			if (y > 0) {
+				var av = sides[y] / this.figures.length;
+				sides[y] = Math.floor(av); 
+			}
+			
+			if (sides[y] > 2) {
+				sides[y] = 'blue';
+			} else if (sides[y] > 1) {
+				sides[y] = 'red';
+			} else {
+				sides[y] = 'gray';
+			}
+		}
+		
+		this.sides = sides;
+
+	 }
 
 /******************************************************************************
  * Unit Cost Grid methods

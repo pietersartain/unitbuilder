@@ -29,6 +29,8 @@ function add_figure(figures, id) {
 	// Update the movement tray
 	update_movement();
 	
+	update_sides();
+	
 	update_unitcost();
 	
 	return uuid;
@@ -40,6 +42,7 @@ function rm_figure(uuid) {
 	update_la();
 	update_basehp();
 	update_movement();
+	update_sides();
 	update_unitcost();
 }
 
@@ -72,6 +75,17 @@ function update_movement() {
 	$("#move_e").text(move[1]);
 	$("#move_s").text(move[2]);
 	$("#move_w").text(move[3]);
+
+}
+
+function update_sides() {
+
+	var sides = m_Unit.get_sides();
+
+	$("#move_n").css('background-color',sides[0]);
+	$("#move_e").css('background-color',sides[1]);
+	$("#move_s").css('background-color',sides[2]);
+	$("#move_w").css('background-color',sides[3]);
 
 }
 

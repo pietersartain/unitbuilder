@@ -55,8 +55,10 @@ div#global_ability_pool	{ position: absolute; top: 435px; left: 973px;
 
 div#movement			{ position: absolute; top: 435px; left: 703px; 
 						  border: 1px solid black; background: silver;
-						  min-width: 50px; height: 56px; 
+						  min-width: 50px;  
 						}
+
+div#movement table		{ width: 100px; }
 
 div#base_cost			{ position: absolute; top: 85px; left: 550px; }
 div#base_hp				{ position: absolute; top: 85px; left: 450px; }

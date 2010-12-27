@@ -231,12 +231,39 @@ echo "<div class='grid_box' id='grid_sortie_portrait'>".$sortie."</div>";
 <div id="movement">
 	<table>
 		<tr>
-			<td>N</td><td id='move_n'>0</td>
-			<td>E</td><td id='move_e'>0</td>
+			<td></td>
+			<td></td>
+			<td id='move_n'>0</td>
+			<td></td>
+			<td></td>
 		</tr>
 		<tr>
-			<td>S</td><td id='move_s'>0</td>
-			<td>W</td><td id='move_w'>0</td>
+			<td></td>
+			<td></td>
+			<td>N</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td id='move_w'>0</td>
+			<td>W</td>
+			<td></td>
+			<td>E</td>
+			<td id='move_e'>0</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>S</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td id='move_s'>0</td>
+			<td></td>
+			<td></td>
 		</tr>
 	</table>
 </div>
