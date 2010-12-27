@@ -1,21 +1,25 @@
+/*
+
+    Open Legions Unit Builder
+    Copyright (C) 2010  Pieter E Sartain
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+ ******************************************************************************
+ * main.css
+ *
+ * The style code.
+ ******************************************************************************/
+
 body {font-family: tahoma;}
-
-/*div#drop_area {	width: 469px; height: 183px;
-				border: 0px;
-				border-right: 1px;
-				border-bottom: 1px;
-				border-style: solid;
-				border-color: #9499db;
-				float: left; 
-				background-repeat: no-repeat; background-position: -1px -1px;
-				position: absolute; left: 460px; top: 125px;
-			  }
-
-div#drop_area div.grid {border: 0px; border-top: 1px; border-left: 1px; border-color: #9499db; border-style: solid; 
-						float: left; width: 25px; height: 25px; position: relative;}
-
-div#drop_area > img 	{width: 512px; position: absolute; top: 2px; left: -2px;}
-*/
 
 .grid_box > div.grid	{	border: 0px; border-top: 1px; border-left: 1px; border-color: #9499db; 
 							border-style: solid; float: left; width: 25px; height: 25px; position: relative;}
