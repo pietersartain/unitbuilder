@@ -1,14 +1,9 @@
-Open Legions Unit Builder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A running demo is available here:
-http://pics.pesartain.com/games/arcane_legions/unitbuilder
+# Open Legions Unit Builder
 
-The intention is to allow an open platform to build replacement or alternative
-unit cards, possibly also for non-AL fiction. They won't be tournament
-legal, however, since they won't be registered with Wells Expeditions.
+The intention is to allow an open platform to build replacement or alternative unit cards, possibly also for non-AL fiction. They won't be tournament legal, however, since they won't be registered with Wells Expeditions.
 
-Not Yet Implemented / ToDo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Not Yet Implemented / ToDo
+
  * Faction limitations on figure placement (results in NaN error for unit cost)
  * Proper figure blocking and placement
  * Allow skinning / configuration-based rulesets to build new games and modify
@@ -17,13 +12,12 @@ Not Yet Implemented / ToDo
  * Proper background graphics for the unit cards
  * Correct maximum icons per peg
 
-Hosting the Unit Builder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This has been tested to run on Apache 2 with PHP5. Most of the code, however, 
-is javascript based on jquery, so runs client side on the browser.
+## Hosting the Unit Builder
 
-Copyright
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There is a small amount of php used to dynamically generate the frontpage incuding the figure listings from a text file. The unit builder functionality is implemented with javascript (jquery), however, so runs client side. This allows you to generate a static version of the frontpage for hosting.
+
+## Copyright
+
 Arcane Legions is copyright Wells Expeditions 2010. All figures, names, fiction
 and so on are trademark their respective owners.
 
