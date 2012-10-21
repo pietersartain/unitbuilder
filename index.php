@@ -26,13 +26,18 @@
 $fid = fopen("figures.txt",'r');
 $headings = fgetcsv($fid);
 $figures = array();
+$idx = 0;
 while(($figure = fgetcsv($fid)) !== FALSE) {
 	//$figures[$figure[0]] = $figure;
-	$figures[] = $figure;
+	foreach($figure as $key => $value) {
+		$figures[$idx][$key] = trim($value);
+	}
+	$idx++;
 }
 fclose($fid);
 
 //print_r($figures);
+//die();
 
 //unset($figures[0]);
 
