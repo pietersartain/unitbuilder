@@ -42,7 +42,7 @@ fclose($fid);
 function createAbility($ability,$cost,$type) {
 	return "<td 	class='ability' 
 					style=\"background-image: 
-							url('res/special_abilities/".$type."-".str_replace(" ","-",strtolower($ability)).".png')
+							url('res/special_abilities/".$type."-".str_replace(" ","-",strtolower(trim($ability))).".png')
 						\"
 					>&nbsp;</td><td>".$cost."</td>";
 }
