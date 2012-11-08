@@ -136,6 +136,7 @@ function createUl($figures) {
 
 ?>
 
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -148,9 +149,6 @@ function createUl($figures) {
 
 	var figures = new Array(<?php echo count($figures) ?>);
 	
-	//figures[0] = new Array(5);
-	//figures[0][0] = 'Wibble';
-
 	<?php
 		foreach($figures as $idx => $figure) {
 			echo "figures[$idx] = new Array(".count($figure).");";
