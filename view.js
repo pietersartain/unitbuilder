@@ -81,7 +81,7 @@ function reset_all() {
 
 function update_basehp() {
 	$("#base_hp").empty();
-	$("<span>"+m_Unit.get_pegcount()+"/"+m_Unit.get_max_figures()+"</span>").appendTo("#base_hp");
+	$("<span>"+m_Unit.get_hp()+"/"+m_Unit.get_max_figures()+"</span>").appendTo("#base_hp");
 }
 
 function update_movement() {

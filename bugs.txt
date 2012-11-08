@@ -1,0 +1,9 @@
+
+### Outstanding
+Extra figure slots for regrouping
+Unable to print units
+Correct maximum icons per peg
+Faction limitations on figure placement (results in NaN error for unit cost)
+
+### Fixed
+Default base HP starts with 12, but it's a sortie, so it should be 8.

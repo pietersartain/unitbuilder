@@ -32,6 +32,7 @@ function Unit(max_figures){
 	this.unit_cost = 0;
 	
 	this.pegs = 0;
+	this.hp = 0;
 
 	/*
 	 * Dice and movement:
@@ -130,8 +131,8 @@ function Unit(max_figures){
 	
 	this.get_max_figures = function() { return this.max_figures; }
 	
-	this.get_pegcount = function() { return this.pegs; }
-	
+	this.get_hp = function() { return this.hp; }
+
 	this.get_movement = function() { return this.movement; }
 	
 	this.get_sides = function() { return this.sides; }
@@ -165,11 +166,16 @@ function Unit(max_figures){
 	 */
 	this.update_pegcount = function() {
 		this.pegs = 0;
+		this.hp = 0;
 		var pegs;
 		for (var x = 0; x < this.figures.length; x++) {
 			pegs = this.figures[x].get_figure()[27].split("U");
+			pegs = parseInt(pegs[0]);
 			//console.log(pegs[0]);
-			this.pegs += parseInt(pegs[0]);
+			this.pegs += pegs;
+			if (!this.figures[x].is_secondary()) {
+				this.hp += pegs;
+			}
 		}
 	}
 
@@ -708,7 +714,11 @@ function Unit(max_figures){
 				icon_cost += (y*15)
 			}
 
-			this.unit_cost += (figure_cost + icon_cost);
+			this.unit_cost += icon_cost;
+			if (!this.figures[x].is_secondary()) {
+				this.unit_cost += figure_cost;
+			}
+
 		}
 	 
 	 }

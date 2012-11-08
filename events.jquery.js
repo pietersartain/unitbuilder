@@ -22,7 +22,7 @@
 /* 
  * Variable declarations
  */
-var m_Unit = new Unit(12);	// The main base unit thing
+var m_Unit = new Unit(8);	// The main base unit thing
 var iconoffset = 30;		// Dice icon offset size
 var commander = 0;			// Number of commanders on this base
 
@@ -139,7 +139,7 @@ $(function() {
 
 				var pegs = figures[id][27].split("U");
 				
-				if ( (parseInt(pegs[0]) + m_Unit.get_pegcount()) > m_Unit.get_max_figures() ) {
+				if ( (parseInt(pegs[0]) + m_Unit.get_hp()) > m_Unit.get_max_figures() ) {
 					return;
 				}
 
@@ -164,7 +164,7 @@ $(function() {
 	
 					var uuid = add_figure(figures, id);
 	
-					$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"; left: "+xloc+";'> \
+					$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"px; left: "+xloc+"px;'> \
 						<img src='"+base+"' /> \
 						<span>"+base_id+"</span> \
 						<div id='dice_"+id+"_"+uuid+"' class='smalldice'></div> \
@@ -172,10 +172,15 @@ $(function() {
 						</div>"
 					).appendTo(this);
 					
+					var base = $("#base_"+id+"_"+uuid);
+
 					// Make it draggable
-					base_draggable($("#base_"+id+"_"+uuid));
+					base_draggable(base);
 					// Make it a drop target
-					base_droppable($("#base_"+id+"_"+uuid));
+					base_droppable(base);
+
+					// Allow it to be secondary
+					base_rightclickable(base);
 					
 					if (base_color == 'gold') {
 					// If it's gold, let's only have one, hmm?
@@ -194,6 +199,22 @@ $(function() {
 /******************************************************************************
  * Base functions
  ******************************************************************************/
+
+ 	function base_rightclickable(ele) {
+	  ele.bind("contextmenu",function(event) {
+	  	event.preventDefault();
+      $(this).children("span").toggle();
+			// Get the ID of the thing ...
+			var id = $(this).attr('id').split("_");
+			var uuid = id[2];
+      var fig = m_Unit.get_figure(uuid);
+      fig.slot_type(!fig.secondary);
+      m_Unit.update_pegcount();
+      update_basehp();
+      m_Unit.update_cost();
+      update_unitcost();
+		});
+	}
 
 	function base_draggable(ap_ele) {
 		ap_ele.draggable({

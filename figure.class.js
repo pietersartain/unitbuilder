@@ -25,7 +25,8 @@ function Figure(uuid, idx, figure){
 	this.uuid	= uuid; // UUID of the div I'm attached to
 	this.idx	= idx; // index of the main figure array that I was created from
 	this.figure = figure; // Complete figure reference from the main array
-	
+	this.secondary = false; // Is this a secondary slot? (ie: does it count toward the unit HP?)
+
 	// Dice attached to this figure
 	this.red	= [];
 	this.white	= [];
@@ -102,5 +103,9 @@ function Figure(uuid, idx, figure){
 	this.get_idx = function(){ return this.idx; }
 	
 	this.get_figure = function(){ return this.figure; }
+
+	this.slot_type = function(secondary) { this.secondary = secondary; }
+
+	this.is_secondary = function() { return this.secondary; }
 
 }

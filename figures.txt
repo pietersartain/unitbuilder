@@ -89,5 +89,5 @@ ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egyp
 1R25,	Iberian Wolf,			1,	 0,	  0.38,8, Carnivorous, 0.34, Impede, 0.2, Beast, 4, ,,				  468, 312, 156, 468,1,1,2,1,r,r,g,r,	white,	2UPA
 1R26,	Ferverian Legionary,	0.67,0,   0.5, 3, Heavy Armor, 0.2, Death Cloud, 1, Disciplined, 2, Tough, 2.5, --,783, 261,  --,1,1,2,1,r,g,g,g,	red,	2ULB
 1H06A,	Terracotta Strikers,	0.8, 0,   0.2, 5, ,, ,, Hustle, 1.5, Fragile, 3,							  111,  37, 111,  --,1,1,2,1,r,r,g,r,	white,	1U
-1M03A,	Mechanist Savros,		0.5, 0,   1,   4, Articifer, 1, Intuition, 1, ,, ,,							  250, 200, 250, 200,1,1,2,1,r,g,g,g,	gold,	1U
+1M03A,	Mechanist Savros,		0.5, 0,   1,   4, Artificer, 1, Intuition, 1, ,, ,,							  250, 200, 250, 200,1,1,2,1,r,g,g,g,	gold,	1U
 1E25A,	Necrotic Reborn,		3,   0,   0,   4, Fear, 1, ,, Regeneration, 2, ,,							  264, 792,  --, 792,1,1,2,1,r,g,g,g,	white,	3UL

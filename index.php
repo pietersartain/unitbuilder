@@ -21,6 +21,17 @@
  * The main page.
  ******************************************************************************/
 
+/* Ensure the charset info is set in the first 1024 bytes of the page, as per
+ * http://stackoverflow.com/questions/11633162/character-encoding-not-declared-in-html-document
+ */
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<?php
 // Figure list as an array
 
 $fid = fopen("figures.txt",'r');
@@ -136,12 +147,7 @@ function createUl($figures) {
 
 ?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<link type="text/css" href="css/themename/jquery-ui-1.8.6.custom.css" rel="Stylesheet" />	
+<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.6.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
 
