@@ -100,6 +100,10 @@ $(function() {
 		reset_all();
 	});
 
+	$('select[name="baserotation"]').change(function() {
+		$("div#movement").css("transform","rotate("+$(this).val()+"deg)")
+	});
+
 	/*
 	 * Make the dice draggable by default
 	 */

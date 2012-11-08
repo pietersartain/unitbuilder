@@ -194,10 +194,13 @@ function createUl($figures) {
 			</select>
 			<br />
 			<select name='basetype'>
-				<option value="sortie_portrait">Sortie (Portrait)</option>
-				<option value="sortie_landscape">Sortie (Landscape)</option>
-				<option value="cavalry_portrait">Cavalry (Portrait)</option>
-				<option value="cavalry_landscape">Cavalry (Landscape)</option>
+				<option value="sortie_landscape">Sortie</option>
+				<option value="cavalry_landscape">Cavalry</option>
+			</select>
+			<br />
+			<select name='baserotation'>
+				<option value="0">Landscape</option>
+				<option value="90">Portrait</option>
 			</select>
 		</td>
 	</tr>
@@ -258,6 +261,8 @@ echo "<div class='grid_box' id='grid_sortie_portrait'>".$sortie."</div>";
 <div id="local_ability_pool">
 </div>
 
+<?php
+/*
 <div id="movement">
 	<table>
 		<tr>
@@ -296,6 +301,15 @@ echo "<div class='grid_box' id='grid_sortie_portrait'>".$sortie."</div>";
 			<td></td>
 		</tr>
 	</table>
+</div>
+*/
+?>
+
+<div id="movement">
+	<div id="move_n">0</div>
+	<div id="move_e">0</div>
+	<div id="move_w">0</div>
+	<div id="move_s">0</div>
 </div>
 
 <div id="global_ability_pool">
