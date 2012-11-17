@@ -16,42 +16,14 @@
 ******************************************************************************
 * print.css
 *
-* The style code.
+* The style code to allow printing.
 ******************************************************************************/
-
-
-body {
-  font-family: tahoma;
-  margin: 0;
-}
 
 /**
  *  Header containing Faction, base size, abilities, dice and HP
  */
 header {
   display: none;
-}
-
-.dice {
-  background-repeat:no-repeat;
-  background-position: 0px -10px;
-  opacity: 0.2;
-}
-
-.red    { background-image: url('../res/attributes/red.png');  }
-.white  { background-image: url('../res/attributes/white.png');  }
-.blue   { background-image: url('../res/attributes/blue.png'); }
-.move   { background-image: url('../res/attributes/move.png'); }
-
-/**
- *  Style cludges
- */
-ul#figure_list li:after, header:after { 
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
 }
 
 /**
@@ -73,7 +45,6 @@ div#base {
     position: fixed;
     top: 10px  !important; 
     left: 20px !important;
-    /*width: 512px;*/
   }
 }
 
@@ -93,7 +64,6 @@ div#base {
 
 #grid_cavalry_landscape { 
   width: 473px; 
-  /*height: 183px;*/
 }
 
 #grid_sortie_landscape  { 
@@ -106,113 +76,7 @@ div#base {
  *  Base info, including movement
  */
 div#base_info {
-  position: fixed; 
   top: 228px;
   left: 60px;
-  width: 205px;
-
-  &.cavalry {
-    width: 455px;
-  }
-
-  div#movement { 
-    position: relative; 
-    top: -6px; 
-    float: left;
-    border: 0px solid black;
-    width: 30px; height: 30px;
-    font-size: 0.5em;
-    &>div { 
-      background-color: gray; 
-      text-align: center; 
-    }
-
-    &>div#move_n { 
-      width: 28px; height: 10px; 
-      border: 0 solid black;
-      border-width: 1px 1px 0 1px;
-    }
-
-    &>div#move_e { 
-      width: 10px; height: 10px;
-      float: right;
-      border: 0 solid black;
-      border-width: 0 1px 0 0px;
-    }
-
-    &>div#move_w { 
-      width: 10px; height: 10px; 
-      float: left;
-      border: 0 solid black;
-      border-width: 0 0 0 1px;
-    }
-
-    &>div#move_s { 
-      width: 18px; height: 10px; 
-      margin-left: 5px; margin-right: 5px; 
-      clear: both;
-      border: 0 solid black;
-      border-width: 0 1px 1px 1px;
-    }
-  }
-
-  #ga_base_pool {
-    float:right;
-    img.base_info {
-      width: 27px;
-    }
-  }
-
-  #points {
-    float: right;
-    font-size: 0.5em;
-    font-family: "Times New Roman", Times, Serif;
-    padding-left: 3px;
-    border-left: 1px inset gray;
-
-    &>div#base_cost {
-      font-size: 1.6em;
-      text-align: center;
-    }
-  }
 }
 
-/**
- *  Figure drop base
- */
-.grid_box .base {
-  position: absolute;
-  float: left;
-  &>span {
-    position: absolute;
-    left: -5px;
-    top: 20px;
-    background: #ffffdd;
-    font-size: 60%;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-  }
-
-  &>div.smalldice {
-    position: absolute;
-    left: 15px;
-    top: -10px;
-    width: 10px;
-
-    &> img {
-      width: 20px;
-      margin-right: -5px;
-      padding: 0px;
-    }
-  }
-
-  &>div.smallla {
-    position: relative;
-    left: 15px;
-    top: -10px;
-    width: 0px;
-    &>img {
-      width: 35px;
-    }
-  }
-}

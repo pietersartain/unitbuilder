@@ -77,7 +77,6 @@ $(function() {
 		var selbox = $('select[name="basetype"]').val();
 		
 		var fimg = "res/units/"+$('select[name="faction"]').val()+"_"+selbox+".png";
-		//$("#drop_area").css('background-image', 'url("+fimg+")');
 		$("img#fullbg").attr('src',fimg);
 			
 		// Also we should reset the whole thing and force a new max-HP value
@@ -157,8 +156,8 @@ $(function() {
 				if (!commander || (base_color != 'gold') ) {
 
 					// Get the position to drop the cursor 
-					var xloc = ev.pageX-460-iconoffset;// - this.offsetLeft;
-					var yloc = ev.pageY-105-iconoffset-$(window).scrollTop();// - this.offsetTop;
+					var xloc = ev.pageX-460-iconoffset;
+					var yloc = ev.pageY-105-iconoffset-$(window).scrollTop();
 
 					// Force the dropped cursor into the grid
 					xloc = (Math.round(xloc / 26) * 26) + 1;
@@ -288,7 +287,6 @@ $(function() {
 
 					if (m_Unit.figure_has_la(figure_uuid, la_name)) {
 						add_la_to_figure(figure_uuid,figure_idx,la_name);
-						//update_la();
 					}
 
 				// If the draggable is an img.smallla, then it's a local ability from another base

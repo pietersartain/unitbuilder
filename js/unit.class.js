@@ -583,13 +583,7 @@ function Unit(max_figures){
 					// Do we already have a GA of this type?			
 					for (var y = 0; y < this.ga.length; y++) {
 						if (this.ga[y][0] == figure[x]) {
-						
-							//if (addrm == 'add') {
-								this.ga[y][1] += parseFloat(figure[x+1]);
-							//} else {
-							//	this.ga[y][1] -= parseFloat(figure[x+1]);
-							//}
-						
+							this.ga[y][1] += parseFloat(figure[x+1]);						
 							newga = false;
 						}
 					}
@@ -648,14 +642,6 @@ function Unit(max_figures){
 
 			for (var y = 1; y < 4; y++) {
 				var col = this.figures[x].get_figure()[22+y];
-
-				/*
-				switch(col) {
-					case 'r': sides[y][0]++; break;
-					case 'b': sides[y][1]++; break;
-					case 'g': sides[y][2]++; break;
-				}
-				*/
 
 				switch(col) {
 					case 'r': sides[y] += 2; break;

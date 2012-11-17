@@ -237,15 +237,8 @@ function createUl($figures) {
 		$sortie .= "<div class='grid'>&nbsp;</div>";
 	}
 
-	$ee =	'<div style="top: 1px; left: 1px;" class="base ui-draggable ui-droppable" id="base_0_2D984FC3-BDF5-477C-9C8C-2AADAAE566AF">
-		<img src="res/figures/green1U.png">
-		<span>1E01</span>
-		<div class="smalldice" id="dice_0_2D984FC3-BDF5-477C-9C8C-2AADAAE566AF"></div>
-		<div class="smallla" id="la_0_2D984FC3-BDF5-477C-9C8C-2AADAAE566AF"></div>
-		</div>';
-
 	echo "<div class='grid_box' id='grid_cavalry_landscape'>".$cavalry."</div>";
-	echo "<div class='grid_box' id='grid_sortie_landscape'>".$sortie.$ee."</div>";
+	echo "<div class='grid_box' id='grid_sortie_landscape'>".$sortie."</div>";
 
 	?>
 

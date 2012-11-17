@@ -43,8 +43,6 @@ header {
   }
 
   &>div {
-    //top: 15px;
-    //position: fixed;
     float: left;
     margin-left:  5px;
     margin-top: 15px;
@@ -54,7 +52,6 @@ header {
     min-width: 50px; height: 56px; 
 
     &#global_ability_pool {
-      //left: 244px;
 
       div {
         position: relative;
@@ -73,14 +70,12 @@ header {
 
     &#base_hp {
       height: 42px;
-      //left: 381px;
       padding-top: 14px;
       text-align: center;
       width: 56px;
     }
 
     &#dice_pool {
-      //left: 444px; 
 
       td {
         width: 80px;
@@ -94,9 +89,7 @@ header {
       }
     } /* #dice_pool */
 
-    &#local_ability_pool {
-      //left: 713px; 
-      
+    &#local_ability_pool {      
       div {
         position: relative;
         float: left;
@@ -200,7 +193,9 @@ div#scroll_list {
 div#base {
   z-index: 0;
   img#fullbg {
-    position: fixed; top: 100px; left: 431px; /*width: 512px;*/
+    position: fixed;
+    top: 100px;
+    left: 431px;
   }
 }
 
@@ -227,8 +222,14 @@ div#base {
   }
 }
 
-#grid_cavalry_landscape { width: 469px; /*height: 183px;*/}
-#grid_sortie_landscape  { width: 208px; left: 460px; }
+#grid_cavalry_landscape { 
+  width: 469px;
+}
+
+#grid_sortie_landscape  {
+  width: 208px;
+  left: 460px;
+}
 
 /**
  *  Base info, including movement

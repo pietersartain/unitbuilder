@@ -180,7 +180,6 @@ function update_la() {
 		var sum_nat		= la[x][2];
 		var name		= la[x][3].replace(/ /g,"-").toLowerCase();
 		
-		//var text_val	= unplaced+"/"+sum_int.toFixed(0)+"/"+sum_nat.toFixed(2);
 		var text_val	= unplaced+"/"+sum_nat.toFixed(2);
 	
 		// If this item already exists ...
@@ -192,11 +191,6 @@ function update_la() {
 
 		} else {
 			// We need to create an icon and text, too.		
-
-			/*
-			$("<img class='la_pool' id='icon_"+name+"' src='res/special_abilities/lsa-"+name+".png' />").appendTo("#local_ability_pool");
-			$("<span id='text_"+name+"'>"+text_val+"</span>").appendTo("#local_ability_pool");
-			*/
 
 			var content = "";
 			content += "<div>";
@@ -236,7 +230,7 @@ function update_ga() {
 
 	for (var x = 0; x < ga.length; x++) {
 
-		var gname = ga[x][0].replace(" ","-").toLowerCase();  // str_replace(" ","-",strtolower($ability))
+		var gname = ga[x][0].replace(" ","-").toLowerCase();
 		var gcount = ga[x][1];
 
 		var content = ""
@@ -248,9 +242,6 @@ function update_ga() {
 		$("#global_ability_pool").append(content);
 
 		var ga_img = $("<img class='base_info' id='"+gname+"_base' src='res/special_abilities/gsa-"+gname+".png' />");
-
-		//$("<img id='"+gname+"' src='res/special_abilities/gsa-"+gname+".png' />").appendTo("#global_ability_pool");
-		//$("<span>"+gcount.toFixed(1)+"/"+fcount+"</span>").appendTo("#global_ability_pool");
 		
 		if ( (gcount / fcount) >= 1 ) {
 			$("img#"+gname).fadeTo(0,1);
