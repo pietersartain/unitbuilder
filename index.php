@@ -47,14 +47,6 @@ while(($figure = fgetcsv($fid)) !== FALSE) {
 }
 fclose($fid);
 
-//print_r($figures);
-//die();
-
-//unset($figures[0]);
-
-//function parse_ability($name) {
-//	$retval = str_replace(" ","-",strtolower($name));
-
 function createAbility($ability,$cost,$type) {
 	return "<td 	class='ability' 
 					style=\"background-image: 
@@ -64,7 +56,6 @@ function createAbility($ability,$cost,$type) {
 }
 
 function createLi($figure,$idx) {
-	//$str = "<li id='".$figure[0]."'>";
 	$str = "<li id='".$idx."'>";
 	
 	$base = strtolower($figure[26]).$figure[27];
@@ -147,7 +138,7 @@ function createUl($figures) {
 
 ?>
 
-<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.6.custom.css" rel="Stylesheet" />	
+<link type="text/css" href="stylesheets/ui-lightness/jquery-ui-1.8.6.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
 
@@ -166,15 +157,14 @@ function createUl($figures) {
 
 </script>
 
-<!--<script type="text/javascript" src="main.js"></script>-->
+<script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript" src="js/figure.class.js"></script>
+<script type="text/javascript" src="js/unit.class.js"></script>
+<script type="text/javascript" src="js/view.js"></script>
+<script type="text/javascript" src="js/events.jquery.js"></script>
 
-<script type="text/javascript" src="functions.js"></script>
-<script type="text/javascript" src="figure.class.js"></script>
-<script type="text/javascript" src="unit.class.js"></script>
-<script type="text/javascript" src="view.js"></script>
-<script type="text/javascript" src="events.jquery.js"></script>
-
-<link type="text/css" href="main.css" rel="Stylesheet" />	
+<link type="text/css" href="stylesheets/screen.css" rel="stylesheet" media="screen, print" />
+<link type="text/css" href="stylesheets/print.css" rel="stylesheet" media="print" />
 
 </head>
 
@@ -182,29 +172,49 @@ function createUl($figures) {
 
 <header>
 
-<table>
-	<tr>
-		<td><img src="res/insignia/egyptian.png" /></td>
-		<td>
-			<select name='faction'>
-				<option value="egyptian">Egypt</option>
-				<option value="han">Han Dynasty</option>
-				<option value="mercenary">Mercenary</option>
-				<option value="roman">Rome</option>
-			</select>
-			<br />
-			<select name='basetype'>
-				<option value="sortie_landscape">Sortie</option>
-				<option value="cavalry_landscape">Cavalry</option>
-			</select>
-			<br />
-			<select name='baserotation'>
-				<option value="0">Landscape</option>
-				<option value="90">Portrait</option>
-			</select>
-		</td>
-	</tr>
-</table>
+	<table>
+		<tr>
+			<td><img src="res/insignia/egyptian.png" /></td>
+			<td>
+				<select name='faction'>
+					<option value="egyptian">Egypt</option>
+					<option value="han">Han Dynasty</option>
+					<option value="mercenary">Mercenary</option>
+					<option value="roman">Rome</option>
+				</select>
+				<br />
+				<select name='basetype'>
+					<option value="sortie_landscape">Sortie</option>
+					<option value="cavalry_landscape">Cavalry</option>
+				</select>
+				<br />
+				<select name='baserotation'>
+					<option value="0">Landscape</option>
+					<option value="90">Portrait</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+
+	<div id="global_ability_pool"></div>
+
+	<div id='base_hp'></div>
+
+	<div id="dice_pool">
+
+		<table>
+			<tr>
+				<td class='red dice'>&nbsp;</td><td id="red_count">0/0/0.00</td>
+				<td class='white dice'>&nbsp;</td><td id="white_count">0/0/0.00</td>
+			</tr>
+			<tr>
+				<td class='blue dice'>&nbsp;</td><td id="blue_count">0/0/0.00</td>
+				<td class='move dice'>&nbsp;</td><td id="move_count">0/0/0.00</td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="local_ability_pool"></div>
 
 </header>
 
@@ -212,107 +222,46 @@ function createUl($figures) {
 <?php echo createUl($figures) ?>
 </div>
 
-<!--<div id="leftbar">&nbsp;</div>
-<div id="fullbg">&nbsp;</div>-->
+<div id="base">
+	<img id="fullbg" src="" />
 
-<img id="fullbg" src="" />
+	<?php
 
-<?php
-//<div id="drop_area" >
+	$cavalry = '';
+	for ($x = 0; $x < 7*18; $x++) {
+		$cavalry .= "<div class='grid'>&nbsp;</div>";
+	}
 
-$cavalry = '';
-for ($x = 0; $x < 7*18; $x++) {
-	$cavalry .= "<div class='grid'>&nbsp;</div>";
-}
+	$sortie = '';
+	for ($y = 0; $y < 7*8; $y++) {
+		$sortie .= "<div class='grid'>&nbsp;</div>";
+	}
 
-$sortie = '';
-for ($y = 0; $y < 7*8; $y++) {
-	$sortie .= "<div class='grid'>&nbsp;</div>";
-}
+	$ee =	'<div style="top: 1px; left: 1px;" class="base ui-draggable ui-droppable" id="base_0_2D984FC3-BDF5-477C-9C8C-2AADAAE566AF">
+		<img src="res/figures/green1U.png">
+		<span>1E01</span>
+		<div class="smalldice" id="dice_0_2D984FC3-BDF5-477C-9C8C-2AADAAE566AF"></div>
+		<div class="smallla" id="la_0_2D984FC3-BDF5-477C-9C8C-2AADAAE566AF"></div>
+		</div>';
 
-echo "<div class='grid_box' id='grid_cavalry_landscape'>".$cavalry."</div>";
-echo "<div class='grid_box' id='grid_cavalry_portrait'>".$cavalry."</div>";
-echo "<div class='grid_box' id='grid_sortie_landscape'>".$sortie."</div>";
-echo "<div class='grid_box' id='grid_sortie_portrait'>".$sortie."</div>";
+	echo "<div class='grid_box' id='grid_cavalry_landscape'>".$cavalry."</div>";
+	echo "<div class='grid_box' id='grid_sortie_landscape'>".$sortie.$ee."</div>";
 
-// </div>
-?>
+	?>
 
-<div id='base_cost'>
-</div>
-
-<div id='base_hp'>
-</div>
-
-<div id="dice_pool">
-
-	<table>
-		<tr>
-			<td class='red dice'>&nbsp;</td><td id="red_count">0/0/0.00</td>
-			<td class='white dice'>&nbsp;</td><td id="white_count">0/0/0.00</td>
-		</tr>
-		<tr>
-			<td class='blue dice'>&nbsp;</td><td id="blue_count">0/0/0.00</td>
-			<td class='move dice'>&nbsp;</td><td id="move_count">0/0/0.00</td>
-		</tr>
-	</table>
-</div>
-
-<div id="local_ability_pool">
-</div>
-
-<?php
-/*
-<div id="movement">
-	<table>
-		<tr>
-			<td></td>
-			<td></td>
-			<td id='move_n'>0</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td></td>
-			<td>N</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td id='move_w'>0</td>
-			<td>W</td>
-			<td></td>
-			<td>E</td>
-			<td id='move_e'>0</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td></td>
-			<td>S</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td></td>
-			<td id='move_s'>0</td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-</div>
-*/
-?>
-
-<div id="movement">
-	<div id="move_n">0</div>
-	<div id="move_e">0</div>
-	<div id="move_w">0</div>
-	<div id="move_s">0</div>
-</div>
-
-<div id="global_ability_pool">
+	<div id="base_info">
+		<div id="movement">
+			<div id="move_n">0</div>
+			<div id="move_e">0</div>
+			<div id="move_w">0</div>
+			<div id="move_s">0</div>
+		</div>
+		<div id='points'>
+			<div id='base_cost'></div>
+			POINTS
+		</div>
+		<div id="ga_base_pool"></div>
+	</div>
 </div>
 
 </body>

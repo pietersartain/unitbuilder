@@ -89,6 +89,8 @@ $(function() {
 			m_Unit = new Unit(12);
 		}
 
+		m_Unit.set_faction($('select[name="faction"]').val());
+
 		// Hide all the grids
 		$(".grid_box").css('visibility','hidden');
 		$(".grid_box").css('display','none');
@@ -96,6 +98,8 @@ $(function() {
 		// Reveal the one that we're using now.
 		$("#grid_"+selbox).css('visibility','visible');
 		$("#grid_"+selbox).css('display','block');
+
+		$("div#base_info").toggleClass("cavalry");
 
 		reset_all();
 	});
@@ -154,8 +158,8 @@ $(function() {
 
 					// Get the position to drop the cursor 
 					var xloc = ev.pageX-460-iconoffset;// - this.offsetLeft;
-					var yloc = ev.pageY-105-iconoffset;// - this.offsetTop;
-					
+					var yloc = ev.pageY-105-iconoffset-$(window).scrollTop();// - this.offsetTop;
+
 					// Force the dropped cursor into the grid
 					xloc = (Math.round(xloc / 26) * 26) + 1;
 					yloc = (Math.round(yloc / 26) * 26) + 1;

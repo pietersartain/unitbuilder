@@ -1,0 +1,218 @@
+/*
+
+    Open Legions Unit Builder
+    Copyright (C) 2010-2012  Pieter E Sartain
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+******************************************************************************
+* print.css
+*
+* The style code.
+******************************************************************************/
+
+
+body {
+  font-family: tahoma;
+  margin: 0;
+}
+
+/**
+ *  Header containing Faction, base size, abilities, dice and HP
+ */
+header {
+  display: none;
+}
+
+.dice {
+  background-repeat:no-repeat;
+  background-position: 0px -10px;
+  opacity: 0.2;
+}
+
+.red    { background-image: url('../res/attributes/red.png');  }
+.white  { background-image: url('../res/attributes/white.png');  }
+.blue   { background-image: url('../res/attributes/blue.png'); }
+.move   { background-image: url('../res/attributes/move.png'); }
+
+/**
+ *  Style cludges
+ */
+ul#figure_list li:after, header:after { 
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/**
+ *  Figure list
+ */
+div#scroll_list {
+  position: absolute;
+  top: 99px;
+  left: 0;
+  bottom: 0;
+  display: none;
+}
+
+/**
+ *  Base
+ */
+div#base {
+  img#fullbg {
+    position: fixed;
+    top: 10px  !important; 
+    left: 20px !important;
+    /*width: 512px;*/
+  }
+}
+
+/**
+ *  Grid
+ */
+.grid_box {
+  border: 0px;
+  float: left; 
+  left: 49px; 
+  top: 35px;
+
+  &>div.grid  { 
+    border: 0px;
+  }
+}
+
+#grid_cavalry_landscape { 
+  width: 473px; 
+  /*height: 183px;*/
+}
+
+#grid_sortie_landscape  { 
+  width: 211px; 
+  left: 49px; 
+}
+
+
+/**
+ *  Base info, including movement
+ */
+div#base_info {
+  position: fixed; 
+  top: 228px;
+  left: 60px;
+  width: 205px;
+
+  &.cavalry {
+    width: 455px;
+  }
+
+  div#movement { 
+    position: relative; 
+    top: -6px; 
+    float: left;
+    border: 0px solid black;
+    width: 30px; height: 30px;
+    font-size: 0.5em;
+    &>div { 
+      background-color: gray; 
+      text-align: center; 
+    }
+
+    &>div#move_n { 
+      width: 28px; height: 10px; 
+      border: 0 solid black;
+      border-width: 1px 1px 0 1px;
+    }
+
+    &>div#move_e { 
+      width: 10px; height: 10px;
+      float: right;
+      border: 0 solid black;
+      border-width: 0 1px 0 0px;
+    }
+
+    &>div#move_w { 
+      width: 10px; height: 10px; 
+      float: left;
+      border: 0 solid black;
+      border-width: 0 0 0 1px;
+    }
+
+    &>div#move_s { 
+      width: 18px; height: 10px; 
+      margin-left: 5px; margin-right: 5px; 
+      clear: both;
+      border: 0 solid black;
+      border-width: 0 1px 1px 1px;
+    }
+  }
+
+  #ga_base_pool {
+    float:right;
+    img.base_info {
+      width: 27px;
+    }
+  }
+
+  #points {
+    float: right;
+    font-size: 0.5em;
+    font-family: "Times New Roman", Times, Serif;
+    padding-left: 3px;
+    border-left: 1px inset gray;
+
+    &>div#base_cost {
+      font-size: 1.6em;
+      text-align: center;
+    }
+  }
+}
+
+/**
+ *  Figure drop base
+ */
+.grid_box .base {
+  position: absolute;
+  float: left;
+  &>span {
+    position: absolute;
+    left: -5px;
+    top: 20px;
+    background: #ffffdd;
+    font-size: 60%;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+  }
+
+  &>div.smalldice {
+    position: absolute;
+    left: 15px;
+    top: -10px;
+    width: 10px;
+
+    &> img {
+      width: 20px;
+      margin-right: -5px;
+      padding: 0px;
+    }
+  }
+
+  &>div.smallla {
+    position: relative;
+    left: 15px;
+    top: -10px;
+    width: 0px;
+    &>img {
+      width: 35px;
+    }
+  }
+}

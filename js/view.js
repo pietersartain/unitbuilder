@@ -69,11 +69,11 @@ function rm_figure(uuid) {
 function reset_all() {
 
 	$(".grid_box div.base").remove();		// Clear any placed figures
-	update_dicepool(m_Unit.get_dice());		// Reload the values from the m_Unit
+	update_dicepool(m_Unit.get_dice());	// Reload the values from the m_Unit
 	//update_la();
 	$("#local_ability_pool").empty();		// update_la() doesn't work so well. Banish the LAs.
-	update_ga();							// Banish the GAs
-	update_basehp();						// Reload the base HP values
+	update_ga();							          // Banish the GAs
+	update_basehp();						        // Reload the base HP values
 	update_movement();
 	update_unitcost();
 
@@ -180,7 +180,8 @@ function update_la() {
 		var sum_nat		= la[x][2];
 		var name		= la[x][3].replace(/ /g,"-").toLowerCase();
 		
-		var text_val	= unplaced+"/"+sum_int.toFixed(0)+"/"+sum_nat.toFixed(2);
+		//var text_val	= unplaced+"/"+sum_int.toFixed(0)+"/"+sum_nat.toFixed(2);
+		var text_val	= unplaced+"/"+sum_nat.toFixed(2);
 	
 		// If this item already exists ...
 		if ( $("img#icon_"+name).length ) {
@@ -192,14 +193,24 @@ function update_la() {
 		} else {
 			// We need to create an icon and text, too.		
 
+			/*
 			$("<img class='la_pool' id='icon_"+name+"' src='res/special_abilities/lsa-"+name+".png' />").appendTo("#local_ability_pool");
+			$("<span id='text_"+name+"'>"+text_val+"</span>").appendTo("#local_ability_pool");
+			*/
+
+			var content = "";
+			content += "<div>";
+			content += "<img class='la_pool' id='icon_"+name+"' src='res/special_abilities/lsa-"+name+".png' />";
+			content += "<span id='text_"+name+"'>"+text_val+"</span>";
+			content += "</div>";
+			$("#local_ability_pool").append(content);
+
 			$("img#icon_"+name).draggable({
 				revert: true,
 				helper: "clone",
 				zIndex: 2700
 			});
 
-			$("<span id='text_"+name+"'>"+text_val+"</span>").appendTo("#local_ability_pool");
 		}
 		
 		if ( (unplaced) > 0 ) {
@@ -221,19 +232,32 @@ function update_ga() {
 	var fcount = m_Unit.get_figurecount();
 	
 	$("#global_ability_pool").empty();
+	$("#ga_base_pool").empty();
 
 	for (var x = 0; x < ga.length; x++) {
 
 		var gname = ga[x][0].replace(" ","-").toLowerCase();  // str_replace(" ","-",strtolower($ability))
 		var gcount = ga[x][1];
 
-		$("<img id='"+gname+"' src='res/special_abilities/gsa-"+gname+".png' />").appendTo("#global_ability_pool");
-		$("<span>"+gcount.toFixed(1)+"/"+fcount+"</span>").appendTo("#global_ability_pool");
+		var content = ""
+		content += "<div>";
+		content += "<img id='"+gname+"' src='res/special_abilities/gsa-"+gname+".png' />";
+		content += "<span>"+gcount.toFixed(1)+"/"+fcount+"</span>";
+		content += "</div>";
+
+		$("#global_ability_pool").append(content);
+
+		var ga_img = $("<img class='base_info' id='"+gname+"_base' src='res/special_abilities/gsa-"+gname+".png' />");
+
+		//$("<img id='"+gname+"' src='res/special_abilities/gsa-"+gname+".png' />").appendTo("#global_ability_pool");
+		//$("<span>"+gcount.toFixed(1)+"/"+fcount+"</span>").appendTo("#global_ability_pool");
 		
 		if ( (gcount / fcount) >= 1 ) {
 			$("img#"+gname).fadeTo(0,1);
+			ga_img.appendTo("#ga_base_pool");
 		} else {
 			$("img#"+gname).fadeTo(0,0.2);
+			$("img#"+gname+"_base").remove();
 		}
 	}
 }

@@ -1,0 +1,249 @@
+/*
+
+    Open Legions Unit Builder
+    Copyright (C) 2010-2012  Pieter E Sartain
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+******************************************************************************
+* print.css
+*
+* The style code.
+******************************************************************************/
+/* line 23, ../sass/print.scss */
+body {
+  font-family: tahoma;
+  margin: 0;
+}
+
+/**
+ *  Header containing Faction, base size, abilities, dice and HP
+ */
+/* line 31, ../sass/print.scss */
+header {
+  display: none;
+}
+
+/* line 35, ../sass/print.scss */
+.dice {
+  background-repeat: no-repeat;
+  background-position: 0px -10px;
+  opacity: 0.2;
+}
+
+/* line 41, ../sass/print.scss */
+.red {
+  background-image: url("../res/attributes/red.png");
+}
+
+/* line 42, ../sass/print.scss */
+.white {
+  background-image: url("../res/attributes/white.png");
+}
+
+/* line 43, ../sass/print.scss */
+.blue {
+  background-image: url("../res/attributes/blue.png");
+}
+
+/* line 44, ../sass/print.scss */
+.move {
+  background-image: url("../res/attributes/move.png");
+}
+
+/**
+ *  Style cludges
+ */
+/* line 49, ../sass/print.scss */
+ul#figure_list li:after, header:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/**
+ *  Figure list
+ */
+/* line 60, ../sass/print.scss */
+div#scroll_list {
+  position: absolute;
+  top: 99px;
+  left: 0;
+  bottom: 0;
+  display: none;
+}
+
+/**
+ *  Base
+ */
+/* line 72, ../sass/print.scss */
+div#base img#fullbg {
+  position: fixed;
+  top: 10px  !important;
+  left: 20px !important;
+  /*width: 512px;*/
+}
+
+/**
+ *  Grid
+ */
+/* line 83, ../sass/print.scss */
+.grid_box {
+  border: 0px;
+  float: left;
+  left: 49px;
+  top: 35px;
+}
+/* line 89, ../sass/print.scss */
+.grid_box > div.grid {
+  border: 0px;
+}
+
+/* line 94, ../sass/print.scss */
+#grid_cavalry_landscape {
+  width: 473px;
+  /*height: 183px;*/
+}
+
+/* line 99, ../sass/print.scss */
+#grid_sortie_landscape {
+  width: 211px;
+  left: 49px;
+}
+
+/**
+ *  Base info, including movement
+ */
+/* line 108, ../sass/print.scss */
+div#base_info {
+  position: fixed;
+  top: 228px;
+  left: 60px;
+  width: 205px;
+}
+/* line 114, ../sass/print.scss */
+div#base_info.cavalry {
+  width: 455px;
+}
+/* line 118, ../sass/print.scss */
+div#base_info div#movement {
+  position: relative;
+  top: -6px;
+  float: left;
+  border: 0px solid black;
+  width: 30px;
+  height: 30px;
+  font-size: 0.5em;
+}
+/* line 125, ../sass/print.scss */
+div#base_info div#movement > div {
+  background-color: gray;
+  text-align: center;
+}
+/* line 130, ../sass/print.scss */
+div#base_info div#movement > div#move_n {
+  width: 28px;
+  height: 10px;
+  border: 0 solid black;
+  border-width: 1px 1px 0 1px;
+}
+/* line 136, ../sass/print.scss */
+div#base_info div#movement > div#move_e {
+  width: 10px;
+  height: 10px;
+  float: right;
+  border: 0 solid black;
+  border-width: 0 1px 0 0px;
+}
+/* line 143, ../sass/print.scss */
+div#base_info div#movement > div#move_w {
+  width: 10px;
+  height: 10px;
+  float: left;
+  border: 0 solid black;
+  border-width: 0 0 0 1px;
+}
+/* line 150, ../sass/print.scss */
+div#base_info div#movement > div#move_s {
+  width: 18px;
+  height: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  clear: both;
+  border: 0 solid black;
+  border-width: 0 1px 1px 1px;
+}
+/* line 159, ../sass/print.scss */
+div#base_info #ga_base_pool {
+  float: right;
+}
+/* line 161, ../sass/print.scss */
+div#base_info #ga_base_pool img.base_info {
+  width: 27px;
+}
+/* line 166, ../sass/print.scss */
+div#base_info #points {
+  float: right;
+  font-size: 0.5em;
+  font-family: "Times New Roman", Times, Serif;
+  padding-left: 3px;
+  border-left: 1px inset gray;
+}
+/* line 173, ../sass/print.scss */
+div#base_info #points > div#base_cost {
+  font-size: 1.6em;
+  text-align: center;
+}
+
+/**
+ *  Figure drop base
+ */
+/* line 183, ../sass/print.scss */
+.grid_box .base {
+  position: absolute;
+  float: left;
+}
+/* line 186, ../sass/print.scss */
+.grid_box .base > span {
+  position: absolute;
+  left: -5px;
+  top: 20px;
+  background: #ffffdd;
+  font-size: 60%;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+}
+/* line 196, ../sass/print.scss */
+.grid_box .base > div.smalldice {
+  position: absolute;
+  left: 15px;
+  top: -10px;
+  width: 10px;
+}
+/* line 202, ../sass/print.scss */
+.grid_box .base > div.smalldice > img {
+  width: 20px;
+  margin-right: -5px;
+  padding: 0px;
+}
+/* line 209, ../sass/print.scss */
+.grid_box .base > div.smallla {
+  position: relative;
+  left: 15px;
+  top: -10px;
+  width: 0px;
+}
+/* line 214, ../sass/print.scss */
+.grid_box .base > div.smallla > img {
+  width: 35px;
+}

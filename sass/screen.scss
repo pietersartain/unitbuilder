@@ -1,0 +1,347 @@
+/*
+
+    Open Legions Unit Builder
+    Copyright (C) 2010-2012  Pieter E Sartain
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+******************************************************************************
+* screen.css
+*
+* The style code.
+******************************************************************************/
+
+body {
+  font-family: tahoma;
+  margin: 0;
+}
+
+/**
+ *  Header containing Faction, base size, abilities, dice and HP
+ */
+header {
+  background: silver;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-bottom: 1px solid #999;
+  
+  &>table {
+    float: left;
+    margin-right: 150px;
+    padding-right: 25px;
+  }
+
+  &>div {
+    //top: 15px;
+    //position: fixed;
+    float: left;
+    margin-left:  5px;
+    margin-top: 15px;
+    height: 56px;
+    border: 1px solid #999;
+    background: silver;
+    min-width: 50px; height: 56px; 
+
+    &#global_ability_pool {
+      //left: 244px;
+
+      div {
+        position: relative;
+        float: left;
+        margin-top: 2px;
+        span {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background: silver;
+          padding: 0px 5px;
+          opacity: 0.85;
+        }
+      }
+    }
+
+    &#base_hp {
+      height: 42px;
+      //left: 381px;
+      padding-top: 14px;
+      text-align: center;
+      width: 56px;
+    }
+
+    &#dice_pool {
+      //left: 444px; 
+
+      td {
+        width: 80px;
+        border:
+        1px solid gray;
+
+        &.dice {
+          width: 40px;
+          border: 0px;
+        }
+      }
+    } /* #dice_pool */
+
+    &#local_ability_pool {
+      //left: 713px; 
+      
+      div {
+        position: relative;
+        float: left;
+        margin-top: 2px;
+        span {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background: silver;
+          padding: 0px 1px;
+          opacity: 0.85;
+        }
+      }
+    }
+
+  } /* div */
+} /* header */
+
+.dice {
+  background-repeat:no-repeat;
+  background-position: 0px -10px;
+  opacity: 0.2;
+}
+
+.red    { background-image: url('../res/attributes/red.png');  }
+.white  { background-image: url('../res/attributes/white.png');  }
+.blue   { background-image: url('../res/attributes/blue.png'); }
+.move   { background-image: url('../res/attributes/move.png'); }
+
+/**
+ *  Style cludges
+ */
+ul#figure_list li:after, header:after { 
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/**
+ *  Figure list
+ */
+div#scroll_list {
+  position: absolute;
+  top: 99px;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+
+  ul#figure_list {
+    padding: 0px;
+    margin: 0px;
+    li { 
+      border: 1px solid #999;
+      width: 380px;
+      background: silver; 
+      list-style: none;
+      padding: 0px;
+      margin: 0px;
+      table {
+        width: 100%;
+        td  {
+          width: 12.5%;
+        }
+      }
+    }
+  }
+
+  .mercenary  { background-image: url('../res/insignia/mercenary.png');}
+  .han        { background-image: url('../res/insignia/han.png');    }
+  .roman      { background-image: url('../res/insignia/roman.png');  }
+  .egyptian   { background-image: url('../res/insignia/egyptian.png'); }
+
+  .base_id  { 
+    display: inline; width: 110px; height: 20px;
+    background-repeat:no-repeat;
+    background-position: 0px -30px;
+    padding-left: 40px; color: #ffffdd; font-weight: bold;
+  }
+
+  .ability {
+    background-repeat:no-repeat;
+    background-position: 0px -15px;
+    opacity: 0.2;
+  }
+
+  .name {
+    width: 290px;
+    display: inline;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 120%;
+  }
+
+}
+
+/**
+ *  Base
+ */
+div#base {
+  z-index: 0;
+  img#fullbg {
+    position: fixed; top: 100px; left: 431px; /*width: 512px;*/
+  }
+}
+
+/**
+ *  Grid
+ */
+.grid_box {
+  visibility: hidden; 
+  display: none;
+  border: 0px;
+  border-right: 1px;
+  border-bottom: 1px;
+  border-style: solid;
+  border-color: #9499db;
+  float: left; 
+  background-repeat: no-repeat; background-position: -1px -1px;
+  position: fixed; 
+  left: 460px; 
+  top: 125px;
+
+  &>div.grid  { 
+    border: 0px; border-top: 1px; border-left: 1px; border-color: #9499db; 
+    border-style: solid; float: left; width: 25px; height: 25px; position: relative;
+  }
+}
+
+#grid_cavalry_landscape { width: 469px; /*height: 183px;*/}
+#grid_sortie_landscape  { width: 208px; left: 460px; }
+
+/**
+ *  Base info, including movement
+ */
+
+div#base_info {
+  position: fixed; 
+  top: 318px;
+  left: 470px;
+  width: 205px;
+
+  &.cavalry {
+    width: 455px;
+  }
+
+  div#movement { 
+    position: relative; 
+    top: -6px; 
+    float: left;
+    border: 0px solid black;
+    width: 30px; height: 30px;
+    font-size: 0.5em;
+    &>div { 
+      background-color: gray; 
+      text-align: center; 
+    }
+
+    &>div#move_n { 
+      width: 28px; height: 10px; 
+      border: 0 solid black;
+      border-width: 1px 1px 0 1px;
+    }
+
+    &>div#move_e { 
+      width: 10px; height: 10px;
+      float: right;
+      border: 0 solid black;
+      border-width: 0 1px 0 0px;
+    }
+
+    &>div#move_w { 
+      width: 10px; height: 10px; 
+      float: left;
+      border: 0 solid black;
+      border-width: 0 0 0 1px;
+    }
+
+    &>div#move_s { 
+      width: 18px; height: 10px; 
+      margin-left: 5px; margin-right: 5px; 
+      clear: both;
+      border: 0 solid black;
+      border-width: 0 1px 1px 1px;
+    }
+  }
+
+  #ga_base_pool {
+    float:right;
+    img.base_info {
+      width: 27px;
+    }
+  }
+
+  #points {
+    float: right;
+    font-size: 0.5em;
+    font-family: "Times New Roman", Times, Serif;
+    padding-left: 3px;
+    border-left: 1px inset gray;
+
+    &>div#base_cost {
+      font-size: 1.6em;
+      text-align: center;
+    }
+  }
+}
+
+/**
+ *  Figure drop base
+ */
+.grid_box .base {
+  position: absolute;
+  float: left;
+  &>span {
+    position: absolute;
+    left: -5px;
+    top: 20px;
+    background: #ffffdd;
+    font-size: 60%;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+  }
+
+  &>div.smalldice {
+    position: absolute;
+    left: 15px;
+    top: -10px;
+    width: 10px;
+
+    &> img {
+      width: 20px;
+      margin-right: -5px;
+      padding: 0px;
+    }
+  }
+
+  &>div.smallla {
+    position: relative;
+    left: 15px;
+    top: -10px;
+    width: 0px;
+    &>img {
+      width: 35px;
+    }
+  }
+}
