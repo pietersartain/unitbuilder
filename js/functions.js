@@ -31,3 +31,10 @@ function newID() {
 		return v.toString(16);
 	}).toUpperCase();
 }
+
+/*
+ * http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric/1830844#1830844
+ */
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}

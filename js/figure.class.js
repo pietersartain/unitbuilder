@@ -22,16 +22,16 @@
 
 function Figure(uuid, idx, figure){
 
-	this.uuid	= uuid; // UUID of the div I'm attached to
-	this.idx	= idx; // index of the main figure array that I was created from
-	this.figure = figure; // Complete figure reference from the main array
-	this.secondary = false; // Is this a secondary slot? (ie: does it count toward the unit HP?)
+	this.uuid	     = uuid;   // UUID of the div I'm attached to
+	this.idx	     = idx;    // index of the main figure array that I was created from
+	this.figure    = figure; // Complete figure reference from the main array
+	this.secondary = false;  // Is this a secondary slot? (ie: does it count toward the unit HP?)
 
 	// Dice attached to this figure
-	this.red	= [];
+	this.red	  = [];
 	this.white	= [];
-	this.blue	= [];
-	this.move	= [];
+	this.blue	  = [];
+	this.move	  = [];
 	
 	// Local abilities attached to this figure
 	this.la		= [];
@@ -107,5 +107,30 @@ function Figure(uuid, idx, figure){
 	this.slot_type = function(secondary) { this.secondary = secondary; }
 
 	this.is_secondary = function() { return this.secondary; }
+
+	this.get_iconcount = function() {
+		return this.get_dicecount() + this.get_lacount();
+	}
+
+	this.get_maxicons = function() {
+		switch(this.figure[27]) {
+			case "1U":     return 6; break;
+			case "1UB":    return 6; break;
+			case "1UE":    return 6; break;
+			case "2UC":    return 8; break;
+			case "2ULB":   return 8; break;
+			case "2UPA":   return 6; break;
+			case "2UPB":   return 6; break;
+			case "3U2FP":  return 8; break;
+			case "3UAP":   return 8; break;
+			case "3UC":    return 8; break;
+			case "3UL":    return 12; break;
+			case "4U":     return 8; break;
+			case "4U2FP":  return 8; break;
+			case "4UL":    return 16; break;
+			case "4ULB":   return 12; break;
+			case "4UP":    return 12; break;
+		}
+	}
 
 }

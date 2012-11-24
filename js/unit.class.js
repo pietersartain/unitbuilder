@@ -26,13 +26,13 @@ function Unit(max_figures){
  * Member variables and initialisation
  ******************************************************************************/
 
-	this.figures = [];
+	this.figures     = [];
 	this.max_figures = max_figures;
-	this.faction = -1;
-	this.unit_cost = 0;
+	this.faction     = -1;
+	this.unit_cost   = 0;
 	
 	this.pegs = 0;
-	this.hp = 0;
+	this.hp   = 0;
 
 	/*
 	 * Dice and movement:
@@ -58,11 +58,7 @@ function Unit(max_figures){
 	this.dice[3][3] = "move";
 	
 	// Build a conversion table, rather than recode everything in JS
-	this.dtrans = new Array(4);
-	this.dtrans[0] = 2;
-	this.dtrans[1] = 4;
-	this.dtrans[2] = 3;
-	this.dtrans[3] = 5;
+	this.dtrans = [2,4,3,5];
 	
 	// Local abilities: we need to know similar things as we do for dice
 	// cols: remaining unplaced, sum (int), sum (natural), name/id
@@ -142,8 +138,8 @@ function Unit(max_figures){
 	this.set_faction = function(faction) {
 		switch(faction){
 		case "egyptian":	this.faction = 0;	break;
-		case "han":			this.faction = 1;	break;
-		case "roman":		this.faction = 2;	break;
+		case "han":			  this.faction = 1;	break;
+		case "roman":		  this.faction = 2;	break;
 		case "mercenary":	this.faction = 3;	break;
 		}
 		

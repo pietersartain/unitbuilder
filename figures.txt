@@ -5,7 +5,7 @@ ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egyp
 1E04,	Cursed Spearman,		1,   0,   0,   3, Spearmen,      0.20,,,  Regeneration,   1.2, Aggressive, 1,  59, 118, 118, 177,1,2,3,2,r,g,g,g,	white,	1U
 1E05,	Egyptian Archer,		0.2, 0.7, 0.2, 4, Precision,     0.10,,,              ,      ,           ,  ,  52, 104, 104, 156,1,1,2,1,b,g,g,g,	white,	1U
 1E06,	Egyptian Fire Archer,	0,   0.7, 0.3, 3, Fire Arrows,   0.2, Hail of Arrows, 0.1, ,,,,                59, 118, 118, 177,1,1,2,1,b,g,g,g,	white,	1U
-1E07,	Centaur Charger,		1.6, 0,   0.8, 8, Specialized,   0.2, ,,  Battle Prowess, 2.5, Aggressive, 2, 163, 326, 408, 489,1,2,3,2,r,r,g,r,	white,	1U
+1E07,	Centaur Charger,		1.6, 0,   0.8, 8, Specialized,   0.2, ,,  Battle Prowess, 2.5, Aggressive, 2, 163, 326, 408, 489,1,2,3,2,r,r,g,r,	white,	2UPA
 1E10,	Cleopatra VII,			0,   0,   2,   4, Harsh Mistress,1, Death Touch, 1, Calculating, 12, ,,       617,  --,  --,  --,1,1,2,1,r,r,g,r,	gold,	1U
 1E11,	Decidius Saxa,			2,   0,   2,   4, Command Position, 1, ,, Hustle, 8, Aggressive, 1,           474,  --,  --,  --,1,1,2,1,r,r,r,r,	gold,	1U
 1E12,	Amenhotep III,			1,   0,   1.5, 4, Lord of the Dead, 1, ,, Resentful, 8, Aggressive, 1,        278,  --,  --,  --,1,1,2,1,r,r,g,r,	gold,	1U

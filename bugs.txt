@@ -1,9 +1,12 @@
-
 ### Outstanding
-Unable to print units
-Correct maximum icons per peg
-Faction limitations on figure placement (results in NaN error for unit cost)
+Collision detection for figure placement
+Correct figure local ability placement (ie: can only be placed on the figure with that LA available)
 
 ### Fixed
+Correct maximum icons per peg.
+Faction limitations on figure placement (results in NaN error for unit cost).
+Unit naming.
+Rotate the figure bases as well as the movement grid.
 Default base HP starts with 12, but it's a sortie, so it should be 8.
-Extra figure slots for regrouping
+Extra figure slots for regrouping.
+Unable to print units.

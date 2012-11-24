@@ -143,18 +143,28 @@ function createUl($figures) {
 <script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
 
 <script language="javascript">
-
-	var figures = new Array(<?php echo count($figures) ?>);
-	
-	<?php
+<?php
+/*
+	echo "var figures = new Array(".count($figures).");";
 		foreach($figures as $idx => $figure) {
 			echo "figures[$idx] = new Array(".count($figure).");";
 			foreach($figure as $key => $value) {
 				echo "figures[$idx][$key] = \"$value\";";
 			}
 		}
-	?>
+*/
 
+		echo "var figures = [";
+		foreach($figures as $idx => $figure) {
+			echo "[";
+			foreach($figure as $key => $value) {
+				echo "\"$value\",";
+			}
+			echo "],";
+		}
+		echo "];";
+
+?>
 </script>
 
 <script type="text/javascript" src="js/functions.js"></script>
@@ -249,6 +259,7 @@ function createUl($figures) {
 			<div id="move_w">0</div>
 			<div id="move_s">0</div>
 		</div>
+		<div id="uname"><input type="text"></input></div>
 		<div id='points'>
 			<div id='base_cost'></div>
 			POINTS

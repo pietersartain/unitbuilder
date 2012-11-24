@@ -22,494 +22,507 @@
 /* 
  * Variable declarations
  */
-var m_Unit = new Unit(8);	// The main base unit thing
-var iconoffset = 30;		// Dice icon offset size
-var commander = 0;			// Number of commanders on this base
+var m_Unit        = new Unit(8);  // The main base unit thing
+var iconoffset    = 30;           // Dice icon offset size
+var commander     = false;        // Number of commanders on this base
+var factionoffset = 14;           // Array offset for faction costs (15,16,17,18; Egypt, Han, Roman, Merc)
 
 /*
  * jQuery functions from here on in ...
  */
 $(function() {
 
-	// Set up some default values to start with ...
-	update_basehp();
-	m_Unit.set_faction('egyptian');
-	update_unitcost();
+  // Set up some default values to start with ...
+  update_basehp();
+  m_Unit.set_faction('egyptian');
+  update_unitcost();
 
-	// Update the background based on the initial selection
-	var selbox = $('select[name="basetype"]').val();
+  // Update the background based on the initial selection
+  var selbox = $('select[name="basetype"]').val();
 
-	var fimg = "res/units/"+$('select[name="faction"]').val()+"_"+selbox+".png";
-	$("img#fullbg").attr('src',fimg);
+  var fimg = "res/units/"+$('select[name="faction"]').val()+"_"+selbox+".png";
+  $("img#fullbg").attr('src',fimg);
 
-	// Update the faction icon based on the initial selection
-	fimg = "res/insignia/"+$('select[name="faction"]').val()+".png";
-	$("header img").attr('src',fimg);
+  // Update the faction icon based on the initial selection
+  fimg = "res/insignia/"+$('select[name="faction"]').val()+".png";
+  $("header img").attr('src',fimg);
 
-	// Reveal the one that we're using now.
-	$("#grid_"+selbox).css('visibility','visible');
-	$("#grid_"+selbox).css('display','block');
+  // Reveal the one that we're using now.
+  $("#grid_"+selbox).css('visibility','visible');
+  $("#grid_"+selbox).css('display','block');
 
 
 /******************************************************************************
  * Default functionality
  ******************************************************************************/
 
-	/*
-	 * Change the faction icon on a select box change.
-	 */
-	 $('select[name="faction"]').change(function() {
-		var fimg = "res/insignia/"+$('select[name="faction"]').val()+".png";
-		$("header img").attr('src',fimg);
+  /*
+   * Change the faction icon on a select box change.
+   */
+   $('select[name="faction"]').change(function() {
+    var fval = $('select[name="faction"]').val();
+    var fimg = "res/insignia/"+fval+".png";
+    $("header img").attr('src',fimg);
 
-		fimg = "res/units/"+$('select[name="faction"]').val()+"_"+$('select[name="basetype"]').val()+".png";
-		$("img#fullbg").attr('src',fimg);
+    fimg = "res/units/"+fval+"_"+$('select[name="basetype"]').val()+".png";
+    $("img#fullbg").attr('src',fimg);
 
-		m_Unit.set_faction($('select[name="faction"]').val());
-		update_unitcost();
-	});
+    m_Unit.set_faction(fval);
+    update_unitcost();
 
-	/*
-	 * Change the base type on a select box change
-	 */
-	$('select[name="basetype"]').change(function() {
-		
-		var selbox = $('select[name="basetype"]').val();
-		
-		var fimg = "res/units/"+$('select[name="faction"]').val()+"_"+selbox+".png";
-		$("img#fullbg").attr('src',fimg);
-			
-		// Also we should reset the whole thing and force a new max-HP value
-		var basetype = selbox.split("_");
-		
-		if (basetype[0] == "sortie") {
-			m_Unit = new Unit(8);
-		} else {
-			m_Unit = new Unit(12);
-		}
+    switch(fval) {
+      case "egyptian":  factionoffset = 14; break;
+      case "han":       factionoffset = 15; break;
+      case "roman":     factionoffset = 16; break;
+      case "mercenary": factionoffset = 17; break;
+    }
 
-		m_Unit.set_faction($('select[name="faction"]').val());
+  });
 
-		// Hide all the grids
-		$(".grid_box").css('visibility','hidden');
-		$(".grid_box").css('display','none');
-		
-		// Reveal the one that we're using now.
-		$("#grid_"+selbox).css('visibility','visible');
-		$("#grid_"+selbox).css('display','block');
+  /*
+   * Change the base type on a select box change
+   */
+  $('select[name="basetype"]').change(function() {
+    
+    var selbox = $('select[name="basetype"]').val();
+    
+    var fimg = "res/units/"+$('select[name="faction"]').val()+"_"+selbox+".png";
+    $("img#fullbg").attr('src',fimg);
+      
+    // Also we should reset the whole thing and force a new max-HP value
+    var basetype = selbox.split("_");
+    
+    if (basetype[0] == "sortie") {
+      m_Unit = new Unit(8);
+    } else {
+      m_Unit = new Unit(12);
+    }
 
-		$("div#base_info").toggleClass("cavalry");
+    m_Unit.set_faction($('select[name="faction"]').val());
 
-		reset_all();
-	});
+    // Hide all the grids
+    $(".grid_box").css('visibility','hidden');
+    $(".grid_box").css('display','none');
+    
+    // Reveal the one that we're using now.
+    $("#grid_"+selbox).css('visibility','visible');
+    $("#grid_"+selbox).css('display','block');
 
-	$('select[name="baserotation"]').change(function() {
-		$("div#movement").css("transform","rotate("+$(this).val()+"deg)")
-	});
+    $("div#base_info").toggleClass("cavalry");
 
-	/*
-	 * Make the dice draggable by default
-	 */
-	$( "#dice_pool td.dice" ).draggable({
-		revert: true,
-		helper: "clone",
-		zIndex: 2700
-	});
+    reset_all();
+  });
 
-	/*
-	 * Make the <li> tag in #figure_list draggable with the following properties
-	 */
-	$( "#figure_list>li" ).draggable({
-		revert: true, 
-		//helper: "clone",
-		cursorAt: { top: iconoffset, left: iconoffset },
-		helper: function( event ) {
-			var id = $(this).attr('id')+":visible";
-			var base = $("#"+id+" img").attr('src');
-			return $( "<img src='"+base+"' />" )
-		},
-		zIndex: 2700
-	});
+  /*
+   * Rotate portrait
+   */
+  $('select[name="baserotation"]').change(function() {
+    //$("div#movement").css("transform","rotate("+$(this).val()+"deg)");
+    //$(".base").css("transform","rotate("+$(this).val()+"deg)");
+    var rval = "rotate";
+    $("div#movement").toggleClass(rval);
+    $(".base").toggleClass(rval);
+  });
 
-	/*
-	 * Assign #drop_area to be a droppable area. Also creates more draggables on drop.
-	 */
-	$(".grid_box").droppable({
-		accept: "#figure_list>li, .grid_box div.base",
+  /*
+   * Make the dice draggable by default
+   */
+  $( "#dice_pool td.dice" ).draggable({
+    revert: true,
+    helper: "clone",
+    zIndex: 2700
+  });
 
-		drop: function(ev, ui) {
+  /*
+   * Make the <li> tag in #figure_list draggable with the following properties
+   */
+  $( "#figure_list>li" ).draggable({
+    revert: true, 
+    //helper: "clone",
+    cursorAt: { top: iconoffset, left: iconoffset },
+    helper: function( event ) {
+      var id = $(this).attr('id')+":visible";
+      var base = $("#"+id+" img").attr('src');
+      var classes = $("#"+id+" div.base").attr('class');
+      return $( "<img src='"+base+"' class='"+classes+"' />" )
+    },
+    zIndex: 2700
+  });
 
-			if ($(ui.draggable).is("li")) {
+  /*
+   * Assign #drop_area to be a droppable area. Also creates more draggables on drop.
+   */
+  $(".grid_box").droppable({
+    accept: "#figure_list>li, .grid_box div.base",
 
-				// Get the ID of the original <li>
-				var id = $(ui.draggable).attr('id');
+    drop: function(ev, ui) {
 
-				var pegs = figures[id][27].split("U");
-				
-				if ( (parseInt(pegs[0]) + m_Unit.get_hp()) > m_Unit.get_max_figures() ) {
-					return;
-				}
+      if ($(ui.draggable).is("li")) {
 
-				// Get the colour ...
-				var base_color = figures[id][26];
+        // Get the ID of the original <li>
+        var id = $(ui.draggable).attr('id');
 
-				if (!commander || (base_color != 'gold') ) {
+        var pegs = figures[id][27].split("U");
+        
+        if ( (parseInt(pegs[0]) + m_Unit.get_hp()) > m_Unit.get_max_figures() ) {
+          return;
+        }
 
-					// Get the position to drop the cursor 
-					var xloc = ev.pageX-460-iconoffset;
-					var yloc = ev.pageY-105-iconoffset-$(window).scrollTop();
+        // Get the colour
+        var base_color = figures[id][26];
 
-					// Force the dropped cursor into the grid
-					xloc = (Math.round(xloc / 26) * 26) + 1;
-					yloc = (Math.round(yloc / 26) * 26) + 1;
+        // Get the faction costs
+        var faction_cost = figures[id][factionoffset];
 
-					// Use the original li to get the base image
-					var base = $("li#"+id+":visible img").attr('src');
+        // Conditions to allow a unit to be dropped:
+        var checkCommander = !(commander && base_color == 'gold');
+        var checkFaction   = isNumber(faction_cost);
 
-					// The id of the figure can be found directly
-					var base_id 	= figures[id][0];
-	
-					var uuid = add_figure(figures, id);
-	
-					$("<div id='base_"+id+"_"+uuid+"' class='base' style='top: "+yloc+"px; left: "+xloc+"px;'> \
-						<img src='"+base+"' /> \
-						<span>"+base_id+"</span> \
-						<div id='dice_"+id+"_"+uuid+"' class='smalldice'></div> \
-						<div id='la_"+id+"_"+uuid+"' class='smallla'></div> \
-						</div>"
-					).appendTo(this);
-					
-					var base = $("#base_"+id+"_"+uuid);
+        if  (checkCommander && checkFaction) {
 
-					// Make it draggable
-					base_draggable(base);
-					// Make it a drop target
-					base_droppable(base);
+          // Get the position to drop the cursor 
+          var xloc = ev.pageX-460-iconoffset;
+          var yloc = ev.pageY-105-iconoffset-$(window).scrollTop();
 
-					// Allow it to be secondary
-					base_rightclickable(base);
-					
-					if (base_color == 'gold') {
-					// If it's gold, let's only have one, hmm?
-						commander = 1;
-					}
-					
-				}
-			} else {
-				ui.helper.removeMe = false;
-			}
-			
-		}
+          // Force the dropped cursor into the grid
+          xloc = (Math.round(xloc / 26) * 26) + 1;
+          yloc = (Math.round(yloc / 26) * 26) + 1;
 
-	}); // #drop_area
+          // Use the original li to get the base image
+          var base = $("li#"+id+":visible img").attr('src');
+          
+          // Get the rotation
+          var rval = "";
+          if ($("#"+id+" div.base").hasClass('rotate')) {
+            rval = "rotate";
+          }
+
+          // The id of the figure can be found directly
+          var base_id   = figures[id][0];
+  
+          var uuid = add_figure(figures, id);
+
+          $("<div id='base_"+id+"_"+uuid+"' class='base "+rval+"' style='top: "+yloc+"px; left: "+xloc+"px;'> \
+            <img src='"+base+"' /> \
+            <span>"+base_id+"</span> \
+            <div id='dice_"+id+"_"+uuid+"' class='smalldice'></div> \
+            <div id='la_"+id+"_"+uuid+"' class='smallla'></div> \
+            </div>"
+          ).appendTo(this);
+          
+          var base = $("#base_"+id+"_"+uuid);
+
+          // Make it draggable
+          base_draggable(base);
+          // Make it a drop target
+          base_droppable(base);
+
+          // Allow it to be secondary
+          base_rightclickable(base);
+          
+          if (base_color == 'gold') {
+          // If it's gold, let's only have one, hmm?
+            commander = true;
+          }
+          
+        }
+      } else {
+        ui.helper.removeMe = false;
+      }
+      
+    }
+
+  }); // #drop_area
 
 /******************************************************************************
  * Base functions
  ******************************************************************************/
 
- 	function base_rightclickable(ele) {
-	  ele.bind("contextmenu",function(event) {
-	  	event.preventDefault();
+  function base_rightclickable(ele) {
+    ele.bind("contextmenu",function(event) {
+      event.preventDefault();
       $(this).children("span").toggle();
-			// Get the ID of the thing ...
-			var id = $(this).attr('id').split("_");
-			var uuid = id[2];
-      var fig = m_Unit.get_figure(uuid);
+      // Get the ID of the thing ...
+      var id = $(this).attr('id').split("_"); // base, id, uuid
+      var fig = m_Unit.get_figure(id[2]);
       fig.slot_type(!fig.secondary);
       m_Unit.update_pegcount();
       update_basehp();
-      m_Unit.update_cost();
       update_unitcost();
-		});
-	}
 
-	function base_draggable(ap_ele) {
-		ap_ele.draggable({
-			grid: [26, 26],
-			start: function(event, ui) {
-				// flag to indicate that we want to remove element on drag stop
-				ui.helper.removeMe = true;
-			}, //start
-			stop: function(event, ui) {
-				// remove draggable if flag is still true
-				// which means it wasn't unset on drop into parent
-				// so dragging stopped outside of parent
-				if (ui.helper.removeMe) {
-				
-					// Get the ID of the draggable helper thing ...
-					var id = $(ui.helper).attr('id').split("_");
-					var uuid = id[2];
+      // This is not perfect, since you can quite easily get multiple
+      // commander bases on the same unit with their figure number showing.
+      var base_color = figures[id[1]][26];
+      if (commander && base_color == 'gold') commander = !commander;
 
-					ui.helper.remove();
+    });
+  }
 
-					// Get the colour ...
-					var base_color = m_Unit.get_figure(uuid).get_figure()[26];
-					if (base_color == 'gold') {
-						commander = 0;
-					}
+  function base_draggable(ap_ele) {
+    ap_ele.draggable({
+      grid: [26, 26],
+      start: function(event, ui) {
+        // flag to indicate that we want to remove element on drag stop
+        ui.helper.removeMe = true;
+      }, //start
+      stop: function(event, ui) {
+        // remove draggable if flag is still true
+        // which means it wasn't unset on drop into parent
+        // so dragging stopped outside of parent
+        if (ui.helper.removeMe) {
+        
+          // Get the ID of the draggable helper thing ...
+          var id = $(ui.helper).attr('id').split("_");
+          var uuid = id[2];
 
-					rm_figure(uuid);
+          ui.helper.remove();
 
-				}
-			} // stop
-		}) // draggable
-		; // moveable figure icon
-	}
-	
-	function base_droppable(ap_ele) {
-		ap_ele.droppable({
-			accept: "td.dice, img",
-			drop: function(ev, ui) {
-		
-				// If the draggable is a td.dice - it's come from the dice pool
-				if ($(ui.draggable).is("td.dice")) {
-					// Break the div id into it's constituent parts
-					var id_ar = $(this).attr('id').split("_");
-					var idx = id_ar[1];
-					var uuid = id_ar[2];
-					var class_list = $(ui.helper).attr("class").split(" ");
+          // Get the colour ...
+          var base_color = m_Unit.get_figure(uuid).get_figure()[26];
+          if (base_color == 'gold') {
+            commander = 0;
+          }
 
-					add_dice_to_figure(uuid,idx,class_list[0]);
-				
-				// If the draggable is an img.la_pool, then it's a local ability from the LA pool
-				} else if ($(ui.draggable).is("img.la_pool")) {
+          rm_figure(uuid);
 
-					// ID of the thing that's being dropped on
-					var id = $(this).attr('id').split("_");
-					//console.log("Dropped on: "+id);
-					var figure_idx = id[1];
-					var figure_uuid = id[2];
+        }
+      } // stop
+    }) // draggable
+    ; // moveable figure icon
+  }
+  
+  function base_droppable(ap_ele) {
+    ap_ele.droppable({
+      accept: "td.dice, img",
+      drop: function(ev, ui) {
 
-					// ID of the thing that's being dropped - it's a clone of the original
-					var id = $(ui.helper).attr('id').split("_");
-					//console.log("Being dropped: "+id);
-					var la_name = id[1];
+        // Get the ID of the droppable (this)
+        var drop_id   = $(this).attr('id').split("_");
+        var drop_idx  = drop_id[1];
+        var drop_uuid = drop_id[2];
 
-					if (m_Unit.figure_has_la(figure_uuid, la_name)) {
-						add_la_to_figure(figure_uuid,figure_idx,la_name);
-					}
+        // Get the ID of the draggable helper thing
+        if ($(ui.helper).attr('id')) {
+          var drag_id     = $(ui.helper).attr('id').split("_");
+          var drag_idx    = drag_id[1];
+          var drag_Fuuid  = drag_id[2];
+          var drag_Luuid  = drag_id[3];
+        }
 
-				// If the draggable is an img.smallla, then it's a local ability from another base
-				} else if ($(ui.draggable).is("img.smallla")) {
-					
-					// The LA icon has just been moved from baseA to baseB
+        var f = m_Unit.get_figure(drop_uuid);
+        if (f.get_iconcount() >= f.get_maxicons()) return;
 
-					// Get the ID of the draggable helper thing - baseA
-					var id		= $(ui.helper).attr('id').split("_");
-					var Fidx	= id[1];
-					var Fuuid	= id[2];
-					var Luuid	= id[3];
+        // If the draggable is a td.dice - it's come from the dice pool
+        if ($(ui.draggable).is("td.dice")) {
+          var class_list = $(ui.helper).attr("class").split(" ");
+          add_dice_to_figure(drop_uuid,drop_idx,class_list[0]);
+        
+        // If the draggable is an img.la_pool, then it's a local ability from the LA pool
+        } else if ($(ui.draggable).is("img.la_pool")) {
 
-					// Get the ID of the droppable (this) - baseB
-					var idB = $(this).attr('id').split("_");
-					var idxB = idB[1];
-					var uuidB = idB[2];
+          // ID of the thing that's being dropped - it's a clone of the original
+          //console.log("Being dropped: "+id);
+          var la_name = drag_id[1];
 
-					var png		= $(ui.helper).attr("src").split("/");
-					png			= png[png.length-1].split(".");
-					png			= png[0].split("lsa-");
-					var la_name		= png[1];
+          if (m_Unit.figure_has_la(drop_uuid, la_name)) {
+            add_la_to_figure(drop_uuid,drop_idx,la_name);
+          }
 
-					if (m_Unit.figure_has_la(uuidB, la_name)) {
-						// Remove this item from the model
-						m_Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
-		
-						// Remove the item from the DOM
-						ui.helper.remove();
-						
-						// Update view
-						update_figure_la(Fuuid, Fidx);
+        // If the draggable is an img.smallla, then it's a local ability from another base
+        } else if ($(ui.draggable).is("img.smallla")) {
+          
+          // The LA icon has just been moved from baseA to baseB
+          var png      = $(ui.helper).attr("src").split("/");
+          png          = png[png.length-1].split(".");
+          png          = png[0].split("lsa-");
+          var la_name  = png[1];
 
-						// Add a new item to the model and DOM
-						add_la_to_figure(uuidB,idxB,la_name);
-						
-						m_Unit.update_cost();
-						update_unitcost();
-					}
+          if (m_Unit.figure_has_la(drop_uuid, la_name)) {
+            // Remove this item from the model
+            m_Unit.rm_la_from_figure(drag_Fuuid, la_name, drag_Luuid);
+    
+            // Remove the item from the DOM
+            ui.helper.remove();
+            
+            // Update view
+            update_figure_la(drag_Fuuid, drag_idx);
 
-					// Don't kill the helper, please
-					ui.helper.removeMe = false;
-				
-				// If the draggable is an img, it's a dice from another base
-				} else if ($(ui.draggable).is("img")) {
-				
-					// The dice have just been moved from baseA to baseB
-					
-					// Get the ID of the draggable helper thing - baseA
-					var idA = $(ui.helper).attr('id').split("_");
-					var idxA = idA[1];
-					var uuidA = idA[2];
-					
-					// Get the ID of the droppable (this) - baseB
-					var idB = $(this).attr('id').split("_");
-					var idxB = idB[1];
-					var uuidB = idB[2];
-					
-					// Also we need to know what kind of dice we dropped
-					var dice = $(ui.helper).attr("src").split("/");
-					dice = dice[dice.length-1];
-					dice = dice.split(".");
-					dice = dice[0];
+            // Add a new item to the model and DOM
+            add_la_to_figure(drop_uuid,drop_idx,la_name);
+            
+            update_unitcost();
+          }
 
-					// Update model
-					m_Unit.rm_dice_from_figure(uuidA,dice);
-					
-					// Update view
-					update_figure_dice(uuidA, idxA);
+          // Don't kill the helper, please
+          ui.helper.removeMe = false;
+        
+        // If the draggable is an img, it's a dice from another base
+        } else if ($(ui.draggable).is("img")) {
+        
+          // The dice have just been moved from baseA to baseB          
+          // Also we need to know what kind of dice we dropped
+          var dice = $(ui.helper).attr("src").split("/");
+          dice = dice[dice.length-1];
+          dice = dice.split(".");
+          dice = dice[0];
 
-					// Kill the draggable itself
-					ui.helper.remove();
-					
-					// And add a new one to the droppable
-					add_dice_to_figure(uuidB,idxB,dice);
+          // Update model
+          m_Unit.rm_dice_from_figure(drag_Fuuid,dice);
+          
+          // Update view
+          update_figure_dice(drag_Fuuid, drag_idx);
 
-					m_Unit.update_cost();
-					update_unitcost();
+          // Kill the draggable itself
+          ui.helper.remove();
+          
+          // And add a new one to the droppable
+          add_dice_to_figure(drop_uuid,drop_idx,dice);
 
-					ui.helper.removeMe = false;
-				}
-			}
-		}) // droppable
-		;
-	}
+          update_unitcost();
+
+          ui.helper.removeMe = false;
+        }
+      }
+    }) // droppable
+    ;
+  }
 
 /******************************************************************************
  * Dice functions
  ******************************************************************************/
 
-	function dice_draggable(ap_ele){
-		ap_ele.draggable({
-			start: function(event, ui) {
-				// flag to indicate that we want to remove element on drag stop
-				ui.helper.removeMe = true;
-			}, //start
-			stop: function(event, ui) {
-				// remove draggable if flag is still true
-				// which means it wasn't unset on drop into parent
-				// so dragging stopped outside of parent
-				if (ui.helper.removeMe) {
-				
-					// Get the ID of the draggable helper thing
-					var id = $(ui.helper).attr('id').split("_");
-					var idx = id[1];
-					var uuid = id[2];
-					
-					// Also we need to know what kind of dice we dropped
-					var dice = $(ui.helper).attr("src").split("/");
-					dice = dice[dice.length-1];
-					dice = dice.split(".");
-					dice = dice[0];
-					
-					// Update model
-					m_Unit.rm_dice_from_figure(uuid,dice);
-					
-					// Update view
-					update_figure_dice(uuid, idx);
-					update_dicepool();
+  function dice_draggable(ap_ele){
+    ap_ele.draggable({
+      start: function(event, ui) {
+        // flag to indicate that we want to remove element on drag stop
+        ui.helper.removeMe = true;
+      }, //start
+      stop: function(event, ui) {
+        // remove draggable if flag is still true
+        // which means it wasn't unset on drop into parent
+        // so dragging stopped outside of parent
 
-					// Remove the offending item
-					ui.helper.remove();
-					
-					m_Unit.update_cost();
-					update_unitcost();
-				}
-				
-			} // stop
-		}) // draggable
-		; // moveable figure icon
-	}
+        if (ui.helper.removeMe) {
+        
+          // Get the ID of the draggable helper thing
+          var id = $(ui.helper).attr('id').split("_");
+          var idx = id[1];
+          var uuid = id[2];
+          
+          // Also we need to know what kind of dice we dropped
+          var dice = $(ui.helper).attr("src").split("/");
+          dice = dice[dice.length-1];
+          dice = dice.split(".");
+          dice = dice[0];
+          
+          // Update model
+          m_Unit.rm_dice_from_figure(uuid,dice);
+          
+          // Update view
+          update_figure_dice(uuid, idx);
+          update_dicepool();
 
-	function add_dice_to_figure(Fuuid,idx,type) {
+          // Remove the offending item
+          ui.helper.remove();
 
-		// Give each dice it's own UUID		
-		Duuid = newID();
-		
-		// Update the model
-		m_Unit.add_dice_to_figure(Fuuid,type,Duuid);
-		
-		// Resize the UI
-		update_figure_dice(Fuuid, idx);
-		
-		// Add the new graphic
-		$("<img id='icon_"+idx+"_"+Fuuid+"_"+Duuid+"' src='res/attributes/"+type+".png' />").appendTo($("#dice_"+idx+"_"+Fuuid));
-		dice_draggable($("#icon_"+idx+"_"+Fuuid+"_"+Duuid));
-									
-		// Then finally update the available number of dice
-		update_dicepool();
-		
-		m_Unit.update_cost();
-		update_unitcost();
-	}
+          update_unitcost();
+        }
+        
+      } // stop
+    }) // draggable
+    ; // moveable figure icon
+  }
+
+  function add_dice_to_figure(Fuuid,idx,type) {
+
+    // Give each dice it's own UUID   
+    Duuid = newID();
+    
+    // Update the model
+    m_Unit.add_dice_to_figure(Fuuid,type,Duuid);
+
+    // Update the available number of dice
+    update_dicepool();
+    update_unitcost();
+    
+    // Resize the UI
+    update_figure_dice(Fuuid, idx);
+    
+    // Add the new graphic
+    var ap_ele = $("<img id='icon_"+idx+"_"+Fuuid+"_"+Duuid+"' src='res/attributes/"+type+".png' />");
+    $("#dice_"+idx+"_"+Fuuid).append(ap_ele);
+
+    dice_draggable(ap_ele);
+
+  }
 
 /******************************************************************************
  * Local ability functions
  ******************************************************************************/
 
-	function la_draggable(ap_ele){
-		ap_ele.draggable({
-			revert: true,
-			start: function(event, ui) {
-				// flag to indicate that we want to remove element on drag stop
-				ui.helper.removeMe = true;
-			}, //start
-			stop: function(event, ui) {
-				// remove draggable if flag is still true
-				// which means it wasn't unset on drop into parent
-				// so dragging stopped outside of parent
-				if (ui.helper.removeMe) {
-				
-					// We need to know the ID of the item we're dragging
-					// Which interestingly, shows us the UUID of the LA
-					// and the UUID of the figure we're dragging it from.
-					var id		= $(ui.helper).attr('id').split("_");
-					var png		= $(ui.helper).attr("src").split("/");
+  function la_draggable(ap_ele){
+    ap_ele.draggable({
+      revert: true,
+      start: function(event, ui) {
+        // flag to indicate that we want to remove element on drag stop
+        ui.helper.removeMe = true;
+      }, //start
+      stop: function(event, ui) {
+        // remove draggable if flag is still true
+        // which means it wasn't unset on drop into parent
+        // so dragging stopped outside of parent
+        if (ui.helper.removeMe) {
+        
+          // We need to know the ID of the item we're dragging
+          // Which interestingly, shows us the UUID of the LA
+          // and the UUID of the figure we're dragging it from.
+          var id    = $(ui.helper).attr('id').split("_");
+          var png   = $(ui.helper).attr("src").split("/");
 
-					// Remove the DOM element representing the starting items
-					ui.helper.remove();
+          // Remove the DOM element representing the starting items
+          ui.helper.remove();
 
-					var Fidx	= id[1];
-					var Fuuid	= id[2];
-					var Luuid	= id[3];
+          var Fidx  = id[1];
+          var Fuuid = id[2];
+          var Luuid = id[3];
 
-					png			= png[png.length-1].split(".");
-					png			= png[0].split("lsa-");
-					var la_name	= png[1];
+          png     = png[png.length-1].split(".");
+          png     = png[0].split("lsa-");
+          var la_name = png[1];
 
-					// Remove this item from the model
-					m_Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
+          // Remove this item from the model
+          m_Unit.rm_la_from_figure(Fuuid, la_name, Luuid);
 
-					// Update view
-					update_figure_la(Fuuid,Fidx); // Fix the spacing
-					update_la(); // Sort out the pool icons
-					
-					m_Unit.update_cost();
-					update_unitcost();
-				}
-				
-			} // stop
-		}) // draggable
-		; // moveable figure icon
-	}
+          // Update view
+          update_figure_la(Fuuid,Fidx); // Fix the spacing
+          update_la(); // Sort out the pool icons
+          
+          update_unitcost();
+        }
+        
+      } // stop
+    }) // draggable
+    ; // moveable figure icon
+  }
 
-	function add_la_to_figure(Fuuid,Fidx,la_name) {
-	
-		// Give each LA it's own UUID
-		Luuid = newID();
-		
-		// Update the model
-		m_Unit.add_la_to_figure(Fuuid,la_name,Luuid);
-		
-		update_figure_la(Fuuid,Fidx);
-		
-		// Update the UI
-		update_la();
+  function add_la_to_figure(Fuuid,Fidx,la_name) {
+  
+    // Give each LA it's own UUID
+    Luuid = newID();
+    
+    // Update the model
+    m_Unit.add_la_to_figure(Fuuid,la_name,Luuid);
+    
+    update_figure_la(Fuuid,Fidx);
+    
+    // Update the UI
+    update_la();
 
-		// Add the new graphic
-		$("<img class='smallla' id='laicon_"+Fidx+"_"+Fuuid+"_"+Luuid+"' src='res/special_abilities/lsa-"+la_name+".png' />").appendTo($("#la_"+Fidx+"_"+Fuuid));
-		la_draggable($("#laicon_"+Fidx+"_"+Fuuid+"_"+Luuid));
-		
-		m_Unit.update_cost();
-		update_unitcost();
-	}
+    // Add the new graphic
+    $("<img class='smallla' id='laicon_"+Fidx+"_"+Fuuid+"_"+Luuid+"' src='res/special_abilities/lsa-"+la_name+".png' />").appendTo($("#la_"+Fidx+"_"+Fuuid));
+    la_draggable($("#laicon_"+Fidx+"_"+Fuuid+"_"+Luuid));
+    
+    update_unitcost();
+  }
 
 }); // main jquery initialiser function

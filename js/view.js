@@ -107,6 +107,7 @@ function update_sides() {
 }
 
 function update_unitcost(){
+	m_Unit.update_cost();
 	$("#base_cost").text(m_Unit.get_cost());
 }
 
