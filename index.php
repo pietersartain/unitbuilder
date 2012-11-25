@@ -144,16 +144,6 @@ function createUl($figures) {
 
 <script language="javascript">
 <?php
-/*
-	echo "var figures = new Array(".count($figures).");";
-		foreach($figures as $idx => $figure) {
-			echo "figures[$idx] = new Array(".count($figure).");";
-			foreach($figure as $key => $value) {
-				echo "figures[$idx][$key] = \"$value\";";
-			}
-		}
-*/
-
 		echo "var figures = [";
 		foreach($figures as $idx => $figure) {
 			echo "[";
@@ -163,7 +153,6 @@ function createUl($figures) {
 			echo "],";
 		}
 		echo "];";
-
 ?>
 </script>
 
