@@ -324,6 +324,7 @@ $(function() {
           //console.log("Being dropped: "+id);
           var la_name = drag_id[1];
 
+          // Enforce dropping of LAs only on figures that have that LA available.
           if (m_Unit.figure_has_la(drop_uuid, la_name)) {
             add_la_to_figure(drop_uuid,drop_idx,la_name);
           }

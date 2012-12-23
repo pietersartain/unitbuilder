@@ -28,16 +28,16 @@ http://unitbuilder-4dzgxkwr.dotcloud.com/
 
 ### Feature complete
  * Place dice and local ability icons on the top or bottom of the figure (currently dice go top, abilities on the bottom).
- * Correct figure local ability placement (ie: can only be placed on the figure with that LA available).
- * Better Commander handling.
  * Proper figure blocking and collision detection.
  * Proper background graphics for the unit cards.
  * Save/restore created bases.
 
 ### Nice to have
+ * Better Commander handling.
  * Allow skinning / configuration-based rulesets to build new games and modify existing rules.
 
 ### Done
+ * Correct figure local ability placement (ie: can only be placed on the figure with that LA available).
  * Correct maximum icons per peg.
  * Faction limitations on figure placement (results in NaN error for unit cost).
  * Unit naming.
