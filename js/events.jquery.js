@@ -1,7 +1,7 @@
 /*
 
     Open Legions Unit Builder
-    Copyright (C) 2010  Pieter E Sartain
+    Copyright (C) 2010-2012  Pieter E Sartain
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

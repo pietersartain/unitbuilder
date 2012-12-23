@@ -3,7 +3,7 @@
 /*
 
     Open Legions Unit Builder
-    Copyright (C) 2010  Pieter E Sartain
+    Copyright (C) 2010-2012  Pieter E Sartain
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Open Legions Unit Builder</title>
 
 <?php
 // Figure list as an array
@@ -42,6 +43,18 @@ while(($figure = fgetcsv($fid)) !== FALSE) {
 	//$figures[$figure[0]] = $figure;
 	foreach($figure as $key => $value) {
 		$figures[$idx][$key] = trim($value);
+		switch($key) {
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 7:
+			case 9:
+			case 11:
+			case 13:
+				$figures[$idx][$key] = round( ( (float)$figures[$idx][$key] ) * 100 );
+			break;
+		}
 	}
 	$idx++;
 }
@@ -52,7 +65,7 @@ function createAbility($ability,$cost,$type) {
 					style=\"background-image: 
 							url('res/special_abilities/".$type."-".str_replace(" ","-",strtolower(trim($ability))).".png')
 						\"
-					>&nbsp;</td><td>".$cost."</td>";
+					>&nbsp;</td><td>".($cost/100)."</td>";
 }
 
 function createLi($figure,$idx) {
@@ -82,10 +95,10 @@ function createLi($figure,$idx) {
 		$str .= "<div class='$faction base_id'>".$figure[0]."</div>";
 		$str .= "<div class='name'>		".$figure[1]."	</div>";
 		$str .= "<br /><table><tr>";
-		$str .= "<td class='red dice'>&nbsp;</td><td id='red'>		".$figure[2]."	</td>";
-		$str .= "<td class='blue dice'>&nbsp;</td><td id='blue'>		".$figure[3]."	</td>";
-		$str .= "<td class='white dice'>&nbsp;</td><td id='white'>	".$figure[4]."	</td>";
-		$str .= "<td class='move dice'>&nbsp;</td><td id='move'>		".$figure[5]."	</td>";
+		$str .= "<td class='red dice'>&nbsp;</td><td id='red'>		  ".($figure[2]/100)."	</td>";
+		$str .= "<td class='blue dice'>&nbsp;</td><td id='blue'>		".($figure[3]/100)."	</td>";
+		$str .= "<td class='white dice'>&nbsp;</td><td id='white'>	".($figure[4]/100)."	</td>";
+		$str .= "<td class='move dice'>&nbsp;</td><td id='move'>		".($figure[5]/100)."	</td>";
 		$str .= "</tr><tr>";
 
 		if ($figure[6] != "") {
@@ -148,7 +161,29 @@ function createUl($figures) {
 		foreach($figures as $idx => $figure) {
 			echo "[";
 			foreach($figure as $key => $value) {
-				echo "\"$value\",";
+				switch($key) {
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 7:
+					case 9:
+					case 11:
+					case 13:
+					case 14:
+					case 15:
+					case 16:
+					case 17:
+					case 18:
+					case 19:
+					case 20:
+					case 21:
+						echo "$value,";
+					break;
+					default:
+						echo "\"$value\",";
+					break;
+				}
 			}
 			echo "],";
 		}

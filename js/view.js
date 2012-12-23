@@ -1,7 +1,7 @@
 /*
 
     Open Legions Unit Builder
-    Copyright (C) 2010  Pieter E Sartain
+    Copyright (C) 2010-2012  Pieter E Sartain
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -131,22 +131,35 @@ function update_figure_dice(uuid, idx) {
 
 function update_dicepool() {
 
+
+	/*
+	 * Dice and movement:
+	 *
+	 * 4 x 3 array
+	 *	rows: red, white, blue, move
+	 *  cols: remaining unplaced, sum (int), sum (natural), name/id
+	 */
 	var dice = m_Unit.get_dice();
 
 	for (var x = 0; x < dice.length; x++) {
 
-		$("#dice_pool td#"+dice[x][3]+"_count").text(
-				 ""+dice[x][0]+
-				"/"+dice[x][1]+
-				"/"+dice[x][2].toFixed(2)
+		var unplaced = Math.floor(dice[x][0] / 100);
+		var sum_int  = Math.floor(dice[x][1] / 100);
+		var sum_nat  = dice[x][2] / 100;
+		var name     = dice[x][3];
+
+		$("#dice_pool td#"+name+"_count").text(
+				 ""+unplaced+
+				"/"+sum_int+
+				"/"+sum_nat.toFixed(2)
 		);
 		
-		if (dice[x][0] > 0) {
-			$( "#dice_pool td."+dice[x][3] ).draggable("enable");
-			$( "#dice_pool td."+dice[x][3] ).fadeTo(0,1);
+		if (unplaced > 0) {
+			$( "#dice_pool td."+name ).draggable("enable");
+			$( "#dice_pool td."+name ).fadeTo(0,1);
 		} else {
-			$( "#dice_pool td."+dice[x][3] ).draggable("disable");
-			$( "#dice_pool td."+dice[x][3] ).fadeTo(0,0.2);
+			$( "#dice_pool td."+name ).draggable("disable");
+			$( "#dice_pool td."+name ).fadeTo(0,0.2);
 		}
 	}
 }
@@ -176,9 +189,9 @@ function update_la() {
 	for (var x = 0; x < la.length; x++) {
 
 		//  cols: remaining unplaced, sum (int), sum (natural), name/id
-		var unplaced	= la[x][0];
-		var sum_int		= la[x][1];
-		var sum_nat		= la[x][2];
+		var unplaced	= Math.floor(la[x][0] / 100);
+		var sum_int		= Math.floor(la[x][1] / 100);
+		var sum_nat		= la[x][2] / 100;
 		var name		= la[x][3].replace(/ /g,"-").toLowerCase();
 		
 		var text_val	= unplaced+"/"+sum_nat.toFixed(2);
@@ -237,14 +250,14 @@ function update_ga() {
 		var content = ""
 		content += "<div>";
 		content += "<img id='"+gname+"' src='res/special_abilities/gsa-"+gname+".png' />";
-		content += "<span>"+gcount.toFixed(1)+"/"+fcount+"</span>";
+		content += "<span>"+(gcount.toFixed(1) / 100)+"/"+fcount+"</span>";
 		content += "</div>";
 
 		$("#global_ability_pool").append(content);
 
 		var ga_img = $("<img class='base_info' id='"+gname+"_base' src='res/special_abilities/gsa-"+gname+".png' />");
 		
-		if ( (gcount / fcount) >= 1 ) {
+		if ( (gcount / fcount) >= 100 ) {
 			$("img#"+gname).fadeTo(0,1);
 			ga_img.appendTo("#ga_base_pool");
 		} else {

@@ -1,7 +1,7 @@
 /*
 
     Open Legions Unit Builder
-    Copyright (C) 2010  Pieter E Sartain
+    Copyright (C) 2010-2012  Pieter E Sartain
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -187,7 +187,7 @@ function Unit(max_figures){
 		this.get_figure(Fuuid).add_dice(type,Duuid);
 		
 		// Decrement the available number of dice
-		this.dice[this.get_dice_value_from_type(type)][0]--;
+		this.dice[this.get_dice_value_from_type(type)][0] -= 100;
 	}
 
 	/*
@@ -198,7 +198,7 @@ function Unit(max_figures){
 		this.get_figure(uuid).rm_dice(type);
 		
 		// Increment the available number of dice
-		this.dice[this.get_dice_value_from_type(type)][0]++;
+		this.dice[this.get_dice_value_from_type(type)][0] +=100;
 	}
 
 	/*
@@ -215,13 +215,13 @@ function Unit(max_figures){
 		// 2: sum (natural)
 		for (var x = 0; x < 4; x++) {
 			
-			ldice[x] = parseFloat(figure[this.dtrans[x]]);
+			ldice[x] = figure[this.dtrans[x]];
 			
 			// New val - recalculated from the raw figure array based on the addition
 			// of the new figure.
 			var av = 0;
 			for (var y = 0; y < this.figures.length; y++) {
-				av += parseFloat(this.figures[y].get_figure()[this.dtrans[x]]);
+				av += this.figures[y].get_figure()[this.dtrans[x]];
 			}
 
 			// The move dice
@@ -415,7 +415,7 @@ function Unit(max_figures){
 		var la_idx = this.get_la_idx_from_name(name);
 
 		// Decrement the available LA counter
-		this.la[la_idx][0]--;
+		this.la[la_idx][0] -= 100;
 	}
 
 	/*
@@ -428,7 +428,7 @@ function Unit(max_figures){
 		var la_idx = this.get_la_idx_from_name(name);
 
 		// Increment the available LA counter
-		this.la[la_idx][0]++;
+		this.la[la_idx][0] += 100;
 	}
 
 	/*
@@ -495,7 +495,7 @@ function Unit(max_figures){
 								var gen_la_name = this.figures[z].get_figure()[w];
 								
 								if (gen_la_name == fig_la_name) {
-									new_val += parseFloat(figure[w+1]);
+									new_val += figure[w+1];
 								}
 							}
 						}
@@ -579,7 +579,7 @@ function Unit(max_figures){
 					// Do we already have a GA of this type?			
 					for (var y = 0; y < this.ga.length; y++) {
 						if (this.ga[y][0] == figure[x]) {
-							this.ga[y][1] += parseFloat(figure[x+1]);						
+							this.ga[y][1] += figure[x+1];
 							newga = false;
 						}
 					}
@@ -588,7 +588,7 @@ function Unit(max_figures){
 					if (newga) {
 						this.ga[this.ga.length] = new Array(2);
 						this.ga[this.ga.length-1][0] = figure[x];	// GA name
-						this.ga[this.ga.length-1][1] = parseFloat(figure[x+1]);	// GA amount
+						this.ga[this.ga.length-1][1] = figure[x+1];	// GA amount
 					}			
 				} // if
 			} // for
@@ -613,7 +613,7 @@ function Unit(max_figures){
 			this.movement[y] = 0;
 			
 			for (var x = 0; x < this.figures.length; x++) {
-				this.movement[y] += parseInt(this.figures[x].get_figure()[18+y]);
+				this.movement[y] += this.figures[x].get_figure()[18+y];
 			}
 			
 			if (this.figures.length)
@@ -687,7 +687,7 @@ function Unit(max_figures){
 	 	
 		for (var x = 0; x < this.figures.length; x++) {
 		
-			var figure_cost = parseInt(this.figures[x].get_figure()[14+this.faction]);
+			var figure_cost = this.figures[x].get_figure()[14+this.faction];
 			
 			var icon_size = this.figures[x].get_dicecount() + this.figures[x].get_lacount();
 			
