@@ -63,7 +63,7 @@ ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egyp
 1M13,	Kor Tiger Rider,		2,   0,   0.6, 7, Mobility, 0.25, ,, Charger, 4, ,,                           269, 538, 269, 269,1,1,2,1,r,r,g,r,	white,	3U2FP
 1M14,	Kor Sniper,				0,   0.5, 0.5, 3, Sniper, 1, Elusive, 0.34, ,, ,,                             125, 250, 125, 125,1,1,2,1,b,b,g,b,	red,	1UB
 1R01,	Front Line Legionary,	0.7, 0,   0.5, 4, Wall of Shields, 0.1, Thrown Weapon, 0.2, Disciplined, 1.2, ,, 86,156, 78,  Infinity,1,1,2,1,b,r,g,r,	white,	1UE
-1R02,	Formation Legionary,	0.7, 0.5, 0,   4, Wall of Shields, 0.1, ,, Disciplined, 1.2, ,,                58, 106,  53,  Infinity,1,1,2,1,r,r,g,r,	white,	1U
+1R02,	Formation Legionary,	0.7, 0, 0.5,   4, Wall of Shields, 0.1, ,, Disciplined, 1.2, ,,                58, 106,  53,  Infinity,1,1,2,1,r,r,g,r,	white,	1U
 1R03,	Legionary Shieldbearer,	0.5, 0,   0.6, 3, Wall of Shields, 0.2, ,, Disciplined, 1.2, ,,                56, 102,  51,  Infinity,1,1,2,1,r,r,g,r,	white,	1U
 1R04,	Legionary Defender,		0.5, 0,   0.6, 3, Wall of Shields, 0.2, ,, Disciplined, 1.2, ,,                56, 102,  51,  Infinity,1,1,2,1,r,r,g,r,	white,	1U
 1R05,	Legionary Archer,		0,   0.6, 0.3, 4, ,, ,, Disciplined, 1.2, ,,                                   65, 118,  59,  Infinity,1,1,2,1,b,r,g,r,	white,	1U
