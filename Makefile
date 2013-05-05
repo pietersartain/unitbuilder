@@ -1,9 +1,17 @@
-PAGES=./index.html
+PAGES=index.html
+MAINDIR=content
+REALPATH=$(realpath $(MAINDIR))
 
-default: $(PAGES)
+default: $(addprefix $(REALPATH)/,$(PAGES)) sass
 
-%.html : %.php
-	php `basename $<` > $@
+$(REALPATH)/%.html : %.php
+	cd `dirname $<`; php `basename $<` > $@
 
-clean : 
-	-rm ./index.html
+sass:
+	compass compile
+
+.PHONY: sass
+
+clean: 
+	-rm $(REALPATH)/index.html
+	compass clean

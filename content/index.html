@@ -1,0 +1,933 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Open Legions Unit Builder</title>
+
+
+<link type="text/css" href="stylesheets/ui-lightness/jquery-ui-1.8.6.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
+
+<script language="javascript">
+var figures = [["1E01","Hoplite with Javelins",60,0,40,400,"Thrown Weapon",20,"",0,"Battle Prowess",120,"Aggressive",100,75,150,188,255,1,1,2,1,"b","r","g","r","white","1U",],["1E02","Charging Hoplite",60,0,40,400,"",0,"",0,"Battle Prowess",120,"Aggressive",100,50,100,125,150,1,1,2,1,"r","r","g","r","white","1U",],["1E03","Cursed Swordsman",100,0,20,300,"Concentration",14,"",0,"Regeneration",120,"Aggressive",100,65,130,130,195,1,2,3,2,"r","g","g","g","white","1U",],["1E04","Cursed Spearman",100,0,0,300,"Spearmen",20,"",0,"Regeneration",120,"Aggressive",100,59,118,118,177,1,2,3,2,"r","g","g","g","white","1U",],["1E05","Egyptian Archer",20,70,20,400,"Precision",10,"",0,"",0,"",0,52,104,104,156,1,1,2,1,"b","g","g","g","white","1U",],["1E06","Egyptian Fire Archer",0,70,30,300,"Fire Arrows",20,"Hail of Arrows",10,"",0,"",0,59,118,118,177,1,1,2,1,"b","g","g","g","white","1U",],["1E07","Centaur Charger",160,0,80,800,"Specialized",20,"",0,"Battle Prowess",250,"Aggressive",200,163,326,408,489,1,2,3,2,"r","r","g","r","white","2UPA",],["1E10","Cleopatra VII",0,0,200,400,"Harsh Mistress",100,"Death Touch",100,"Calculating",1200,"",0,617,Infinity,Infinity,Infinity,1,1,2,1,"r","r","g","r","gold","1U",],["1E11","Decidius Saxa",200,0,200,400,"Command Position",100,"",0,"Hustle",800,"Aggressive",100,474,Infinity,Infinity,Infinity,1,1,2,1,"r","r","r","r","gold","1U",],["1E12","Amenhotep III",100,0,150,400,"Lord of the Dead",100,"",0,"Resentful",800,"Aggressive",100,278,Infinity,Infinity,Infinity,1,1,2,1,"r","r","g","r","gold","1U",],["1E13","Darius of Pontus",200,0,150,400,"Hellenic Pride",100,"",0,"Battle Prowess",400,"Aggressive",200,143,429,Infinity,Infinity,1,1,2,1,"r","r","g","r","gold","1U",],["1E14","Achilles",300,0,150,800,"Power at a Price",100,"",0,"Battle Prowess",800,"Aggressive",200,453,1359,Infinity,1359,1,2,3,2,"r","r","r","r","gold","2UPA",],["1E15","Masika",100,0,100,400,"Death Touch",100,"",0,"Aggressive",100,"",0,205,615,615,615,1,1,2,1,"r","r","g","r","gold","1U",],["1E16","Hand of Isis",0,0,33,400,"Death Touch",100,"Impede",34,"",0,"",0,100,200,300,300,1,1,2,1,"r","g","g","g","green","1U",],["1E17","Hand of Osiris",50,0,0,400,"Necromancer",100,"",0,"",0,"",0,129,258,323,387,1,1,2,1,"g","g","g","g","green","1U",],["1E18","Anubian Guard",180,0,100,500,"Fear",34,"",0,"Brutal",200,"Aggressive",200,175,Infinity,Infinity,Infinity,1,1,2,1,"r","r","r","r","green","2ULB",],["1E19","Sta",140,0,30,600,"Poison",20,"",0,"Beast",200,"Aggressive",200,111,111,111,111,1,2,2,2,"g","g","g","g","green","2UPB",],["1E20","Criosphinx",160,0,30,600,"",0,"",0,"Beast",200,"Charger",300,115,115,115,115,1,2,2,2,"g","g","g","g","white","2UPA",],["1E21","Protosphinx",200,0,100,600,"Cunning",100,"",0,"Aggressive",400,"",0,258,516,516,516,1,2,2,2,"r","r","g","r","white","3U2FP",],["1E22","Cyclops",220,0,80,500,"Carnivorous",25,"",0,"Brutal",250,"Resentful",250,147,221,221,221,1,1,2,1,"r","g","g","g","white","2ULB",],["1E23","Centaur Archer",20,140,60,700,"Hail of Arrows",20,"",0,"Battle Prowess",250,"",0,224,448,560,672,1,2,3,2,"b","b","g","r","white","2UPA",],["1E24","Lionrider of Bast",225,0,100,700,"",0,"",0,"Deadly",400,"Aggressive",400,278,558,837,837,1,1,2,1,"r","r","g","r","white","3UAP",],["1E25","Necrotic Warrior",250,0,50,600,"Trample",25,"",0,"Brutal",400,"",0,202,606,Infinity,606,1,1,2,1,"r","r","g","r","white","3UL",],["1E26","Beast Handler",50,0,25,400,"Concentration",100,"",0,"Aggressive",100,"",0,88,264,264,264,1,1,2,1,"r","g","g","g","red","1U",],["1H01","Charging Han Infantry",80,0,30,400,"Xenophobic",10,"",0,"Hustle",120,"Good Fortune",120,150,50,150,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1H02","Marching Han Infantry",70,0,40,400,"Xenophobic",10,"",0,"Good Fortune",120,"",0,132,44,132,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1H03","Han Sharpshooter",0,80,40,400,"Precision",17,"",0,"Good Fortune",120,"",0,210,70,210,Infinity,1,1,2,1,"b","b","g","b","white","1U",],["1H04","Han Artillerist",0,80,30,400,"Hail of Arrows",17,"",0,"Good Fortune",120,"",0,219,73,219,Infinity,1,1,2,1,"b","b","g","b","white","1U",],["1H05","Terracotta Spearman A",60,0,40,400,"Spearmen",10,"",0,"Fragile",300,"",0,78,26,78,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1H06","Terracotta Spearman B",60,0,40,400,"Spearmen",10,"",0,"Fragile",300,"",0,78,26,78,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1H07","Han Mounted Archer",0,120,40,700,"Precision",25,"",0,"Good Fortune",250,"",0,579,193,579,Infinity,1,2,3,2,"b","r","g","b","white","2UPA",],["1H08","Han Cavalry",180,0,80,700,"Xenophobic",20,"",0,"Good Fortune",250,"",0,417,139,417,Infinity,1,2,3,2,"r","r","g","r","white","2UPA",],["1H09","Shoyosei",160,0,100,600,"Trample",25,"Heavy Armor",25,"Deadly",250,"Good Fortune",250,Infinity,161,Infinity,Infinity,1,2,3,2,"r","r","g","r","white","2UPA",],["1H10","Zhongli Quan",200,0,150,400,"Call the Iron Rain",100,"",0,"Deadly",1200,"Calculating",800,Infinity,407,Infinity,Infinity,1,1,2,1,"r","r","r","r","gold","1U",],["1H11","Hundun Spirit",250,0,120,500,"Spirit of Chaos",100,"Superior Reach",100,"",0,"",0,Infinity,979,Infinity,Infinity,1,1,2,1,"r","r","r","r","gold","4U",],["1H12","Lord Muira",300,0,100,500,"Fear",100,"Confusion",100,"Deadly",800,"Good Fortune",300,Infinity,389,Infinity,Infinity,1,1,2,1,"r","r","g","r","gold","2UC",],["1H12","Harionago",200,0,150,400,"Entangle",100,"",0,"",0,"",0,Infinity,156,Infinity,Infinity,1,1,2,1,"r","g","g","g","gold","1U",],["1H14","Nuwa",0,0,150,400,"Artificer",100,"",0,"Good Fortune",300,"",0,816,272,816,816,1,1,2,1,"r","r","g","r","gold","2UC",],["1H15","Chen Xiaotang",300,0,0,400,"Opportunist",100,"",0,"Hustle",400,"Good Fortune",200,507,169,507,507,1,1,2,1,"r","r","g","r","gold","1U",],["1H16","Yuezhi Healer",0,0,0,400,"Healing",100,"",0,"Good Fortune",100,"",0,418,167,418,418,1,1,2,1,"g","g","g","g","green","1U",],["1H17","Qilin",120,0,100,600,"Bad Luck",34,"",0,"Charger",300,"Good Fortune",300,Infinity,195,Infinity,Infinity,1,1,2,1,"r","r","r","r","green","2UPA",],["1H18","Jorogumo",160,0,75,600,"Poison",34,"Cunning",25,"Resentful",400,"",0,774,258,774,774,1,1,1,1,"r","r","r","r","green","3UC",],["1H19","Goryo",100,0,67,400,"Fireburst",100,"",0,"",0,"",0,432,144,432,432,1,1,2,1,"b","r","g","r","green","1U",],["1H20","Wu Tou Gui",0,0,0,200,"Fear",100,"Entangle",34,"",0,"",0,148,78,148,148,2,2,2,2,"g","g","g","g","green","1U",],["1H21","Foo Lion",50,0,200,400,"",0,"",0,"Brutal",450,"",0,Infinity,322,Infinity,Infinity,1,1,2,1,"r","r","g","r","white","4UP",],["1H22","Han Crossbowman",0,90,0,400,"",0,"",0,"Deadly",120,"Good Fortune",120,207,69,207,207,1,1,2,1,"b","b","g","b","white","1U",],["1H23","Yeti",250,0,50,600,"Impede",34,"",0,"Cowardly",600,"Brutal",400,825,330,825,825,1,1,2,1,"r","r","g","r","white","4UL",],["1H24","Kyudo Archer",0,80,20,400,"Way of the Bow",17,"",0,"Good Fortune",120,"",0,249,83,249,249,1,1,2,1,"b","g","g","g","white","1U",],["1H25","Shoyosei Infantry",80,0,50,400,"Elusive",17,"",0,"Deadly",120,"Good Fortune",120,Infinity,71,Infinity,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1M01","Xiongnu Mounted Archer",20,140,40,700,"Precision",25,"Mobility",20,"",0,"",0,204,408,204,204,1,2,3,2,"b","r","g","b","white","2UPA",],["1M02","Xiongnu Skirmisher",180,0,100,700,"Mobility",20,"",0,"Charger",200,"",0,175,350,175,175,1,1,3,1,"r","r","g","r","white","2UPA",],["1M03","Savros Kuznetzov",100,0,100,300,"Intuition",100,"Demolitionist",100,"",0,"",0,166,166,166,133,1,1,2,1,"r","g","g","g","gold","1U",],["1M04","Modu Shanyu",0,0,100,300,"Crone's Curse",100,"Death Touch",100,"",0,"",0,356,Infinity,356,356,2,2,2,2,"g","g","g","g","gold","3UC",],["1M05","Shield Golem",50,0,120,400,"Wall of Shields",40,"",0,"",0,"",0,170,170,170,136,1,1,2,1,"r","r","g","r","white","2UPB",],["1M06","Sword Golem",200,0,33,500,"Concentration",34,"",0,"",0,"",0,164,164,164,131,1,1,2,1,"r","r","g","r","white","2ULB",],["1M07","The Enlightened One",0,0,0,400,"Aura of Peace",100,"",0,"",0,"",0,132,132,132,132,1,1,1,1,"r","r","r","r","gold","1U",],["1M08","Bogomir Litvinov",400,0,100,400,"Concentration",100,"",0,"Brutal",800,"",0,634,634,634,507,1,1,2,1,"r","r","g","r","gold","4UL",],["1M09","Slavic Shieldwall",0,0,200,500,"Wall of Shields",50,"",0,"",0,"",0,494,494,494,395,1,1,2,1,"r","r","r","r","red","4ULB",],["1M10","Great One",200,0,100,400,"",0,"",0,"Brutal",400,"Resentful",400,319,319,319,255,1,1,2,1,"r","g","g","g","white","4UL",],["1M11","Warlord Khudu",300,0,100,800,"Stormrider",100,"",0,"Charger",800,"",0,679,1086,679,543,1,1,2,1,"r","r","r","r","gold","4U2FP",],["1M12","Gulug",300,0,100,500,"Bully",100,"",0,"",0,"",0,199,398,199,199,1,1,2,1,"r","r","g","r","gold","2ULB",],["1M13","Kor Tiger Rider",200,0,60,700,"Mobility",25,"",0,"Charger",400,"",0,269,538,269,269,1,1,2,1,"r","r","g","r","white","3U2FP",],["1M14","Kor Sniper",0,50,50,300,"Sniper",100,"Elusive",34,"",0,"",0,125,250,125,125,1,1,2,1,"b","b","g","b","red","1UB",],["1R01","Front Line Legionary",70,0,50,400,"Wall of Shields",10,"Thrown Weapon",20,"Disciplined",120,"",0,86,156,78,Infinity,1,1,2,1,"b","r","g","r","white","1UE",],["1R02","Formation Legionary",70,0,50,400,"Wall of Shields",10,"",0,"Disciplined",120,"",0,58,106,53,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1R03","Legionary Shieldbearer",50,0,60,300,"Wall of Shields",20,"",0,"Disciplined",120,"",0,56,102,51,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1R04","Legionary Defender",50,0,60,300,"Wall of Shields",20,"",0,"Disciplined",120,"",0,56,102,51,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1R05","Legionary Archer",0,60,30,400,"",0,"",0,"Disciplined",120,"",0,65,118,59,Infinity,1,1,2,1,"b","r","g","r","white","1U",],["1R06","Heavy Legionary",140,0,100,300,"Heavy Armor",20,"",0,"Disciplined",250,"Tough",250,Infinity,426,142,Infinity,1,1,2,1,"r","r","g","r","white","2ULB",],["1R07","Roman Cavalry Charger",160,0,80,800,"Trample",20,"",0,"Disciplined",250,"",0,318,318,159,Infinity,1,2,3,2,"r","r","g","r","white","2UPA",],["1R08","Roman Cavalry Lancer",140,0,100,800,"Xenophobic",20,"",0,"Disciplined",250,"",0,330,330,165,Infinity,1,2,3,2,"r","r","g","r","white","2UPA",],["1R09","Ursan Cataphract",300,0,100,500,"Carnivorous",34,"",0,"Disciplined",500,"Brutal",500,Infinity,984,328,Infinity,1,2,2,2,"r","g","g","g","white","4UP",],["1R10","Marcus Agrippa",200,0,150,700,"Leader of Men",100,"",0,"Disciplined",800,"Calculating",800,Infinity,1455,485,Infinity,1,2,3,2,"r","r","g","r","gold","2UPA",],["1R11","Caius Lucius",200,0,150,400,"Specialized",100,"Specialist Leader",100,"Disciplined",800,"",0,Infinity,506,253,Infinity,1,1,2,1,"r","r","g","r","gold","1U",],["1R12","Titus Petronius",200,0,200,300,"Heavy Armor",20,"Armored Rush",100,"Disciplined",500,"Tough",250,Infinity,960,320,Infinity,1,1,2,1,"r","g","g","g","gold","2ULB",],["1R13","Vercingetorix",250,0,0,400,"King of the Gauls",100,"Berserker",100,"Charger",120,"",0,612,408,204,612,1,1,1,1,"r","r","r","r","gold","1U",],["1R14","Diviciacus",0,0,100,400,"Grand Druid",100,"Nature Magic",100,"",0,"",0,444,296,148,444,1,1,2,1,"r","g","g","g","gold","1U",],["1R15","Minos",200,0,200,400,"Roman Patriot",100,"",0,"Disciplined",800,"Battle Prowess",400,Infinity,Infinity,424,Infinity,1,1,2,1,"r","r","g","r","gold","3UC",],["1R16","Priestess of Aesclepius",0,0,20,300,"Healing",100,"",0,"",0,"",0,Infinity,474,158,Infinity,1,1,2,1,"g","g","g","g","green","1U",],["1R17","Priestess of Bellonna",50,0,50,400,"Fervor",100,"",0,"Disciplined",200,"Hustle",800,Infinity,315,105,Infinity,1,1,2,1,"r","r","g","r","green","1U",],["1R18","Priestess of Vulcan",100,0,0,400,"Fireburst",100,"Fire Arrows",34,"",0,"",0,Infinity,444,148,Infinity,1,1,2,1,"r","r","g","r","green","1U",],["1R19","Infantry Centurion",125,0,50,400,"Specialized",100,"",0,"Disciplined",400,"",0,101,162,81,Infinity,1,1,2,1,"r","r","g","r","red","1U",],["1R20","Sagitarii Centurion",0,100,50,400,"Precision",100,"",0,"Disciplined",400,"",0,153,244,122,Infinity,1,1,2,1,"b","r","g","r","red","1U",],["1R21","Druid",0,0,50,400,"Tangle Vines",100,"Nature Magic",60,"",0,"",0,267,178,89,267,1,1,2,1,"r","g","g","g","green","1U",],["1R22","Minotaur Warrior",167,0,100,500,"",0,"",0,"Brutal",250,"Disciplined",250,Infinity,495,165,Infinity,1,1,2,1,"r","r","g","r","white","2UC",],["1R23","Gallic Berserker A",100,0,0,500,"Berserker",17,"",0,"Charger",120,"",0,183,122,61,183,1,1,1,1,"r","r","r","r","white","1U",],["1R24","Gallic Berserker B",100,0,0,500,"Berserker",17,"",0,"Charger",120,"",0,183,122,61,183,1,1,1,1,"r","r","r","r","white","1U",],["1R25","Iberian Wolf",100,0,38,800,"Carnivorous",34,"Impede",20,"Beast",400,"",0,468,312,156,468,1,1,2,1,"r","r","g","r","white","2UPA",],["1R26","Ferverian Legionary",67,0,50,300,"Heavy Armor",20,"Death Cloud",100,"Disciplined",200,"Tough",250,Infinity,783,261,Infinity,1,1,2,1,"r","g","g","g","red","2ULB",],["1H06A","Terracotta Strikers",80,0,20,500,"",0,"",0,"Hustle",150,"Fragile",300,111,37,111,Infinity,1,1,2,1,"r","r","g","r","white","1U",],["1M03A","Mechanist Savros",50,0,100,400,"Artificer",100,"Intuition",100,"",0,"",0,250,200,250,200,1,1,2,1,"r","g","g","g","gold","1U",],["1E25A","Necrotic Reborn",300,0,0,400,"Fear",100,"",0,"Regeneration",200,"",0,264,792,Infinity,792,1,1,2,1,"r","g","g","g","white","3UL",],];</script>
+
+<script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript" src="js/figure.class.js"></script>
+<script type="text/javascript" src="js/unit.class.js"></script>
+<script type="text/javascript" src="js/view.js"></script>
+<script type="text/javascript" src="js/events.jquery.js"></script>
+
+<link type="text/css" href="stylesheets/screen.css" rel="stylesheet" media="screen, print" />
+<link type="text/css" href="stylesheets/print.css" rel="stylesheet" media="print" />
+
+</head>
+
+<body>
+
+<header>
+
+	<table>
+		<tr>
+			<td><img src="res/insignia/egyptian.png" /></td>
+			<td>
+				<select name='faction'>
+					<option value="egyptian">Egypt</option>
+					<option value="han">Han Dynasty</option>
+					<option value="mercenary">Mercenary</option>
+					<option value="roman">Rome</option>
+				</select>
+				<br />
+				<select name='basetype'>
+					<option value="sortie_landscape">Sortie</option>
+					<option value="cavalry_landscape">Cavalry</option>
+				</select>
+				<br />
+				<select name='baserotation'>
+					<option value="0">Landscape</option>
+					<option value="90">Portrait</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+
+	<div id="global_ability_pool"></div>
+
+	<div id='base_hp'></div>
+
+	<div id="dice_pool">
+
+		<table>
+			<tr>
+				<td class='red dice'>&nbsp;</td><td id="red_count">0/0/0.00</td>
+				<td class='white dice'>&nbsp;</td><td id="white_count">0/0/0.00</td>
+			</tr>
+			<tr>
+				<td class='blue dice'>&nbsp;</td><td id="blue_count">0/0/0.00</td>
+				<td class='move dice'>&nbsp;</td><td id="move_count">0/0/0.00</td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="local_ability_pool"></div>
+
+</header>
+
+<div id="scroll_list">
+<ul id='figure_list'><li id='0'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E01</div><div class='name'>		Hoplite with Javelins	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-thrown-weapon.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-battle-prowess.png')
+						"
+					>&nbsp;</td><td>1.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td></tr></table></div><div style='float: left;'></div></li><li id='1'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E02</div><div class='name'>		Charging Hoplite	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-battle-prowess.png')
+						"
+					>&nbsp;</td><td>1.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td></tr></table></div><div style='float: left;'></div></li><li id='2'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E03</div><div class='name'>		Cursed Swordsman	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.2	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-concentration.png')
+						"
+					>&nbsp;</td><td>0.14</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-regeneration.png')
+						"
+					>&nbsp;</td><td>1.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td></tr></table></div><div style='float: left;'></div></li><li id='3'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E04</div><div class='name'>		Cursed Spearman	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-spearmen.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-regeneration.png')
+						"
+					>&nbsp;</td><td>1.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td></tr></table></div><div style='float: left;'></div></li><li id='4'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E05</div><div class='name'>		Egyptian Archer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.7	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.2	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-precision.png')
+						"
+					>&nbsp;</td><td>0.1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='5'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E06</div><div class='name'>		Egyptian Fire Archer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.7	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.3	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fire-arrows.png')
+						"
+					>&nbsp;</td><td>0.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-hail-of-arrows.png')
+						"
+					>&nbsp;</td><td>0.1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='6'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E07</div><div class='name'>		Centaur Charger	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.8	</td><td class='move dice'>&nbsp;</td><td id='move'>		8	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-specialized.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-battle-prowess.png')
+						"
+					>&nbsp;</td><td>2.5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>2</td></tr></table></div><div style='float: left;'></div></li><li id='7'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E10</div><div class='name'>		Cleopatra VII	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	2	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-harsh-mistress.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-death-touch.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-calculating.png')
+						"
+					>&nbsp;</td><td>12</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='8'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E11</div><div class='name'>		Decidius Saxa	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	2	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-command-position.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-hustle.png')
+						"
+					>&nbsp;</td><td>8</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td></tr></table></div><div style='float: left;'></div></li><li id='9'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E12</div><div class='name'>		Amenhotep III	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-lord-of-the-dead.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-resentful.png')
+						"
+					>&nbsp;</td><td>8</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td></tr></table></div><div style='float: left;'></div></li><li id='10'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E13</div><div class='name'>		Darius of Pontus	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-hellenic-pride.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-battle-prowess.png')
+						"
+					>&nbsp;</td><td>4</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>2</td></tr></table></div><div style='float: left;'></div></li><li id='11'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E14</div><div class='name'>		Achilles	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  3	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		8	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-power-at-a-price.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-battle-prowess.png')
+						"
+					>&nbsp;</td><td>8</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>2</td></tr></table></div><div style='float: left;'></div></li><li id='12'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E15</div><div class='name'>		Masika	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-death-touch.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='13'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E16</div><div class='name'>		Hand of Isis	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.33	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-death-touch.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-impede.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='14'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E17</div><div class='name'>		Hand of Osiris	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-necromancer.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='15'><div style='float: left; width:25px;' class='base'><img src='res/figures/green2ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E18</div><div class='name'>		Anubian Guard	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.8	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fear.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>2</td></tr></table></div><div style='float: left;'></div></li><li id='16'><div style='float: left; width:25px;' class='base'><img src='res/figures/green2UPB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E19</div><div class='name'>		Sta	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.4	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.3	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-poison.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-beast.png')
+						"
+					>&nbsp;</td><td>2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>2</td></tr></table></div><div style='float: left;'></div></li><li id='17'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E20</div><div class='name'>		Criosphinx	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.3	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-beast.png')
+						"
+					>&nbsp;</td><td>2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>3</td></tr></table></div><div style='float: left;'></div></li><li id='18'><div style='float: left; width:25px;' class='base'><img src='res/figures/white3U2FP.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E21</div><div class='name'>		Protosphinx	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-cunning.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>4</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='19'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E22</div><div class='name'>		Cyclops	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2.2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.8	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-carnivorous.png')
+						"
+					>&nbsp;</td><td>0.25</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>2.5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-resentful.png')
+						"
+					>&nbsp;</td><td>2.5</td></tr></table></div><div style='float: left;'></div></li><li id='20'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E23</div><div class='name'>		Centaur Archer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		1.4	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.6	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-hail-of-arrows.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-battle-prowess.png')
+						"
+					>&nbsp;</td><td>2.5</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='21'><div style='float: left; width:25px;' class='base'><img src='res/figures/white3UAP.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E24</div><div class='name'>		Lionrider of Bast	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2.25	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-deadly.png')
+						"
+					>&nbsp;</td><td>4</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>4</td></tr></table></div><div style='float: left;'></div></li><li id='22'><div style='float: left; width:25px;' class='base'><img src='res/figures/white3UL.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E25</div><div class='name'>		Necrotic Warrior	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-trample.png')
+						"
+					>&nbsp;</td><td>0.25</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>4</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='23'><div style='float: left; width:25px;' class='base'><img src='res/figures/red1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E26</div><div class='name'>		Beast Handler	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.25	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-concentration.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-aggressive.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='24'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H01</div><div class='name'>		Charging Han Infantry	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.8	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.3	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-xenophobic.png')
+						"
+					>&nbsp;</td><td>0.1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-hustle.png')
+						"
+					>&nbsp;</td><td>1.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1.2</td></tr></table></div><div style='float: left;'></div></li><li id='25'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H02</div><div class='name'>		Marching Han Infantry	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.7	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-xenophobic.png')
+						"
+					>&nbsp;</td><td>0.1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='26'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H03</div><div class='name'>		Han Sharpshooter	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.8	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-precision.png')
+						"
+					>&nbsp;</td><td>0.17</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='27'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H04</div><div class='name'>		Han Artillerist	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.8	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.3	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-hail-of-arrows.png')
+						"
+					>&nbsp;</td><td>0.17</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='28'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H05</div><div class='name'>		Terracotta Spearman A	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-spearmen.png')
+						"
+					>&nbsp;</td><td>0.1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-fragile.png')
+						"
+					>&nbsp;</td><td>3</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='29'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H06</div><div class='name'>		Terracotta Spearman B	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-spearmen.png')
+						"
+					>&nbsp;</td><td>0.1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-fragile.png')
+						"
+					>&nbsp;</td><td>3</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='30'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H07</div><div class='name'>		Han Mounted Archer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		1.2	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-precision.png')
+						"
+					>&nbsp;</td><td>0.25</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>2.5</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='31'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H08</div><div class='name'>		Han Cavalry	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.8	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.8	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-xenophobic.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>2.5</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='32'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H09</div><div class='name'>		Shoyosei	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-trample.png')
+						"
+					>&nbsp;</td><td>0.25</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-heavy-armor.png')
+						"
+					>&nbsp;</td><td>0.25</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-deadly.png')
+						"
+					>&nbsp;</td><td>2.5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>2.5</td></tr></table></div><div style='float: left;'></div></li><li id='33'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H10</div><div class='name'>		Zhongli Quan	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-call-the-iron-rain.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-deadly.png')
+						"
+					>&nbsp;</td><td>12</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-calculating.png')
+						"
+					>&nbsp;</td><td>8</td></tr></table></div><div style='float: left;'></div></li><li id='34'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold4U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H11</div><div class='name'>		Hundun Spirit	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.2	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-spirit-of-chaos.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-superior-reach.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='35'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold2UC.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H12</div><div class='name'>		Lord Muira	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  3	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fear.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-confusion.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-deadly.png')
+						"
+					>&nbsp;</td><td>8</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>3</td></tr></table></div><div style='float: left;'></div></li><li id='36'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H12</div><div class='name'>		Harionago	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-entangle.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='37'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold2UC.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H14</div><div class='name'>		Nuwa	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-artificer.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>3</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='38'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H15</div><div class='name'>		Chen Xiaotang	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  3	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-opportunist.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-hustle.png')
+						"
+					>&nbsp;</td><td>4</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>2</td></tr></table></div><div style='float: left;'></div></li><li id='39'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H16</div><div class='name'>		Yuezhi Healer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-healing.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='40'><div style='float: left; width:25px;' class='base'><img src='res/figures/green2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H17</div><div class='name'>		Qilin	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-bad-luck.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>3</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>3</td></tr></table></div><div style='float: left;'></div></li><li id='41'><div style='float: left; width:25px;' class='base'><img src='res/figures/green3UC.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H18</div><div class='name'>		Jorogumo	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.75	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-poison.png')
+						"
+					>&nbsp;</td><td>0.34</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-cunning.png')
+						"
+					>&nbsp;</td><td>0.25</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-resentful.png')
+						"
+					>&nbsp;</td><td>4</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='42'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H19</div><div class='name'>		Goryo	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.67	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fireburst.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='43'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H20</div><div class='name'>		Wu Tou Gui	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		2	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fear.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-entangle.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='44'><div style='float: left; width:25px;' class='base'><img src='res/figures/white4UP.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H21</div><div class='name'>		Foo Lion	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	2	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>4.5</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='45'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H22</div><div class='name'>		Han Crossbowman	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.9	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-deadly.png')
+						"
+					>&nbsp;</td><td>1.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1.2</td></tr></table></div><div style='float: left;'></div></li><li id='46'><div style='float: left; width:25px;' class='base'><img src='res/figures/white4UL.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H23</div><div class='name'>		Yeti	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		6	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-impede.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-cowardly.png')
+						"
+					>&nbsp;</td><td>6</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>4</td></tr></table></div><div style='float: left;'></div></li><li id='47'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H24</div><div class='name'>		Kyudo Archer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.8	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.2	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-way-of-the-bow.png')
+						"
+					>&nbsp;</td><td>0.17</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='48'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H25</div><div class='name'>		Shoyosei Infantry	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.8	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-elusive.png')
+						"
+					>&nbsp;</td><td>0.17</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-deadly.png')
+						"
+					>&nbsp;</td><td>1.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-good-fortune.png')
+						"
+					>&nbsp;</td><td>1.2</td></tr></table></div><div style='float: left;'></div></li><li id='49'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M01</div><div class='name'>		Xiongnu Mounted Archer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		1.4	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.4	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-precision.png')
+						"
+					>&nbsp;</td><td>0.25</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-mobility.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='50'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M02</div><div class='name'>		Xiongnu Skirmisher	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.8	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-mobility.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='51'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M03</div><div class='name'>		Savros Kuznetzov	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-intuition.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-demolitionist.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='52'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold3UC.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M04</div><div class='name'>		Modu Shanyu	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-crone's-curse.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-death-touch.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='53'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M05</div><div class='name'>		Shield Golem	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.2	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-wall-of-shields.png')
+						"
+					>&nbsp;</td><td>0.4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='54'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M06</div><div class='name'>		Sword Golem	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.33	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-concentration.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='55'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M07</div><div class='name'>		The Enlightened One	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-aura-of-peace.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='56'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold4UL.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M08</div><div class='name'>		Bogomir Litvinov	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  4	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-concentration.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='57'><div style='float: left; width:25px;' class='base'><img src='res/figures/red4ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M09</div><div class='name'>		Slavic Shieldwall	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	2	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-wall-of-shields.png')
+						"
+					>&nbsp;</td><td>0.5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='58'><div style='float: left; width:25px;' class='base'><img src='res/figures/white4UL.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M10</div><div class='name'>		Great One	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>4</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-resentful.png')
+						"
+					>&nbsp;</td><td>4</td></tr></table></div><div style='float: left;'></div></li><li id='59'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold4U2FP.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M11</div><div class='name'>		Warlord Khudu	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  3	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		8	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-stormrider.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='60'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold2ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M12</div><div class='name'>		Gulug	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  3	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-bully.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='61'><div style='float: left; width:25px;' class='base'><img src='res/figures/white3U2FP.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M13</div><div class='name'>		Kor Tiger Rider	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.6	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-mobility.png')
+						"
+					>&nbsp;</td><td>0.25</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>4</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='62'><div style='float: left; width:25px;' class='base'><img src='res/figures/red1UB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M14</div><div class='name'>		Kor Sniper	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.5	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-sniper.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-elusive.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='63'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1UE.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R01</div><div class='name'>		Front Line Legionary	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.7	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-wall-of-shields.png')
+						"
+					>&nbsp;</td><td>0.1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-thrown-weapon.png')
+						"
+					>&nbsp;</td><td>0.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='64'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R02</div><div class='name'>		Formation Legionary	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.7	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-wall-of-shields.png')
+						"
+					>&nbsp;</td><td>0.1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='65'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R03</div><div class='name'>		Legionary Shieldbearer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.6	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-wall-of-shields.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='66'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R04</div><div class='name'>		Legionary Defender	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.6	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-wall-of-shields.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='67'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R05</div><div class='name'>		Legionary Archer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0.6	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.3	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='68'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R06</div><div class='name'>		Heavy Legionary	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.4	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-heavy-armor.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>2.5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-tough.png')
+						"
+					>&nbsp;</td><td>2.5</td></tr></table></div><div style='float: left;'></div></li><li id='69'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R07</div><div class='name'>		Roman Cavalry Charger	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.6	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.8	</td><td class='move dice'>&nbsp;</td><td id='move'>		8	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-trample.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>2.5</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='70'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R08</div><div class='name'>		Roman Cavalry Lancer	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.4	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		8	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-xenophobic.png')
+						"
+					>&nbsp;</td><td>0.2</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>2.5</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='71'><div style='float: left; width:25px;' class='base'><img src='res/figures/white4UP.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R09</div><div class='name'>		Ursan Cataphract	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  3	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-carnivorous.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>5</td></tr></table></div><div style='float: left;'></div></li><li id='72'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R10</div><div class='name'>		Marcus Agrippa	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		7	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-leader-of-men.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>8</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-calculating.png')
+						"
+					>&nbsp;</td><td>8</td></tr></table></div><div style='float: left;'></div></li><li id='73'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R11</div><div class='name'>		Caius Lucius	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-specialized.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-specialist-leader.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='74'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold2ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R12</div><div class='name'>		Titus Petronius	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	2	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-heavy-armor.png')
+						"
+					>&nbsp;</td><td>0.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-armored-rush.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-tough.png')
+						"
+					>&nbsp;</td><td>2.5</td></tr></table></div><div style='float: left;'></div></li><li id='75'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R13</div><div class='name'>		Vercingetorix	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-king-of-the-gauls.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-berserker.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='76'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R14</div><div class='name'>		Diviciacus	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-grand-druid.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-nature-magic.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='77'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold3UC.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R15</div><div class='name'>		Minos	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  2	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	2	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-roman-patriot.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>8</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-battle-prowess.png')
+						"
+					>&nbsp;</td><td>4</td></tr></table></div><div style='float: left;'></div></li><li id='78'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R16</div><div class='name'>		Priestess of Aesclepius	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.2	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-healing.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='79'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R17</div><div class='name'>		Priestess of Bellonna	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fervor.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-hustle.png')
+						"
+					>&nbsp;</td><td>8</td></tr></table></div><div style='float: left;'></div></li><li id='80'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R18</div><div class='name'>		Priestess of Vulcan	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fireburst.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fire-arrows.png')
+						"
+					>&nbsp;</td><td>0.34</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='81'><div style='float: left; width:25px;' class='base'><img src='res/figures/red1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R19</div><div class='name'>		Infantry Centurion	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.25	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-specialized.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>4</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='82'><div style='float: left; width:25px;' class='base'><img src='res/figures/red1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R20</div><div class='name'>		Sagitarii Centurion	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		1	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-precision.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>4</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='83'><div style='float: left; width:25px;' class='base'><img src='res/figures/green1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R21</div><div class='name'>		Druid	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-tangle-vines.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-nature-magic.png')
+						"
+					>&nbsp;</td><td>0.6</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='84'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UC.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R22</div><div class='name'>		Minotaur Warrior	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1.67	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-brutal.png')
+						"
+					>&nbsp;</td><td>2.5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>2.5</td></tr></table></div><div style='float: left;'></div></li><li id='85'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R23</div><div class='name'>		Gallic Berserker A	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-berserker.png')
+						"
+					>&nbsp;</td><td>0.17</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='86'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R24</div><div class='name'>		Gallic Berserker B	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-berserker.png')
+						"
+					>&nbsp;</td><td>0.17</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-charger.png')
+						"
+					>&nbsp;</td><td>1.2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='87'><div style='float: left; width:25px;' class='base'><img src='res/figures/white2UPA.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R25</div><div class='name'>		Iberian Wolf	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  1	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.38	</td><td class='move dice'>&nbsp;</td><td id='move'>		8	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-carnivorous.png')
+						"
+					>&nbsp;</td><td>0.34</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-impede.png')
+						"
+					>&nbsp;</td><td>0.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-beast.png')
+						"
+					>&nbsp;</td><td>4</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='88'><div style='float: left; width:25px;' class='base'><img src='res/figures/red2ULB.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='roman base_id'>1R26</div><div class='name'>		Ferverian Legionary	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.67	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.5	</td><td class='move dice'>&nbsp;</td><td id='move'>		3	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-heavy-armor.png')
+						"
+					>&nbsp;</td><td>0.2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-death-cloud.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-disciplined.png')
+						"
+					>&nbsp;</td><td>2</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-tough.png')
+						"
+					>&nbsp;</td><td>2.5</td></tr></table></div><div style='float: left;'></div></li><li id='89'><div style='float: left; width:25px;' class='base'><img src='res/figures/white1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='han base_id'>1H06A</div><div class='name'>		Terracotta Strikers	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.8	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0.2	</td><td class='move dice'>&nbsp;</td><td id='move'>		5	</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-hustle.png')
+						"
+					>&nbsp;</td><td>1.5</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-fragile.png')
+						"
+					>&nbsp;</td><td>3</td></tr></table></div><div style='float: left;'></div></li><li id='90'><div style='float: left; width:25px;' class='base'><img src='res/figures/gold1U.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='mercenary base_id'>1M03A</div><div class='name'>		Mechanist Savros	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  0.5	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	1	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-artificer.png')
+						"
+					>&nbsp;</td><td>1</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-intuition.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li><li id='91'><div style='float: left; width:25px;' class='base'><img src='res/figures/white3UL.png' style='width:25px;' /></div><div style='float: left; width: 80%;'><div class='egyptian base_id'>1E25A</div><div class='name'>		Necrotic Reborn	</div><br /><table><tr><td class='red dice'>&nbsp;</td><td id='red'>		  3	</td><td class='blue dice'>&nbsp;</td><td id='blue'>		0	</td><td class='white dice'>&nbsp;</td><td id='white'>	0	</td><td class='move dice'>&nbsp;</td><td id='move'>		4	</td></tr><tr><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/lsa-fear.png')
+						"
+					>&nbsp;</td><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td 	class='ability' 
+					style="background-image: 
+							url('res/special_abilities/gsa-regeneration.png')
+						"
+					>&nbsp;</td><td>2</td><td>&nbsp;</td><td>&nbsp;</td></tr></table></div><div style='float: left;'></div></li></ul></div>
+
+<div id="base">
+	<img id="fullbg" src="" />
+
+	<div class='grid_box' id='grid_cavalry_landscape'><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div></div><div class='grid_box' id='grid_sortie_landscape'><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div><div class='grid'>&nbsp;</div></div>
+	<div id="base_info">
+		<div id="movement">
+			<div id="move_n">0</div>
+			<div id="move_e">0</div>
+			<div id="move_w">0</div>
+			<div id="move_s">0</div>
+		</div>
+		<div id="uname"><input type="text"></input></div>
+		<div id='points'>
+			<div id='base_cost'></div>
+			POINTS
+		</div>
+		<div id="ga_base_pool"></div>
+	</div>
+</div>
+
+</body>
+</html>

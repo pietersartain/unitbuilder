@@ -1,2 +1,3 @@
 www:
-  type: php
+  type: static
+  approot: content

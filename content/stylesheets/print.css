@@ -21,7 +21,7 @@
 /**
  *  Header containing Faction, base size, abilities, dice and HP
  */
-/* line 25, ../sass/print.scss */
+/* line 25, ../../sass/print.scss */
 header {
   display: none;
 }
@@ -29,7 +29,7 @@ header {
 /**
  *  Figure list
  */
-/* line 32, ../sass/print.scss */
+/* line 32, ../../sass/print.scss */
 div#scroll_list {
   position: absolute;
   top: 99px;
@@ -41,7 +41,7 @@ div#scroll_list {
 /**
  *  Base
  */
-/* line 44, ../sass/print.scss */
+/* line 44, ../../sass/print.scss */
 div#base img#fullbg {
   position: fixed;
   top: 10px  !important;
@@ -51,24 +51,24 @@ div#base img#fullbg {
 /**
  *  Grid
  */
-/* line 54, ../sass/print.scss */
+/* line 54, ../../sass/print.scss */
 .grid_box {
   border: 0px;
   float: left;
   left: 49px;
   top: 35px;
 }
-/* line 60, ../sass/print.scss */
+/* line 60, ../../sass/print.scss */
 .grid_box > div.grid {
   border: 0px;
 }
 
-/* line 65, ../sass/print.scss */
+/* line 65, ../../sass/print.scss */
 #grid_cavalry_landscape {
   width: 473px;
 }
 
-/* line 69, ../sass/print.scss */
+/* line 69, ../../sass/print.scss */
 #grid_sortie_landscape {
   width: 211px;
   left: 49px;
@@ -77,7 +77,7 @@ div#base img#fullbg {
 /**
  *  Base info, including movement
  */
-/* line 78, ../sass/print.scss */
+/* line 78, ../../sass/print.scss */
 div#base_info {
   top: 228px;
   left: 60px;
