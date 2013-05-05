@@ -4,9 +4,11 @@ The intention of this code was originally to allow an open platform to build rep
 
 While this may never be a feature-complete replacement, it should be sufficient to still enjoy the creation and printing of units for Arcane Legions.
 
-## Demo / Instructions
+## Live Demo
 
 http://unitbuilder-4dzgxkwr.dotcloud.com/
+
+### Usage
 
  * Select the faction and base type you want.
  * Drag & drop a figure from the left list onto the base.
@@ -14,9 +16,26 @@ http://unitbuilder-4dzgxkwr.dotcloud.com/
  * Drag & drop either an icon off the figure, or a figure off the base, to "delete" it from the unit.
  * Right click a base to convert it to a secondary figure.
 
-## Gotchas
+#### Gotchas
  * To allow regrouping on Commander (gold) figures, make the Commander to a secondary figure by right clicking it before adding it again.
  * When switching from landscape to portrait modes, the figures will pivot on the top-left peg.
+ 
+## Hosting the Unit Builder
+
+The simplest way:
+ * Download this repository (as a tarball or zipfile or similar)
+ * Open content/index.html in a browser
+ * Enjoy!
+
+### Compiling
+If you need to make a change to the html file, the CSS or the figure list, you will need to regenerate the html. This is done by executing make in the base directory. You will need:
+
+ * Make
+ * ruby 1.9.3+
+ * compass
+ * Command line php
+
+This is easy enough to do on Linux and OSX. If you're stuck with Windows and need to do this, I recommend using a Linux virtual machine and saving yourself a ton of pain.
 
 ## Todo
 
@@ -24,7 +43,6 @@ http://unitbuilder-4dzgxkwr.dotcloud.com/
  * Better instructions for hosting and/or a static frontpage included in the code.
  * Inline instructions for use.
  * Round the figure points to nearest 50.
- * Improve
 
 ### Feature complete
  * Place dice and local ability icons on the top or bottom of the figure (currently dice go top, abilities on the bottom).
@@ -44,19 +62,16 @@ http://unitbuilder-4dzgxkwr.dotcloud.com/
  * Rotate the figure bases as well as the movement grid.
  * Extra figure slots for regrouping.
  * Printable units.
+ * Easy local hosting.
 
-## Hosting the Unit Builder
-
-There is a small amount of php used to dynamically generate the frontpage incuding the figure listings from a text file. The unit builder functionality is implemented with javascript (jquery), however, so runs client side. This allows you to generate a static version of the frontpage for hosting.
-
-## Copyright
+## Copyright & Licensing
 
 Arcane Legions is copyright Wells Expeditions 2010-2012. All figures, names, fiction and so on are trademark their respective owners.
 
 jquery is made available under the GPL v2 and is included in this source tree for convenience. See http://jquery.org/license for details.
 
-This code is copyright Pieter E Sartain 2010, and released under the GPL v2 license. See license.txt document for details.
+The code is Copyright 2010-2013 Pieter E Sartain, and released under the GPL v2 license. See license.txt document for details.
 
 Where I've pilfered code from somewhere else, I've linked the reference, but mostly it's my own work.
 
-Basically, I wrote this and want to keep it freely available, regardless of what happens to the original game. Think of it as a piece of fan work, where immitation is the greatest form of flattery.
+Basically, I wrote this and want to keep it freely available. Think of it as a piece of fan work, where immitation is the greatest form of flattery.
