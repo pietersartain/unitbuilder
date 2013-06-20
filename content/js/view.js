@@ -108,7 +108,8 @@ function update_sides() {
 
 function update_unitcost(){
 	m_Unit.update_cost();
-	$("#base_cost").text(m_Unit.get_cost());
+	$("#unrounded_points").text(m_Unit.get_cost());
+	$("#base_cost").text( ceilToNearest(m_Unit.get_cost(),50) );
 }
 
 /******************************************************************************
@@ -130,8 +131,6 @@ function update_figure_dice(uuid, idx) {
 }
 
 function update_dicepool() {
-
-
 	/*
 	 * Dice and movement:
 	 *

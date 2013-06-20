@@ -40,9 +40,7 @@ This is easy enough to do on Linux and OSX. If you're stuck with Windows and nee
 ## Todo
 
  * Check printable-ness.
- * Better instructions for hosting and/or a static frontpage included in the code.
  * Inline instructions for use.
- * Round the figure points to nearest 50.
 
 ### Feature complete
  * Place dice and local ability icons on the top or bottom of the figure (currently dice go top, abilities on the bottom).
@@ -63,6 +61,7 @@ This is easy enough to do on Linux and OSX. If you're stuck with Windows and nee
  * Extra figure slots for regrouping.
  * Printable units.
  * Easy local hosting.
+ * Round the figure points to nearest 50.
 
 ## Copyright & Licensing
 

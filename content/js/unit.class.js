@@ -347,7 +347,7 @@ function Unit(max_figures){
 	}
 
 	/*
-	 * Remove an existing figure from this unit, based on UUI
+	 * Remove an existing figure from this unit, based on UUID
 	 */
 	this.rm_figure = function(uuid) {
 	
@@ -366,7 +366,7 @@ function Unit(max_figures){
 				lfig.rm_dice(this.dice[x][3]);
 		
 				// Increment the available number of dice
-				this.dice[x][0]++;
+				this.dice[x][0] += 100;
 			}
 		}
 		

@@ -250,6 +250,8 @@ function createUl($figures) {
 
 	<div id="local_ability_pool"></div>
 
+	<div id="unrounded_points">0</div>
+
 </header>
 
 <div id="scroll_list">
