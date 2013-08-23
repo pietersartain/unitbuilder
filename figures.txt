@@ -39,11 +39,11 @@ ID,Name,Close,Ranged,Def,Mv,FA1,FA1Cost,FA2,FA2Cost,UA1,UA1Cost,UA2,UA2Cost,Egyp
 1H14,	Nuwa,					0,   0,   1.5, 4, Artificer, 1, ,, Good Fortune, 3, ,,                        816, 272, 816, 816,1,1,2,1,r,r,g,r,	gold,	2UC
 1H15,	Chen Xiaotang,			3,   0,   0,   4, Opportunist, 1, ,, Hustle, 4, Good Fortune, 2,              507, 169, 507, 507,1,1,2,1,r,r,g,r,	gold,	1U
 1H16,	Yuezhi Healer,			0,   0,   0,   4, Healing, 1, ,, Good Fortune, 1, ,,                          418, 167, 418, 418,1,1,2,1,g,g,g,g,	green,	1U
-1H17,	Qilin,					1.2, 0,   1,   6, Bad Luck, 0.34, ,, Charger, 3, Good Fortune, 3,              Infinity, 195,  Infinity,  Infinity,1,1,2,1,r,r,r,r,	green,	2UPA
+1H17,	Qilin,					1.2, 0,   1,   6, Bad Luck, 0.34, ,, ,, Good Fortune, 3,              Infinity, 195,  Infinity,  Infinity,1,1,2,1,r,r,r,r,	green,	2UPA
 1H18,	Jorogumo,				1.6, 0,   0.75,6, Poison, 0.34, Cunning, 0.25, Resentful, 4, ,,               774, 258, 774, 774,1,1,1,1,r,r,r,r,	green,	3UC
 1H19,	Goryo,					1,   0,   0.67,4, Fireburst, 1, ,, ,, ,,                                      432, 144, 432, 432,1,1,2,1,b,r,g,r,	green,	1U
 1H20,	Wu Tou Gui,				0,   0,   0,   2, Fear, 1, Entangle, 0.34, ,, ,,                              148,  78, 148, 148,2,2,2,2,g,g,g,g,	green,	1U
-1H21,	Foo Lion,				0.5, 0,   2,   4, ,, ,, Brutal, 4.5, ,,                                        Infinity, 322,  Infinity,  Infinity,1,1,2,1,r,r,g,r,	white,	4UP
+1H21,	Foo Lion,				0.5, 0,   2,   4, ,, ,, ,, ,,                                        Infinity, 322,  Infinity,  Infinity,1,1,2,1,r,r,g,r,	white,	4UP
 1H22,	Han Crossbowman,		0,   0.9, 0,   4, ,, ,, Deadly, 1.2, Good Fortune, 1.2,                       207,  69, 207, 207,1,1,2,1,b,b,g,b,	white,	1U
 1H23,	Yeti,					2.5, 0,   0.5, 6, Impede, 0.34, ,, Cowardly, 6, Brutal, 4,                    825, 330, 825, 825,1,1,2,1,r,r,g,r,	white,	4UL
 1H24,	Kyudo Archer,			0,   0.8, 0.2, 4, Way of the Bow, 0.17, ,, Good Fortune, 1.2, ,,              249,  83, 249, 249,1,1,2,1,b,g,g,g,	white,	1U
